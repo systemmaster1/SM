@@ -1,0 +1,42 @@
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import {useLocale,useTranslations} from 'next-intl';
+import {motion} from 'framer-motion';
+import {ArrowRight,Check,Building2,Code2,Headphones,ShieldCheck,Sparkles,Zap} from 'lucide-react';
+import {products,services,industries} from '@/data/site';
+import {Reveal} from './reveal';
+
+export function Home(){
+ const locale=useLocale(); const hero=useTranslations('hero'); const p=useTranslations('products'); const c=useTranslations('custom'); const ind=useTranslations('industries'); const why=useTranslations('why'); const cta=useTranslations('cta');
+ return <main>
+  <section className="relative overflow-hidden py-20 md:py-28">
+   <div className="container grid items-center gap-14 lg:grid-cols-[1.05fr_.95fr]">
+    <div>
+     <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} className="eyebrow mb-6 rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2"><Sparkles size={14}/>{hero('badge')}</motion.div>
+     <motion.h1 initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{delay:.08}} className="display text-[clamp(3rem,7vw,5.8rem)] font-black">{hero('title1')} <span className="bg-gradient-to-r from-[var(--gold-2)] to-[var(--gold)] bg-clip-text text-transparent">{hero('title2')}</span></motion.h1>
+     <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.16}} className="muted mt-7 max-w-2xl text-lg leading-8">{hero('desc')}</motion.p>
+     <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.24}} className="mt-8 flex flex-wrap gap-3"><Link className="btn btn-gold" href={`/${locale}/contact`}>{hero('primary')}<ArrowRight size={18}/></Link><Link className="btn btn-ghost" href={`/${locale}/products`}>{hero('secondary')}</Link></motion.div>
+     <div className="mt-10 grid max-w-xl grid-cols-3 gap-3">{[['8+','Years'],['3','Live SaaS'],['24/7','Support']].map(([n,l])=><div key={l} className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4"><div className="display text-2xl font-black">{n}</div><div className="muted text-xs font-bold uppercase tracking-wider">{l}</div></div>)}</div>
+    </div>
+    <motion.div initial={{opacity:0,scale:.95,x:30}} animate={{opacity:1,scale:1,x:0}} transition={{duration:.8}} className="card relative p-5 md:p-7">
+      <div className="absolute -inset-10 -z-10 rounded-full bg-blue-500/10 blur-3xl"/><div className="mb-6 flex items-center justify-between"><div><div className="text-sm font-extrabold">Live Business Command Center</div><div className="muted text-xs">All operations connected in real time</div></div><span className="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-extrabold text-emerald-500">LIVE</span></div>
+      <div className="grid gap-3">{[
+       ['Sales Pipeline','14 new qualified leads','+18%'],['Workflow Tracker','29 active tasks','86%'],['WhatsApp Agent','248 replies automated','24/7'],['Auto Reports','Daily report delivered','09:00']
+      ].map((row,i)=><motion.div key={row[0]} initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:.35+i*.1}} className="flex items-center gap-4 rounded-2xl border border-[var(--line)] bg-[var(--surface-strong)]/60 p-4"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/15 text-[var(--primary)]"><Zap size={19}/></div><div className="min-w-0 flex-1"><div className="font-extrabold">{row[0]}</div><div className="muted truncate text-sm">{row[1]}</div></div><div className="text-sm font-extrabold text-emerald-500">{row[2]}</div></motion.div>)}
+      </div><div className="mt-5 grid grid-cols-3 gap-3">{['Revenue','Tasks','Leads'].map((x,i)=><div key={x} className="rounded-xl border border-[var(--line)] p-3"><div className="muted text-xs">{x}</div><div className="mt-1 font-extrabold">{['₹8.4L','93%','142'][i]}</div></div>)}</div>
+    </motion.div>
+   </div>
+  </section>
+
+  <section className="section pt-10"><div className="container"><Reveal><div className="text-center"><div className="eyebrow">{p('eyebrow')}</div><h2 className="display mx-auto mt-4 max-w-3xl text-4xl font-black md:text-5xl">{p('title')}</h2><p className="muted mx-auto mt-5 max-w-2xl">{p('desc')}</p></div></Reveal><div className="grid-3 mt-12">{products.map((x,i)=><Reveal key={x.key} delay={i*.08}><article className="card group flex h-full flex-col p-6 transition hover:-translate-y-2"><div className="flex items-start justify-between gap-4"><Image src={x.logo} alt={x.name} width={110} height={86} className="h-20 w-28 object-contain"/><span className="rounded-full bg-emerald-500/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-emerald-500">{p('ready')}</span></div><h3 className="display mt-5 text-2xl font-black">{x.name}</h3><div className="mt-2 text-lg font-extrabold text-[var(--gold)]">{x.price}</div><ul className="muted mt-5 grid gap-3 text-sm">{x.features.map(f=><li key={f} className="flex gap-2"><Check size={17} className="mt-0.5 shrink-0 text-emerald-500"/>{f}</li>)}</ul><div className="mt-auto flex flex-wrap gap-2 pt-7"><a href={x.href} target="_blank" className="btn btn-primary !min-h-11 flex-1">{p('visit')}<ArrowRight size={16}/></a><Link href={`/${locale}/contact`} className="btn btn-ghost !min-h-11">{p('demo')}</Link></div></article></Reveal>)}</div></div></section>
+
+  <section className="section"><div className="container"><div className="card overflow-hidden p-7 md:p-12"><div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr]"><Reveal><div><div className="eyebrow"><Code2 size={15}/>{c('eyebrow')}</div><h2 className="display mt-5 text-4xl font-black md:text-5xl">{c('title')}</h2><p className="muted mt-5 text-lg">{c('desc')}</p><Link href={`/${locale}/contact`} className="btn btn-gold mt-7">{c('cta')}<ArrowRight size={17}/></Link></div></Reveal><div className="grid gap-3 sm:grid-cols-2">{services.map((s,i)=><Reveal key={s} delay={i*.025}><div className="flex items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface-strong)]/50 p-4 font-extrabold"><div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/15 text-[var(--primary)]"><Code2 size={17}/></div>{s}</div></Reveal>)}</div></div></div></div></section>
+
+  <section className="section"><div className="container"><Reveal><div className="eyebrow"><Building2 size={15}/>{ind('eyebrow')}</div><h2 className="display mt-4 max-w-3xl text-4xl font-black md:text-5xl">{ind('title')}</h2></Reveal><div className="grid-4 mt-10">{industries.map((x,i)=><Reveal key={x} delay={i*.03}><Link href={`/${locale}/industries`} className="card block p-5 font-extrabold transition hover:-translate-y-1 hover:border-blue-500/30"><Building2 className="mb-5 text-[var(--gold)]"/>{x}<div className="muted mt-2 text-sm font-normal">ERP, automation and industry-specific workflows.</div></Link></Reveal>)}</div></div></section>
+
+  <section className="section"><div className="container"><Reveal><div className="text-center"><div className="eyebrow">{why('eyebrow')}</div><h2 className="display mx-auto mt-4 max-w-3xl text-4xl font-black md:text-5xl">{why('title')}</h2></div></Reveal><div className="grid-4 mt-10">{[[ShieldCheck,'Secure & scalable','Production-ready architecture and role-based security.'],[Sparkles,'Premium experience','Professional UI, motion and conversion-focused journeys.'],[Headphones,'Long-term support','Training, maintenance and continuous improvements.'],[Zap,'Automation first','Reduce repetitive work and make decisions faster.']].map(([Icon,title,desc],i)=>{const I=Icon as typeof ShieldCheck;return <Reveal key={String(title)} delay={i*.06}><div className="card h-full p-6"><I className="text-[var(--gold)]"/><h3 className="display mt-5 text-xl font-black">{String(title)}</h3><p className="muted mt-3 text-sm">{String(desc)}</p></div></Reveal>})}</div></div></section>
+
+  <section className="section"><div className="container"><Reveal><div className="card relative overflow-hidden p-8 text-center md:p-14"><div className="absolute inset-0 -z-10 bg-gradient-to-r from-blue-500/10 via-transparent to-amber-400/10"/><h2 className="display text-4xl font-black md:text-5xl">{cta('title')}</h2><p className="muted mx-auto mt-5 max-w-2xl text-lg">{cta('desc')}</p><Link href={`/${locale}/contact`} className="btn btn-gold mt-8">{cta('button')}<ArrowRight size={18}/></Link></div></Reveal></div></section>
+ </main>
+}

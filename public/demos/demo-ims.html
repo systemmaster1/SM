@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IMS — Inventory Management Demo | SystemMaster</title>
+<meta name="description" content="Live Inventory Management System demo — stock in/out, tracking, low stock alerts, fast/slow/dead stock analysis, PDF & Excel reports.">
+<link rel="icon" type="image/png" href="logo/systemmaster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px;}
+.filter-bar input[type=date],.filter-bar select{padding:10px 12px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(255,255,255,0.05);color:var(--white);font-family:inherit;font-size:0.88rem;}
+.stock-bar{height:8px;border-radius:99px;background:rgba(255,255,255,0.08);overflow:hidden;min-width:90px;}
+.stock-bar i{display:block;height:100%;border-radius:99px;}
+.tag-in{background:rgba(0,255,163,0.12);color:var(--neon-green);}
+.tag-out{background:rgba(255,107,107,0.12);color:#ff6b6b;}
+.tag-low{background:rgba(255,154,60,0.15);color:var(--neon-orange);}
+.tag-ok{background:rgba(0,255,163,0.1);color:var(--neon-green);}
+.tag-over{background:rgba(167,139,250,0.15);color:var(--purple);}
+.tag-fast{background:rgba(0,255,163,0.12);color:var(--neon-green);}
+.tag-slow{background:rgba(255,154,60,0.15);color:var(--neon-orange);}
+.tag-dead{background:rgba(255,107,107,0.15);color:#ff6b6b;}
+.switch{position:relative;width:46px;height:24px;display:inline-block;}
+.switch input{display:none;}
+.switch span{position:absolute;inset:0;border-radius:99px;background:rgba(255,255,255,0.15);transition:.25s;cursor:pointer;}
+.switch span::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.25s;}
+.switch input:checked + span{background:var(--neon-green);}
+.switch input:checked + span::after{left:25px;}
+.pie{width:170px;height:170px;border-radius:50%;flex-shrink:0;}
+.legend{display:flex;flex-direction:column;gap:7px;font-size:0.82rem;}
+.legend .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;}
+@media(max-width:860px){.two-col,.three-col{grid-template-columns:1fr !important;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"><img src="logo/systemmaster.png" alt="SystemMaster Automations"/></div>
+      <div class="brand-text">
+        <span class="brand-name">SystemMaster Automations</span>
+        <span class="brand-tag">Workflow &amp; ERP Solutions</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="btn btn-ghost nav-cta" style="padding:9px 18px;"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get a Free Demo</a>
+    </nav>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-banner">
+  <div class="wrap">
+    <h1>IMS — Inventory Management Demo</h1>
+    <p>Stock IN / OUT entries, live tracking, low-stock alerts, full inventory analysis and date-range reports with PDF &amp; Excel export.</p>
+    <div class="clock-line"><span id="clockTime">--:--:--</span> · <span id="clockDate"></span></div>
+    <div class="crumb"><a href="index.html">Home</a> / <a href="projects.html">Projects</a> / IMS Demo</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+
+    <div class="demo-bar">
+      <i class="fa-solid fa-circle-info" style="font-size:1.2rem;"></i>
+      <div><b>Live IMS demo with real working entries.</b> Add Stock IN/OUT entries, filter reports by date range and export branded PDF/Excel reports — your data stays saved in this browser even after refresh.</div>
+    </div>
+
+    <!-- KPI -->
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Total Items</div><div class="kpi-value" id="kItems">0</div></div>
+      <div class="kpi green"><div class="kpi-label">Stock IN (period)</div><div class="kpi-value" id="kIn">0</div></div>
+      <div class="kpi red"><div class="kpi-label">Stock OUT (period)</div><div class="kpi-value" id="kOut">0</div></div>
+      <div class="kpi gold"><div class="kpi-label">Stock Value</div><div class="kpi-value" id="kVal">₹0</div></div>
+      <div class="kpi orange"><div class="kpi-label">Low Stock</div><div class="kpi-value" id="kLow">0</div></div>
+      <div class="kpi blue"><div class="kpi-label">Movements (period)</div><div class="kpi-value" id="kMov">0</div></div>
+    </div>
+
+    <!-- ENTRY -->
+    <div class="panel">
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-right-left" style="color:var(--gold);"></i> New Stock Entry (IN / OUT)</h3>
+      <div class="add-form">
+        <select id="eType"><option value="IN">Stock IN (Purchase / Production)</option><option value="OUT">Stock OUT (Sale / Issue)</option></select>
+        <select id="eItem"></select>
+        <input type="number" id="eQty" placeholder="Quantity" min="1">
+        <input type="text" id="eParty" placeholder="Party / Reference">
+        <input type="text" id="eRemark" placeholder="Remark (optional)">
+      </div>
+      <button class="btn btn-primary" onclick="addMove()"><i class="fa-solid fa-plus"></i> &nbsp;Save Entry</button>
+      <button class="btn btn-ghost" style="margin-left:8px;" onclick="resetDemo()"><i class="fa-solid fa-rotate-left"></i> &nbsp;Reset Demo</button>
+      <span id="eMsg" style="margin-left:12px;font-size:0.85rem;color:var(--neon-green);"></span>
+    </div>
+
+    <!-- SETTINGS + REPORT -->
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
+      <div class="panel">
+        <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><i class="fa-solid fa-bell" style="color:var(--neon-orange);"></i> Auto Stock Alerts</h3>
+        <p style="font-size:0.88rem;margin-bottom:14px;">Min/Max level alerts — can be enabled or disabled anytime.</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <label class="switch"><input type="checkbox" id="swMin" checked onchange="render()"><span></span></label>
+          <div><b style="color:var(--white);">Low Stock Alert</b><div style="font-size:0.8rem;color:var(--slate);">Alert when an item goes below its minimum level</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <label class="switch"><input type="checkbox" id="swMax" checked onchange="render()"><span></span></label>
+          <div><b style="color:var(--white);">Auto Max Level Alert</b><div style="font-size:0.8rem;color:var(--slate);">Over-stock alert when the maximum level is crossed</div></div>
+        </div>
+        <div id="alertBox" style="margin-top:16px;display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+
+      <div class="panel">
+        <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><i class="fa-solid fa-file-export" style="color:var(--blue-light);"></i> Report — Date Range Filter</h3>
+        <p style="font-size:0.88rem;margin-bottom:14px;">Filter the movement report by date range and download fully branded PDF / Excel reports (with logo, watermark &amp; contact details).</p>
+        <div class="filter-bar">
+          <input type="date" id="fFrom"> <span style="color:var(--slate);">to</span> <input type="date" id="fTo">
+          <select id="fItemFilter"><option value="">All Items</option></select>
+          <button class="btn btn-ghost" style="padding:9px 16px;" onclick="render()"><i class="fa-solid fa-filter"></i> Apply</button>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="exportPDF()"><i class="fa-solid fa-file-pdf"></i> &nbsp;Export PDF</button>
+          <button class="btn btn-gold" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> &nbsp;Export Excel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVENTORY ANALYSIS -->
+    <div class="panel">
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><i class="fa-solid fa-magnifying-glass-chart" style="color:var(--gold);"></i> Inventory Analysis — Fast / Slow / Dead Stock</h3>
+      <p style="font-size:0.88rem;margin-bottom:16px;">Complete movement analysis so you always know which products sell fast, which are slow, and which are stuck as dead stock.</p>
+      <div class="three-col" style="display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;">
+        <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;">
+          <div class="pie" id="outPie"></div>
+          <div class="legend" id="outLegend"></div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="demo-table">
+            <thead><tr><th>Item</th><th>OUT Qty (period)</th><th>Last OUT</th><th>Days Idle</th><th>Movement Status</th></tr></thead>
+            <tbody id="anTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- STOCK TABLE -->
+    <div class="panel">
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-boxes-stacked" style="color:var(--gold);"></i> Live Stock Position</h3>
+      <div style="overflow-x:auto;">
+        <table class="demo-table">
+          <thead><tr><th>Item</th><th>Unit</th><th>Min</th><th>Max</th><th>Current</th><th>Level</th><th>Value (₹)</th><th>Status</th></tr></thead>
+          <tbody id="stockTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MOVEMENT LOG -->
+    <div class="panel">
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-list-check" style="color:var(--blue-light);"></i> Stock Movement Report <span id="movCount" style="font-size:0.8rem;color:var(--slate);font-weight:400;"></span></h3>
+      <div style="overflow-x:auto;">
+        <table class="demo-table">
+          <thead><tr><th>Date</th><th>Type</th><th>Item</th><th>Qty</th><th>Party / Ref</th><th>Remark</th><th></th></tr></thead>
+          <tbody id="movTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cta-band reveal" style="margin-top:30px;">
+      <h2>Want This IMS For Your Business?</h2>
+      <p>Customised with your items, warehouses, units and branding — mobile app + web dashboard ready.</p>
+      <a href="https://wa.me/919027965956?text=I'm%20interested%20in%20the%20IMS%20Inventory%20System" target="_blank" class="btn btn-gold"><i class="fa-brands fa-whatsapp"></i> &nbsp;Chat on WhatsApp</a>
+      <a href="contact.html" class="btn btn-ghost" style="margin-left:10px;">Request a Call</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;">
+      <span>© 2026 SystemMaster — Workflow &amp; ERP Solutions. All rights reserved.</span>
+      <div style="font-size:0.85rem;"><a href="privacy.html" style="color:var(--slate);margin:0 8px;">Privacy Policy</a> · <a href="terms.html" style="color:var(--slate);margin:0 8px;">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919027965956" class="wa-float" title="Chat on WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/shyama.js"></script>
+<script src="js/sm-brand.js"></script>
+<script src="js/demo-gate.js" data-demo="IMS — Inventory Management Demo"></script>
+<script>
+var IMS_KEY = "sm_demo_ims_v2";
+function d(off){ var x=new Date(); x.setDate(x.getDate()-off); return x.toISOString().slice(0,10); }
+
+function seedData(){
+  return {
+    items:[
+      {name:"Plywood 18mm (8x4)", unit:"Sheet", min:50,  max:400, open:120, rate:1450},
+      {name:"MDF Board 12mm",     unit:"Sheet", min:40,  max:300, open:85,  rate:980},
+      {name:"Laminate Sheet 1mm", unit:"Sheet", min:100, max:800, open:260, rate:720},
+      {name:"Flush Door 30mm",    unit:"Pcs",   min:25,  max:150, open:34,  rate:2100},
+      {name:"Adhesive 50kg",      unit:"Bag",   min:20,  max:120, open:18,  rate:3400},
+      {name:"Edge Band Roll",     unit:"Roll",  min:30,  max:200, open:210, rate:450},
+      {name:"PVC Louvers Panel",  unit:"Pcs",   min:20,  max:150, open:60,  rate:850}
+    ],
+    moves:[
+      {date:d(38),type:"IN",  item:"PVC Louvers Panel",   qty:60, party:"Opening Purchase",      remark:"PO-0991"},
+      {date:d(9), type:"IN",  item:"Plywood 18mm (8x4)",  qty:80, party:"Greenply Distributors", remark:"PO-1042"},
+      {date:d(8), type:"OUT", item:"Plywood 18mm (8x4)",  qty:35, party:"Sharma Builders",       remark:"INV-2201"},
+      {date:d(7), type:"IN",  item:"MDF Board 12mm",      qty:60, party:"Action Tesa Depot",     remark:"PO-1043"},
+      {date:d(6), type:"OUT", item:"Laminate Sheet 1mm",  qty:90, party:"Verma Interiors",       remark:"INV-2202"},
+      {date:d(5), type:"OUT", item:"Flush Door 30mm",     qty:12, party:"Royal Furnishing",      remark:"INV-2203"},
+      {date:d(4), type:"IN",  item:"Edge Band Roll",      qty:50, party:"Rehau Agency",          remark:"PO-1044"},
+      {date:d(3), type:"OUT", item:"Adhesive 50kg",       qty:6,  party:"Factory Issue",         remark:"Production"},
+      {date:d(2), type:"OUT", item:"MDF Board 12mm",      qty:28, party:"Dev Modular",           remark:"INV-2204"},
+      {date:d(2), type:"OUT", item:"Plywood 18mm (8x4)",  qty:30, party:"Mehra Interiors",       remark:"INV-2206"},
+      {date:d(1), type:"IN",  item:"Flush Door 30mm",     qty:20, party:"In-house Production",   remark:"Batch-77"},
+      {date:d(1), type:"OUT", item:"Edge Band Roll",      qty:8,  party:"Factory Issue",         remark:"Line B"},
+      {date:d(0), type:"OUT", item:"Plywood 18mm (8x4)",  qty:22, party:"Kapoor Build Tech",     remark:"INV-2205"}
+    ]
+  };
+}
+function load(){ try{ var r=localStorage.getItem(IMS_KEY); if(r) return JSON.parse(r);}catch(e){} return seedData(); }
+function save(){ try{ localStorage.setItem(IMS_KEY, JSON.stringify(db)); }catch(e){} }
+var db = load();
+
+function esc(s){ return String(s||"").replace(/[<>&"']/g,function(c){return {"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&#39;"}[c];}); }
+function fmt(n){ return Number(n||0).toLocaleString("en-IN"); }
+
+function currentStock(name){
+  var it = db.items.find(function(i){return i.name===name;});
+  var cur = it ? it.open : 0;
+  db.moves.forEach(function(m){ if(m.item===name) cur += (m.type==="IN" ? m.qty : -m.qty); });
+  return cur;
+}
+function inRange(m){
+  var f=document.getElementById("fFrom").value, t=document.getElementById("fTo").value;
+  var fi=document.getElementById("fItemFilter").value;
+  if(f && m.date < f) return false;
+  if(t && m.date > t) return false;
+  if(fi && m.item !== fi) return false;
+  return true;
+}
+
+function addMove(){
+  var type=document.getElementById("eType").value;
+  var item=document.getElementById("eItem").value;
+  var qty=parseInt(document.getElementById("eQty").value)||0;
+  var party=document.getElementById("eParty").value.trim();
+  var remark=document.getElementById("eRemark").value.trim();
+  if(qty<1){ alert("Please enter a quantity"); return; }
+  if(type==="OUT" && qty>currentStock(item)){ alert("Insufficient stock available! Current stock: "+currentStock(item)); return; }
+  db.moves.unshift({date:new Date().toISOString().slice(0,10), type:type, item:item, qty:qty, party:party||"—", remark:remark});
+  save();
+  document.getElementById("eQty").value=""; document.getElementById("eParty").value=""; document.getElementById("eRemark").value="";
+  var msg=document.getElementById("eMsg"); msg.textContent="✓ Entry saved"; setTimeout(function(){msg.textContent="";},2000);
+  render();
+}
+function delMove(i){ db.moves.splice(i,1); save(); render(); }
+function resetDemo(){ if(confirm("Reset demo data?")){ db=seedData(); save(); render(); } }
+
+/* ===== Analysis: fast / slow / dead ===== */
+function analysis(){
+  var today=new Date(d(0));
+  var rows=db.items.map(function(it){
+    var outQty=0, lastOut=null, anyMove=null;
+    db.moves.forEach(function(m){
+      if(m.item!==it.name) return;
+      if(!anyMove || m.date>anyMove) anyMove=m.date;
+      if(m.type==="OUT" && inRange(m)) outQty+=m.qty;
+      if(m.type==="OUT" && (!lastOut || m.date>lastOut)) lastOut=m.date;
+    });
+    var idle = lastOut ? Math.round((today-new Date(lastOut))/(24*60*60*1000)) : (anyMove? Math.round((today-new Date(anyMove))/(24*60*60*1000)) : 999);
+    var status, cls;
+    if(!lastOut){ status="DEAD STOCK — never sold since stock-in"; cls="tag-dead"; }
+    else if(idle>21){ status="DEAD STOCK — no OUT in "+idle+" days"; cls="tag-dead"; }
+    else if(outQty>=40){ status="FAST MOVING"; cls="tag-fast"; }
+    else if(outQty>0){ status="SLOW MOVING"; cls="tag-slow"; }
+    else { status="NO MOVEMENT (period)"; cls="tag-slow"; }
+    return {name:it.name, out:outQty, lastOut:lastOut||"—", idle:(lastOut?idle:"—"), status:status, cls:cls};
+  });
+  rows.sort(function(a,b){return b.out-a.out;});
+  return rows;
+}
+
+var PIE_COLS=["#3D7EF0","#E5A93C","#00FFA3","#FF9A3C","#a78bfa","#5A9FFF","#ff6b6b"];
+function renderPie(rows){
+  var tot=rows.reduce(function(s,r){return s+r.out;},0);
+  var pie=document.getElementById("outPie"), leg=document.getElementById("outLegend");
+  if(!tot){ pie.style.background="rgba(255,255,255,0.08)"; leg.innerHTML='<span style="color:var(--slate);">No OUT movement in this period.</span>'; return; }
+  var acc=0, stops=[], lg="";
+  rows.forEach(function(r,i){
+    if(!r.out) return;
+    var from=acc/tot*360; acc+=r.out; var to=acc/tot*360;
+    var c=PIE_COLS[i%PIE_COLS.length];
+    stops.push(c+" "+from+"deg "+to+"deg");
+    lg+='<div><span class="sw" style="background:'+c+';"></span>'+esc(r.name)+' — <b style="color:var(--white);">'+r.out+'</b> ('+Math.round(r.out/tot*100)+'%)</div>';
+  });
+  pie.style.background="conic-gradient("+stops.join(",")+")";
+  leg.innerHTML='<div style="font-size:0.78rem;color:var(--slate);margin-bottom:4px;">OUT quantity share (period)</div>'+lg;
+}
+
+function render(){
+  var sel=document.getElementById("eItem"), fsel=document.getElementById("fItemFilter");
+  var cur1=sel.value, cur2=fsel.value;
+  sel.innerHTML = db.items.map(function(i){return '<option>'+esc(i.name)+'</option>';}).join("");
+  fsel.innerHTML = '<option value="">All Items</option>'+db.items.map(function(i){return '<option>'+esc(i.name)+'</option>';}).join("");
+  if(cur1) sel.value=cur1; if(cur2) fsel.value=cur2;
+
+  var filtered = db.moves.filter(inRange);
+  var tin=0,tout=0;
+  filtered.forEach(function(m){ if(m.type==="IN") tin+=m.qty; else tout+=m.qty; });
+
+  var lowCount=0, totalVal=0, alerts=[];
+  var swMin=document.getElementById("swMin").checked, swMax=document.getElementById("swMax").checked;
+  document.getElementById("stockTbody").innerHTML = db.items.map(function(it){
+    var cur=currentStock(it.name);
+    totalVal += cur*it.rate;
+    var status='<span class="badge tag-ok">OK</span>';
+    if(cur<=it.min){ status='<span class="badge tag-low">LOW STOCK</span>'; lowCount++;
+      if(swMin) alerts.push('⚠️ <b>'+esc(it.name)+'</b> is running low — only '+cur+' '+it.unit+' left (min '+it.min+')');
+    } else if(cur>=it.max){ status='<span class="badge tag-over">OVER MAX</span>';
+      if(swMax) alerts.push('🟣 <b>'+esc(it.name)+'</b> has crossed the max level — '+cur+' '+it.unit+' (max '+it.max+')');
+    }
+    var pct=Math.min(100, Math.round(cur/it.max*100));
+    var col = cur<=it.min ? "#ff6b6b" : (cur>=it.max ? "var(--purple)" : "var(--neon-green)");
+    return '<tr><td style="color:var(--white);font-weight:600;">'+esc(it.name)+'</td><td>'+it.unit+'</td><td>'+it.min+'</td><td>'+it.max+'</td>'+
+      '<td style="color:var(--white);font-weight:700;">'+cur+'</td>'+
+      '<td><div class="stock-bar"><i style="width:'+pct+'%;background:'+col+';"></i></div></td>'+
+      '<td>₹'+fmt(cur*it.rate)+'</td><td>'+status+'</td></tr>';
+  }).join("");
+
+  document.getElementById("alertBox").innerHTML = alerts.length
+    ? alerts.map(function(a){return '<div style="padding:10px 12px;border-radius:10px;background:rgba(255,154,60,0.08);border:1px solid rgba(255,154,60,0.25);font-size:0.85rem;">'+a+'</div>';}).join("")
+    : '<div style="padding:10px 12px;border-radius:10px;background:rgba(0,255,163,0.06);border:1px solid rgba(0,255,163,0.2);font-size:0.85rem;">✅ All items are within normal levels (or alerts are turned off).</div>';
+
+  document.getElementById("kItems").textContent=db.items.length;
+  document.getElementById("kIn").textContent=fmt(tin);
+  document.getElementById("kOut").textContent=fmt(tout);
+  document.getElementById("kVal").textContent="₹"+fmt(totalVal);
+  document.getElementById("kLow").textContent=lowCount;
+  document.getElementById("kMov").textContent=filtered.length;
+  document.getElementById("movCount").textContent="("+filtered.length+" entries shown)";
+
+  document.getElementById("movTbody").innerHTML = filtered.map(function(m){
+    var idx = db.moves.indexOf(m);
+    return '<tr><td>'+m.date+'</td>'+
+      '<td><span class="badge '+(m.type==="IN"?"tag-in":"tag-out")+'">'+m.type+'</span></td>'+
+      '<td style="color:var(--white);">'+esc(m.item)+'</td><td style="font-weight:700;color:var(--white);">'+m.qty+'</td>'+
+      '<td>'+esc(m.party)+'</td><td>'+esc(m.remark||"—")+'</td>'+
+      '<td><button onclick="delMove('+idx+')" style="background:none;border:none;color:#ff6b6b;cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td></tr>';
+  }).join("") || '<tr><td colspan="7" style="text-align:center;color:var(--slate);">No entries found in this date range.</td></tr>';
+
+  var an=analysis();
+  renderPie(an);
+  document.getElementById("anTbody").innerHTML=an.map(function(r){
+    return '<tr><td style="color:var(--white);font-weight:600;">'+esc(r.name)+'</td><td style="font-weight:700;color:var(--white);">'+r.out+'</td><td>'+r.lastOut+'</td><td>'+r.idle+'</td><td><span class="badge '+r.cls+'">'+r.status+'</span></td></tr>';
+  }).join("");
+}
+
+/* ===== Exports (fully branded) ===== */
+function reportRows(){
+  return db.moves.filter(inRange).map(function(m){ return [m.date, m.type, m.item, m.qty, m.party, m.remark||""]; });
+}
+function rangeLabel(){
+  var f=document.getElementById("fFrom").value||"Beginning", t=document.getElementById("fTo").value||"Today";
+  return f+" to "+t;
+}
+function exportPDF(){
+  smLoadLogo(function(){
+    var doc = new jspdf.jsPDF();
+    var y = smBrandHeader(doc, "Inventory Movement Report", "Period: "+rangeLabel()+"   |   Generated: "+new Date().toLocaleString("en-IN"));
+    doc.autoTable({ startY:y, head:[["Date","Type","Item","Qty","Party / Ref","Remark"]], body:reportRows(),
+      headStyles:{fillColor:[15,35,71]}, styles:{fontSize:8.5}, margin:{left:8,right:8,bottom:16} });
+    var y2 = doc.lastAutoTable.finalY + 8;
+    doc.setFontSize(12); doc.setTextColor(31,95,214); doc.setFont("helvetica","bold");
+    doc.text("Current Stock Position", 8, y2);
+    doc.autoTable({ startY:y2+3, head:[["Item","Unit","Min","Max","Current","Value (Rs)"]],
+      body: db.items.map(function(it){var c=currentStock(it.name);return [it.name,it.unit,it.min,it.max,c,fmt(c*it.rate)];}),
+      headStyles:{fillColor:[201,142,31]}, styles:{fontSize:8.5}, margin:{left:8,right:8,bottom:16} });
+    var y3 = doc.lastAutoTable.finalY + 8;
+    doc.setFontSize(12); doc.setTextColor(31,95,214);
+    doc.text("Inventory Analysis — Fast / Slow / Dead Stock", 8, y3);
+    doc.autoTable({ startY:y3+3, head:[["Item","OUT Qty (period)","Last OUT","Days Idle","Movement Status"]],
+      body: analysis().map(function(r){return [r.name, r.out, r.lastOut, r.idle, r.status];}),
+      headStyles:{fillColor:[15,35,71]}, styles:{fontSize:8.5}, margin:{left:8,right:8,bottom:16} });
+    smBrandFinish(doc);
+    doc.save("IMS-Inventory-Report-SystemMaster.pdf");
+  });
+}
+function exportExcel(){
+  var wb = XLSX.utils.book_new();
+  var brand = smExcelBrandRows("Inventory Report");
+  var ws1 = XLSX.utils.aoa_to_sheet(brand.concat([["Date","Type","Item","Qty","Party / Ref","Remark"]]).concat(reportRows()));
+  XLSX.utils.book_append_sheet(wb, ws1, "Movements");
+  var ws2 = XLSX.utils.aoa_to_sheet(brand.concat([["Item","Unit","Min","Max","Current Stock","Stock Value (Rs)"]]).concat(
+    db.items.map(function(it){var c=currentStock(it.name);return [it.name,it.unit,it.min,it.max,c,c*it.rate];})));
+  XLSX.utils.book_append_sheet(wb, ws2, "Stock Position");
+  var ws3 = XLSX.utils.aoa_to_sheet(brand.concat([["Item","OUT Qty (period)","Last OUT","Days Idle","Movement Status"]]).concat(
+    analysis().map(function(r){return [r.name, r.out, r.lastOut, r.idle, r.status];})));
+  XLSX.utils.book_append_sheet(wb, ws3, "Analysis");
+  XLSX.writeFile(wb, "IMS-Inventory-Report-SystemMaster.xlsx");
+}
+render();
+</script>
+</body>
+</html>

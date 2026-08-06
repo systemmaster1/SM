@@ -1,0 +1,2 @@
+import type {MetadataRoute} from 'next';
+export default function sitemap():MetadataRoute.Sitemap{const base='https://systemmaster.in';const paths=['','products','services','industries','portfolio','pricing','about','contact','privacy','terms'];return ['en','hi'].flatMap(l=>paths.map(p=>({url:`${base}/${l}${p?`/${p}`:''}`,lastModified:new Date(),changeFrequency:p?'monthly':'weekly',priority:p?0.8:1})))}

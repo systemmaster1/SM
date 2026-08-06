@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PMS — Production Management Demo | SystemMaster</title>
+<meta name="description" content="Production Management System demo — timestamp-based step planning, plan vs actual, scrap tracking, role-based step completion, auto reports.">
+<link rel="icon" type="image/png" href="logo/systemmaster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>
+.step-row{display:grid;grid-template-columns:34px 1.5fr 110px 90px 80px 80px 120px 130px;gap:10px;align-items:center;padding:11px 12px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid var(--line);margin-bottom:8px;font-size:0.85rem;}
+.step-row.locked{opacity:0.55;}
+.step-head{font-size:0.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--slate);font-weight:700;background:none;border:none;padding:4px 12px;}
+.step-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:Sora;font-size:0.8rem;}
+.s-done{background:rgba(0,255,163,0.15);color:var(--neon-green);}
+.s-run{background:rgba(229,169,60,0.18);color:var(--gold);}
+.s-wait{background:rgba(255,255,255,0.08);color:var(--slate);}
+.pv-bar{height:9px;border-radius:99px;background:rgba(255,255,255,0.08);position:relative;overflow:hidden;}
+.pv-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;}
+.step-row input{width:100%;padding:7px 8px;border-radius:8px;border:1px solid var(--line-strong);background:rgba(255,255,255,0.05);color:var(--white);font-family:inherit;font-size:0.83rem;}
+.step-row input:disabled{opacity:0.45;cursor:not-allowed;}
+.role-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:14px 16px;border-radius:14px;background:rgba(61,126,240,0.07);border:1px solid rgba(61,126,240,0.3);margin-bottom:20px;}
+.role-bar select{padding:10px 12px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(15,35,71,0.9);color:var(--white);font-family:inherit;font-weight:600;}
+.sched-card{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid var(--line);margin-bottom:8px;}
+.switch{position:relative;width:46px;height:24px;display:inline-block;flex-shrink:0;}
+.switch input{display:none;}
+.switch span{position:absolute;inset:0;border-radius:99px;background:rgba(255,255,255,0.15);transition:.25s;cursor:pointer;}
+.switch span::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.25s;}
+.switch input:checked + span{background:var(--neon-green);}
+.switch input:checked + span::after{left:25px;}
+.tag-ontime{background:rgba(0,255,163,0.12);color:var(--neon-green);}
+.tag-late{background:rgba(255,107,107,0.15);color:#ff6b6b;}
+@media(max-width:900px){.step-wrap{min-width:980px;}.two-col{grid-template-columns:1fr !important;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"><img src="logo/systemmaster.png" alt="SystemMaster Automations"/></div>
+      <div class="brand-text">
+        <span class="brand-name">SystemMaster Automations</span>
+        <span class="brand-tag">Workflow &amp; ERP Solutions</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="btn btn-ghost nav-cta" style="padding:9px 18px;"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get a Free Demo</a>
+    </nav>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-banner">
+  <div class="wrap">
+    <h1>PMS — Production Management Demo</h1>
+    <p>Timestamp-based step planning, plan vs actual tracking, step-wise scrap monitoring, role-based step completion &amp; automated WhatsApp / Email reports.</p>
+    <div class="clock-line"><span id="clockTime">--:--:--</span> · <span id="clockDate"></span></div>
+    <div class="crumb"><a href="index.html">Home</a> / <a href="projects.html">Projects</a> / PMS Demo</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+
+    <div class="demo-bar">
+      <i class="fa-solid fa-circle-info" style="font-size:1.2rem;"></i>
+      <div><b>Live PMS demo.</b> Each step gets an auto-calculated <b>planned time</b> (start time + step durations). Enter actual quantity &amp; scrap, mark steps done and watch the dashboard update live. Switch the login role below to see <b>User vs Admin access control</b> in action.</div>
+    </div>
+
+    <!-- ROLE BAR -->
+    <div class="role-bar">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <i class="fa-solid fa-user-shield" style="color:var(--blue-light);font-size:1.2rem;"></i>
+        <b style="color:var(--white);">Logged in as:</b>
+        <select id="roleSel" onchange="render()">
+          <option value="ADMIN">Admin (full access)</option>
+        </select>
+      </div>
+      <div style="font-size:0.82rem;color:var(--silver);">👤 A <b style="color:var(--white);">User</b> can update only the steps assigned to them — all other steps stay <b style="color:var(--neon-orange);">locked 🔒</b>. The <b style="color:var(--white);">Admin</b> can update everything. This role system works in every SystemMaster product.</div>
+    </div>
+
+    <!-- KPI -->
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Planned Qty</div><div class="kpi-value" id="kPlan">0</div></div>
+      <div class="kpi green"><div class="kpi-label">Actual Output</div><div class="kpi-value" id="kAct">0</div></div>
+      <div class="kpi red"><div class="kpi-label">Total Scrap</div><div class="kpi-value" id="kScrap">0</div></div>
+      <div class="kpi gold"><div class="kpi-label">Efficiency</div><div class="kpi-value" id="kEff">0%</div></div>
+      <div class="kpi blue"><div class="kpi-label">Steps Done</div><div class="kpi-value" id="kSteps">0/0</div></div>
+      <div class="kpi orange"><div class="kpi-label">On-Time Steps</div><div class="kpi-value" id="kOnTime">0/0</div></div>
+    </div>
+
+    <!-- ORDER SELECT -->
+    <div class="panel">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+        <h3 style="display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-industry" style="color:var(--gold);"></i> Production Plan — Timestamp Schedule</h3>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <label style="font-size:0.82rem;color:var(--slate);">Plan start time: <input type="time" id="startTime" value="09:00" onchange="saveStart()" style="padding:8px 10px;border-radius:8px;border:1px solid var(--line-strong);background:rgba(255,255,255,0.05);color:var(--white);font-family:inherit;"></label>
+          <select id="orderSel" onchange="render()" style="padding:10px 12px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(15,35,71,0.9);color:var(--white);font-family:inherit;"></select>
+          <button class="btn btn-ghost" style="padding:9px 16px;" onclick="resetDemo()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+        </div>
+      </div>
+      <div id="orderInfo" style="margin-top:10px;font-size:0.9rem;color:var(--silver);"></div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="panel">
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><i class="fa-solid fa-list-ol" style="color:var(--blue-light);"></i> Step-by-Step Process — Plan vs Actual, Scrap &amp; Planned Time</h3>
+      <p style="font-size:0.84rem;color:var(--slate);margin-bottom:14px;">The first step starts at the plan start time; every next step is scheduled by adding that step's duration (e.g. +30 min, +45 min...). Change any duration (Admin) and the whole schedule re-calculates instantly.</p>
+      <div style="overflow-x:auto;">
+        <div class="step-wrap" style="min-width:1020px;">
+          <div class="step-row step-head"><span>#</span><span>Process Step &amp; Owner</span><span>Planned Time</span><span>Duration (min)</span><span>Plan Qty</span><span>Actual</span><span>Scrap / Status</span><span>Done At</span></div>
+          <div id="stepList"></div>
+        </div>
+      </div>
+      <p style="font-size:0.8rem;color:var(--slate);margin-top:8px;"><i class="fa-solid fa-lock" style="color:var(--neon-orange);"></i> Steps not assigned to the selected user appear locked — switch to <b style="color:var(--white);">Admin</b> to edit everything.</p>
+    </div>
+
+    <!-- CHART + SCHEDULER -->
+    <div class="two-col" style="display:grid;grid-template-columns:1.2fr 1fr;gap:22px;">
+      <div class="panel">
+        <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-chart-column" style="color:var(--gold);"></i> Plan vs Actual — Step Wise Analysis</h3>
+        <div id="pvChart" style="display:flex;flex-direction:column;gap:12px;"></div>
+      </div>
+
+      <div class="panel">
+        <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><i class="fa-solid fa-paper-plane" style="color:var(--neon-green);"></i> Auto Report Scheduler</h3>
+        <p style="font-size:0.86rem;margin-bottom:14px;">Daily / Weekly / Monthly production reports can be sent automatically on <b style="color:var(--white);">WhatsApp &amp; Email</b> — fully integrated in the live system.</p>
+        <div class="sched-card"><div><b style="color:var(--white);"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> WhatsApp — Daily Report</b><div style="font-size:0.78rem;color:var(--slate);">Every evening 7:00 PM — day output &amp; scrap summary</div></div><label class="switch"><input type="checkbox" checked onchange="schedMsg(this,'WhatsApp Daily')"><span></span></label></div>
+        <div class="sched-card"><div><b style="color:var(--white);"><i class="fa-solid fa-envelope" style="color:var(--blue-light);"></i> Email — Weekly Report</b><div style="font-size:0.78rem;color:var(--slate);">Every Monday 9:00 AM — weekly plan vs actual PDF</div></div><label class="switch"><input type="checkbox" checked onchange="schedMsg(this,'Email Weekly')"><span></span></label></div>
+        <div class="sched-card"><div><b style="color:var(--white);"><i class="fa-solid fa-envelope-open-text" style="color:var(--purple);"></i> Email — Monthly Report</b><div style="font-size:0.78rem;color:var(--slate);">Month end — complete efficiency &amp; scrap analysis</div></div><label class="switch"><input type="checkbox" onchange="schedMsg(this,'Email Monthly')"><span></span></label></div>
+        <div id="schedNote" style="margin-top:10px;font-size:0.82rem;color:var(--neon-green);min-height:20px;"></div>
+        <div style="margin-top:8px;padding:12px;border-radius:12px;background:rgba(61,126,240,0.08);border:1px solid rgba(61,126,240,0.25);font-size:0.84rem;">
+          📲 <b style="color:var(--white);">Real-time updates:</b> WhatsApp notification to the supervisor / MD on every step completion — enabled in the live system.
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-band reveal" style="margin-top:30px;">
+      <h2>A Custom PMS Built Around Your Factory Process</h2>
+      <p>Designed for your products, machines and process steps — with scrap control, role-based access and automated reporting.</p>
+      <a href="https://wa.me/919027965956?text=I'm%20interested%20in%20the%20PMS%20Production%20System" target="_blank" class="btn btn-gold"><i class="fa-brands fa-whatsapp"></i> &nbsp;Chat on WhatsApp</a>
+      <a href="contact.html" class="btn btn-ghost" style="margin-left:10px;">Request a Call</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;">
+      <span>© 2026 SystemMaster — Workflow &amp; ERP Solutions. All rights reserved.</span>
+      <div style="font-size:0.85rem;"><a href="privacy.html" style="color:var(--slate);margin:0 8px;">Privacy Policy</a> · <a href="terms.html" style="color:var(--slate);margin:0 8px;">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919027965956" class="wa-float" title="Chat on WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script src="js/main.js"></script>
+<script src="js/shyama.js"></script>
+<script src="js/sm-brand.js"></script>
+<script src="js/demo-gate.js" data-demo="PMS — Production Management Demo"></script>
+<script>
+var PMS_KEY="sm_demo_pms_v2";
+function seed(){
+  return {
+    start:"09:00",
+    orders:[
+      { id:"WO-2026-101", product:"Flush Door 30mm — Batch 77", customer:"Royal Furnishing House", due:"5 days", plan:500,
+        steps:[
+          {name:"Raw Material Cutting", owner:"Vikas (Production)", mins:30, plan:520, actual:515, scrap:5,  done:true,  doneAt:"09:32 AM"},
+          {name:"Frame Assembly",       owner:"Suresh (Line A)",    mins:45, plan:515, actual:508, scrap:7,  done:true,  doneAt:"10:21 AM"},
+          {name:"Hot Press",            owner:"Vikas (Production)", mins:60, plan:508, actual:498, scrap:10, done:true,  doneAt:"11:25 AM"},
+          {name:"Trimming & Sanding",   owner:"Manoj (Finishing)",  mins:40, plan:498, actual:300, scrap:4,  done:false, doneAt:null},
+          {name:"Lamination / Finish",  owner:"Suresh (Line A)",    mins:50, plan:494, actual:0,   scrap:0,  done:false, doneAt:null},
+          {name:"QC & Packing",         owner:"Anita (QC)",         mins:35, plan:494, actual:0,   scrap:0,  done:false, doneAt:null}
+        ]},
+      { id:"WO-2026-102", product:"Modular Kitchen Shutters", customer:"Dev Modular Solutions", due:"9 days", plan:240,
+        steps:[
+          {name:"Panel Cutting (CNC)",  owner:"Vikas (Production)", mins:40, plan:250, actual:248, scrap:2, done:true, doneAt:"09:38 AM"},
+          {name:"Edge Banding",         owner:"Suresh (Line A)",    mins:55, plan:248, actual:120, scrap:3, done:false, doneAt:null},
+          {name:"Drilling & Hardware",  owner:"Manoj (Finishing)",  mins:45, plan:245, actual:0,   scrap:0, done:false, doneAt:null},
+          {name:"QC & Packing",         owner:"Anita (QC)",         mins:30, plan:245, actual:0,   scrap:0, done:false, doneAt:null}
+        ]}
+    ]
+  };
+}
+function load(){ try{var r=localStorage.getItem(PMS_KEY); if(r) return JSON.parse(r);}catch(e){} return seed(); }
+function save(){ try{ localStorage.setItem(PMS_KEY, JSON.stringify(db)); }catch(e){} }
+var db=load();
+function esc(s){ return String(s||"").replace(/[<>&"']/g,function(c){return {"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&#39;"}[c];}); }
+
+function cur(){ return db.orders[parseInt(document.getElementById("orderSel").value)||0]; }
+function role(){ return document.getElementById("roleSel").value; }
+function canEdit(step){ return role()==="ADMIN" || role()===step.owner; }
+
+function fmtTime(mins){ // minutes since midnight -> h:mm AM/PM
+  var h=Math.floor(mins/60)%24, m=mins%60, ap=h>=12?"PM":"AM"; var hh=h%12; if(hh===0) hh=12;
+  return hh+":"+(m<10?"0":"")+m+" "+ap;
+}
+function plannedTimes(o){
+  var st=db.start||"09:00", parts=st.split(":");
+  var t=parseInt(parts[0])*60+parseInt(parts[1]); // first step starts here
+  var arr=[];
+  o.steps.forEach(function(s){ arr.push(t); t+=s.mins; }); // next step = previous + duration
+  return {starts:arr, end:t};
+}
+function nowMins(){ var d=new Date(); return d.getHours()*60+d.getMinutes(); }
+function nowLabel(){ return fmtTime(nowMins()); }
+
+function saveStart(){ db.start=document.getElementById("startTime").value||"09:00"; save(); render(); }
+
+function upd(si, field, val){
+  var o=cur(); var s=o.steps[si];
+  if(!canEdit(s)){ alert("🔒 Locked — this step belongs to "+s.owner+". Switch to Admin or to that user."); render(); return; }
+  var v=Math.max(0, parseInt(val)||0);
+  s[field]=v;
+  save(); render();
+}
+function markDone(si){
+  var o=cur(); var s=o.steps[si];
+  if(!canEdit(s)){ alert("🔒 Locked — only "+s.owner+" or the Admin can complete this step."); return; }
+  s.done=!s.done;
+  s.doneAt = s.done ? nowLabel() : null;
+  save(); render();
+}
+function resetDemo(){ if(confirm("Reset demo data?")){ db=seed(); save(); fillRoles(); render(); } }
+function schedMsg(el,label){
+  document.getElementById("schedNote").textContent = "✓ "+label+" report "+(el.checked?"enabled":"disabled")+" (demo)";
+}
+
+function fillRoles(){
+  var sel=document.getElementById("roleSel");
+  var owners=[];
+  db.orders.forEach(function(o){ o.steps.forEach(function(s){ if(owners.indexOf(s.owner)<0) owners.push(s.owner); }); });
+  sel.innerHTML='<option value="ADMIN">Admin (full access)</option>'+owners.map(function(u){return '<option value="'+esc(u)+'">'+esc(u)+' — User</option>';}).join("");
+}
+
+function timeToMins(label){ // "10:21 AM" -> mins
+  if(!label) return null;
+  var m=label.match(/(\d+):(\d+)\s*(AM|PM)/i); if(!m) return null;
+  var h=parseInt(m[1])%12; if(m[3].toUpperCase()==="PM") h+=12;
+  return h*60+parseInt(m[2]);
+}
+
+function render(){
+  document.getElementById("startTime").value=db.start||"09:00";
+  var sel=document.getElementById("orderSel");
+  var keep=sel.value;
+  sel.innerHTML=db.orders.map(function(o,i){return '<option value="'+i+'">'+o.id+' — '+esc(o.product)+'</option>';}).join("");
+  if(keep) sel.value=keep;
+
+  var o=cur(), pt=plannedTimes(o);
+  document.getElementById("orderInfo").innerHTML =
+    '<b style="color:var(--white);">'+esc(o.product)+'</b> &nbsp;·&nbsp; Customer: '+esc(o.customer)+' &nbsp;·&nbsp; Order Qty: <b style="color:var(--gold);">'+o.plan+'</b> &nbsp;·&nbsp; Due in: <b style="color:var(--neon-orange);">'+o.due+'</b> &nbsp;·&nbsp; Planned finish: <b style="color:var(--blue-light);">'+fmtTime(pt.end)+'</b>';
+
+  var totScrap=0, doneCount=0, onTime=0, lastActual=0;
+  o.steps.forEach(function(s,i){
+    totScrap+=s.scrap;
+    if(s.done){
+      doneCount++;
+      var dm=timeToMins(s.doneAt), plannedEnd=pt.starts[i]+s.mins;
+      if(dm!==null && dm<=plannedEnd+10) onTime++;
+    }
+  });
+  var withActual=o.steps.filter(function(s){return s.actual>0;});
+  lastActual = withActual.length ? withActual[withActual.length-1].actual : 0;
+
+  document.getElementById("kPlan").textContent=o.plan;
+  document.getElementById("kAct").textContent=lastActual;
+  document.getElementById("kScrap").textContent=totScrap;
+  document.getElementById("kEff").textContent=(o.plan? Math.round(lastActual/o.plan*100):0)+"%";
+  document.getElementById("kSteps").textContent=doneCount+"/"+o.steps.length;
+  document.getElementById("kOnTime").textContent=onTime+"/"+doneCount;
+
+  var running=true;
+  document.getElementById("stepList").innerHTML=o.steps.map(function(s,i){
+    var st, cls;
+    if(s.done){ st="✓ Done"; cls="s-done"; }
+    else if(running){ st="⏳ Running"; cls="s-run"; running=false; }
+    else { st="Waiting"; cls="s-wait"; }
+    var editable=canEdit(s);
+    var lockBadge = editable ? "" : ' <i class="fa-solid fa-lock" style="color:var(--neon-orange);font-size:0.7rem;" title="Locked for this user"></i>';
+    var plannedStart=fmtTime(pt.starts[i]), plannedEnd=fmtTime(pt.starts[i]+s.mins);
+    var late="";
+    if(s.done && s.doneAt){
+      var dm=timeToMins(s.doneAt);
+      late = (dm!==null && dm>pt.starts[i]+s.mins+10)
+        ? ' <span class="badge tag-late">LATE</span>'
+        : ' <span class="badge tag-ontime">ON TIME</span>';
+    }
+    return '<div class="step-row'+(editable?'':' locked')+'">'+
+      '<div class="step-num '+cls+'">'+(i+1)+'</div>'+
+      '<div style="color:var(--white);font-weight:600;">'+esc(s.name)+lockBadge+'<div style="font-size:0.74rem;color:var(--slate);font-weight:400;">👤 '+esc(s.owner)+(s.scrap>0?' · <span style="color:#ff6b6b;">scrap: '+s.scrap+' pcs at this step</span>':'')+'</div></div>'+
+      '<div style="color:var(--blue-light);font-weight:600;">'+plannedStart+'<div style="font-size:0.7rem;color:var(--slate);font-weight:400;">to '+plannedEnd+'</div></div>'+
+      '<div><input type="number" min="5" step="5" value="'+s.mins+'" '+(role()==="ADMIN"?'':'disabled')+' onchange="upd('+i+',\'mins\',this.value)" title="Step duration (Admin only)"></div>'+
+      '<div>'+s.plan+'</div>'+
+      '<div><input type="number" min="0" value="'+s.actual+'" '+(editable?'':'disabled')+' onchange="upd('+i+',\'actual\',this.value)"></div>'+
+      '<div><input type="number" min="0" value="'+s.scrap+'" '+(editable?'':'disabled')+' onchange="upd('+i+',\'scrap\',this.value)" style="margin-bottom:4px;">'+
+        '<span class="badge" style="cursor:'+(editable?'pointer':'not-allowed')+';background:'+(s.done?'rgba(0,255,163,0.12)':'rgba(255,255,255,0.08)')+';color:'+(s.done?'var(--neon-green)':'var(--silver)')+';display:inline-block;" onclick="markDone('+i+')">'+st+'</span></div>'+
+      '<div style="font-size:0.8rem;">'+(s.doneAt?('<b style="color:var(--white);">'+s.doneAt+'</b>'+late):'<span style="color:var(--slate);">—</span>')+'</div>'+
+      '</div>';
+  }).join("");
+
+  document.getElementById("pvChart").innerHTML=o.steps.map(function(s){
+    var ap=s.plan?Math.min(100,Math.round(s.actual/s.plan*100)):0;
+    var sp=s.plan?Math.round(s.scrap/s.plan*100):0;
+    return '<div><div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px;"><span style="color:var(--white);">'+esc(s.name)+'</span><span style="color:var(--slate);">Plan '+s.plan+' · Actual '+s.actual+' · Scrap '+s.scrap+'</span></div>'+
+      '<div class="pv-bar" style="height:14px;"><i style="width:100%;background:rgba(90,159,255,0.25);"></i><i style="width:'+ap+'%;background:linear-gradient(90deg,var(--blue),var(--blue-light));"></i>'+(sp>0?'<i style="width:'+Math.max(sp,2)+'%;background:#ff6b6b;left:auto;right:0;"></i>':'')+'</div></div>';
+  }).join("");
+}
+fillRoles();
+render();
+</script>
+</body>
+</html>

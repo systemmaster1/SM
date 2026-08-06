@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ERP Demo — SystemMaster</title>
+<meta name="description" content="Try our live ERP demo. Sample leads, charts, multi-source integration.">
+<link rel="icon" type="image/png" href="logo/systemmaster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"><img src="logo/systemmaster.png" alt="SystemMaster Automations"/></div>
+      <div class="brand-text">
+        <span class="brand-name">SystemMaster Automations</span>
+        <span class="brand-tag">Workflow &amp; ERP Solutions</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="btn btn-ghost nav-cta" style="padding:9px 18px;"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get a Free Demo</a>
+    </nav>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- BANNER -->
+<section class="page-banner">
+  <div class="wrap">
+    <h1>ERP System — Live Demo</h1>
+    <p>Add a lead, see KPIs + charts update instantly. Multi-source integration ready.</p>
+    <div class="clock-line"><span id="clockTime">--:--:--</span> · <span id="clockDate"></span></div>
+    <div class="crumb"><a href="index.html">Home</a> / <a href="projects.html">Projects</a> / ERP Demo</div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section>
+  <div class="wrap">
+
+    <div class="demo-bar">
+      <i class="fa-solid fa-circle-info" style="font-size:1.2rem;"></i>
+      <div><b>Live demo with sample data.</b> Phone numbers are masked. System connects to <b>IndiaMART, Google, Alibaba, JustDial, WhatsApp</b> &amp; more — all your inquiry sources in one ERP.</div>
+    </div>
+
+    <!-- KPI -->
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Total Leads</div><div class="kpi-value" id="kpiTotal">0</div><div class="kpi-sub" id="kpiToday">+0 today</div></div>
+      <div class="kpi blue"><div class="kpi-label">IndiaMART</div><div class="kpi-value" id="kpiIM">0</div></div>
+      <div class="kpi"><div class="kpi-label">Other Sources</div><div class="kpi-value" id="kpiMN">0</div></div>
+      <div class="kpi green"><div class="kpi-label">Won</div><div class="kpi-value" id="kpiWon">0</div></div>
+      <div class="kpi red"><div class="kpi-label">Lost</div><div class="kpi-value" id="kpiLost">0</div></div>
+      <div class="kpi orange"><div class="kpi-label">Open</div><div class="kpi-value" id="kpiOpen">0</div></div>
+    </div>
+
+    <!-- ADD LEAD -->
+    <div class="panel">
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-plus-circle" style="color:var(--gold);"></i> Add a New Lead</h3>
+      <div class="add-form">
+        <input type="text" id="fName" placeholder="Contact person">
+        <input type="text" id="fCompany" placeholder="Company name">
+        <input type="tel" id="fPhone" placeholder="Phone">
+        <input type="text" id="fProduct" placeholder="Product">
+        <input type="number" id="fValue" placeholder="Value (₹)" min="0">
+        <select id="fSource">
+          <option>IndiaMART</option><option>Google</option><option>Alibaba</option>
+          <option>JustDial</option><option>WhatsApp</option><option>Website</option>
+          <option>Manual</option><option>Reference</option>
+        </select>
+        <select id="fStatus"><option>Open</option><option>Won</option><option>Lost</option><option>Hold</option></select>
+      </div>
+      <button class="btn btn-primary" onclick="addLead()"><i class="fa-solid fa-plus"></i> &nbsp;Add Lead</button>
+      <button class="btn btn-ghost" style="margin-left:8px;" onclick="resetDemo()"><i class="fa-solid fa-rotate-left"></i> &nbsp;Reset Demo</button>
+    </div>
+
+    <!-- CHARTS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
+      <div class="panel">
+        <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-chart-pie" style="color:var(--blue-light);"></i> Leads by Status</h3>
+        <div id="pieChart" style="height:260px;display:flex;justify-content:center;align-items:center;"></div>
+      </div>
+      <div class="panel">
+        <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-chart-column" style="color:var(--blue-light);"></i> Leads by Source</h3>
+        <div id="barChart" style="height:260px;"></div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="panel">
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-table-list" style="color:var(--blue-light);"></i> Recent Leads</h3>
+      <div style="overflow-x:auto;">
+        <table class="demo-table">
+          <thead><tr><th>Company</th><th>Contact</th><th>Phone</th><th>Product</th><th>Value</th><th>Source</th><th>Status</th><th></th></tr></thead>
+          <tbody id="leadsTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-band reveal" style="margin-top:30px;">
+      <h2>Like What You See?</h2>
+      <p>Tap WhatsApp to get this ERP customised for your business — your fields, your team, your branding.</p>
+      <a href="https://wa.me/919027965956?text=I'm%20interested%20in%20the%20ERP%20System%20-%20please%20customise" target="_blank" class="btn btn-gold"><i class="fa-brands fa-whatsapp"></i> &nbsp;Chat on WhatsApp</a>
+      <a href="contact.html" class="btn btn-ghost" style="margin-left:10px;">Request a Call</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand" style="margin-bottom:8px;">
+          <div class="brand-mark"><img src="logo/systemmaster.png" alt="SystemMaster Automations"/></div>
+          <div class="brand-text">
+            <span class="brand-name">SystemMaster Automations</span>
+            <span class="brand-tag">Workflow &amp; ERP Solutions</span>
+          </div>
+        </div>
+        <p>We help growing businesses run smarter with ERP, workflow automation, AI agents and custom software.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
+      </div>
+      <div class="footer-col">
+        <h4>Demos</h4>
+        <a href="demo-erp.html">ERP Demo</a>
+        <a href="demo-performance.html">Performance Demo</a>
+        <a href="demo-erp-full.html">Full ERP Sim</a>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Get In Touch</h4>
+        <div class="fc-row"><span class="ic">✉️</span><a href="mailto:Connect@systemmaster.in">Connect@systemmaster.in</a></div>
+        <div class="fc-row"><span class="ic">📞</span><a href="tel:+919027965956">+91 90279 65956</a></div>
+        <div class="fc-row"><span class="ic">🌐</span><span>www.systemmaster.in</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-social">
+        <a href="https://wa.me/919027965956" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="mailto:Connect@systemmaster.in" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="tel:+919027965956" title="Phone"><i class="fa-solid fa-phone"></i></a>
+      </div>
+      <span>© 2026 SystemMaster — Workflow &amp; ERP Solutions. All rights reserved.</span>
+      <div style="font-size:0.85rem;">
+        <a href="privacy.html" style="color:var(--slate);margin:0 8px;">Privacy Policy</a> ·
+        <a href="terms.html" style="color:var(--slate);margin:0 8px;">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919027965956" class="wa-float" title="Chat on WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script src="js/main.js"></script>
+<script src="js/shyama.js"></script>
+<script src="js/sm-brand.js"></script>
+<script src="js/demo-gate.js" data-demo="ERP System — Live Demo"></script>
+<script>
+function defaultLeads(){
+  return [
+    {name:"Rakesh Sharma",   company:"Sharma Builders Pvt Ltd",      phone:"9876543210", product:"Plywood Sheet", value:245000, source:"IndiaMART", status:"Open"},
+    {name:"Anita Verma",     company:"Verma Interiors LLP",          phone:"9988776655", product:"MDF Board",     value:185000, source:"Google",    status:"Won"},
+    {name:"Pradeep Kumar",   company:"Mahalaxmi Plywood Co.",        phone:"9123456780", product:"Block Board",   value:620000, source:"Alibaba",   status:"Open"},
+    {name:"Priya Singh",     company:"Royal Furnishing House",       phone:"9012345678", product:"Veneer Sheet",  value:98000,  source:"JustDial",  status:"Hold"},
+    {name:"Manoj Gupta",     company:"Shree Krishna Constructions",  phone:"9876512345", product:"Flush Door",    value:310000, source:"WhatsApp",  status:"Won"},
+    {name:"Sandeep Yadav",   company:"Dev Modular Solutions",        phone:"9988123456", product:"HDHMR Board",   value:540000, source:"IndiaMART", status:"Lost"},
+    {name:"Ravi Mehra",      company:"Mehra Interiors & Decor",      phone:"9551234567", product:"MDF Board",     value:225000, source:"Website",   status:"Open"},
+    {name:"Suresh Iyer",     company:"Sunshine Wood Industries",     phone:"9445566778", product:"Plywood",       value:380000, source:"Reference", status:"Open"},
+    {name:"Anil Kapoor",     company:"Kapoor Build Tech",            phone:"9334455667", product:"Laminates",     value:125000, source:"Google",    status:"Open"},
+    {name:"Vikram Jain",     company:"Jain Plywood House",           phone:"9223344556", product:"Marine Plywood",value:470000, source:"IndiaMART", status:"Won"}
+  ];
+}
+var leads = defaultLeads();
+
+function resetDemo(){ leads = defaultLeads(); render(); }
+
+function addLead(){
+  var n=document.getElementById("fName").value.trim();
+  var co=document.getElementById("fCompany").value.trim();
+  var p=document.getElementById("fPhone").value.trim();
+  var pr=document.getElementById("fProduct").value.trim();
+  var v=parseInt(document.getElementById("fValue").value)||0;
+  var s=document.getElementById("fSource").value;
+  var st=document.getElementById("fStatus").value;
+  if(!n){ alert("Contact person required"); return; }
+  leads.unshift({name:n, company:co, phone:p, product:pr, value:v, source:s, status:st});
+  ["fName","fCompany","fPhone","fProduct","fValue"].forEach(function(id){ document.getElementById(id).value=""; });
+  render();
+}
+function delLead(i){ leads.splice(i,1); render(); }
+
+function esc(s){ return String(s||"").replace(/[<>&"']/g, function(c){return {"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&#39;"}[c];}); }
+function maskPhone(p){
+  if(!p) return "—";
+  var s = String(p).replace(/\D/g, "");
+  if(s.length < 4) return s;
+  return s.substring(0,4) + "X".repeat(Math.max(0, s.length-4));
+}
+function sourceClass(src){
+  return {"IndiaMART":"b-im","Google":"b-gg","Alibaba":"b-ab","JustDial":"b-jd","WhatsApp":"b-wa","Website":"b-mn","Manual":"b-mn","Reference":"b-rf"}[src] || "b-mn";
+}
+
+function render(){
+  var total = leads.length;
+  var im = leads.filter(function(l){return l.source==="IndiaMART";}).length;
+  var mn = total - im;
+  var won = leads.filter(function(l){return l.status==="Won";}).length;
+  var lost = leads.filter(function(l){return l.status==="Lost";}).length;
+  var open = leads.filter(function(l){return l.status==="Open";}).length;
+  document.getElementById("kpiTotal").textContent = total;
+  document.getElementById("kpiToday").textContent = "+"+total+" today";
+  document.getElementById("kpiIM").textContent = im;
+  document.getElementById("kpiMN").textContent = mn;
+  document.getElementById("kpiWon").textContent = won;
+  document.getElementById("kpiLost").textContent = lost;
+  document.getElementById("kpiOpen").textContent = open;
+
+  var stat = {Open:open, Won:won, Lost:lost, Hold:leads.filter(function(l){return l.status==="Hold";}).length};
+  drawPie("pieChart", stat, {Open:"#5A9FFF", Won:"#00FFA3", Lost:"#ff6b6b", Hold:"#E5A93C"});
+
+  var src = {};
+  leads.forEach(function(l){ src[l.source] = (src[l.source]||0) + 1; });
+  drawBar("barChart", src);
+
+  var tb = document.getElementById("leadsTbody");
+  tb.innerHTML = leads.map(function(l,i){
+    var cls = "b-open";
+    if(l.status==="Won") cls="b-won";
+    else if(l.status==="Lost") cls="b-lost";
+    else if(l.status==="Hold") cls="b-hold";
+    var company = l.company ? "<b style='color:var(--white);'>"+esc(l.company)+"</b>" : "<span style='color:var(--slate);'>—</span>";
+    return "<tr><td>"+company+"</td><td>"+esc(l.name)+"</td><td style='font-family:monospace;color:var(--silver);'>"+maskPhone(l.phone)+"</td><td>"+esc(l.product)+"</td><td>₹"+(l.value||0).toLocaleString("en-IN")+"</td><td><span class='badge "+sourceClass(l.source)+"'>"+esc(l.source)+"</span></td><td><span class='badge "+cls+"'>"+l.status+"</span></td><td><button class='btn' style='padding:4px 10px;font-size:0.78rem;border:1px solid rgba(255,107,107,0.4);color:#ff8a8a;background:rgba(255,107,107,0.1);' onclick='delLead("+i+")'><i class='fa-solid fa-trash'></i></button></td></tr>";
+  }).join("");
+}
+
+function drawPie(id, data, colors){
+  var keys = Object.keys(data).filter(function(k){return data[k]>0;});
+  var total = keys.reduce(function(s,k){return s+data[k];},0);
+  var el = document.getElementById(id);
+  if(total===0){ el.innerHTML='<div style="color:var(--slate);">No data yet</div>'; return; }
+  var cx=110, cy=110, r=85, a=-Math.PI/2;
+  var paths = keys.map(function(k){
+    var v = data[k]/total, ang = v*Math.PI*2;
+    var x1=cx+r*Math.cos(a), y1=cy+r*Math.sin(a);
+    a += ang;
+    var x2=cx+r*Math.cos(a), y2=cy+r*Math.sin(a);
+    var large = ang > Math.PI ? 1 : 0;
+    return '<path d="M'+cx+','+cy+' L'+x1+','+y1+' A'+r+','+r+' 0 '+large+' 1 '+x2+','+y2+' Z" fill="'+colors[k]+'" stroke="#0a1428" stroke-width="2"/>';
+  }).join("");
+  var legend = keys.map(function(k){
+    var pct = Math.round((data[k]/total)*100);
+    return '<div style="display:flex;gap:8px;align-items:center;font-size:0.85rem;color:var(--silver);margin:4px 0;"><span style="width:11px;height:11px;background:'+colors[k]+';border-radius:3px;"></span><b style="color:var(--white);">'+k+'</b> &nbsp;'+data[k]+' ('+pct+'%)</div>';
+  }).join("");
+  el.innerHTML = '<div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;width:100%;"><svg viewBox="0 0 220 220" width="200" height="200">'+paths+'</svg><div>'+legend+'</div></div>';
+}
+function drawBar(id, data){
+  var keys = Object.keys(data);
+  if(!keys.length){ document.getElementById(id).innerHTML='<div style="color:var(--slate);">No data yet</div>'; return; }
+  var max = Math.max.apply(null, keys.map(function(k){return data[k];}));
+  var w = 460, h = 240, pad = 36;
+  var bw = (w - pad*2) / keys.length - 8;
+  var bars = keys.map(function(k,i){
+    var bh = (data[k]/max) * (h - pad*2);
+    var x = pad + i*((w - pad*2)/keys.length) + 4;
+    var y = h - pad - bh;
+    return '<rect x="'+x+'" y="'+y+'" width="'+bw+'" height="'+bh+'" fill="url(#barGrad)" rx="4"/>'
+         + '<text x="'+(x+bw/2)+'" y="'+(y-6)+'" text-anchor="middle" fill="#E5A93C" font-size="11" font-weight="700">'+data[k]+'</text>'
+         + '<text x="'+(x+bw/2)+'" y="'+(h-10)+'" text-anchor="middle" fill="#8896b3" font-size="10">'+k+'</text>';
+  }).join("");
+  document.getElementById(id).innerHTML = '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="100%"><defs><linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5A9FFF"/><stop offset="100%" stop-color="#1F5FD6"/></linearGradient></defs>'+bars+'</svg>';
+}
+
+render();
+</script>
+</body>
+</html>

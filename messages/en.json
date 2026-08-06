@@ -1,0 +1,10 @@
+{
+  "nav":{"home":"Home","products":"Products","services":"Services","industries":"Industries","portfolio":"Portfolio","pricing":"Pricing","about":"About","contact":"Contact","login":"Login","demo":"Book a Free Demo"},
+  "hero":{"badge":"8+ years in business automation","title1":"Run your whole business on","title2":"one intelligent system","desc":"Ready-to-use SaaS products and custom software built for growing businesses — from ERP and HRMS to AI automation, mobile apps and workflow systems.","primary":"Book a Free Demo","secondary":"Explore Products"},
+  "products":{"eyebrow":"Ready-to-use SaaS","title":"Live products your team can start using today","desc":"Choose a production-ready cloud product, or ask us to tailor a complete system around your workflow.","ready":"Ready to Use","visit":"Visit Product","demo":"Book Demo","trial":"Start Free Trial"},
+  "custom":{"eyebrow":"Custom software development","title":"Need software built around your exact process?","desc":"We design, develop and deploy secure business software for your industry, team and growth plan.","cta":"Discuss Your Project"},
+  "industries":{"eyebrow":"Industry solutions","title":"Built for the way your industry works"},
+  "why":{"eyebrow":"Why SystemMaster","title":"One partner from discovery to long-term support"},
+  "cta":{"title":"Ready to make your business run smarter?","desc":"Share your workflow with us. We will recommend a ready product or design a custom solution.","button":"Get Free Consultation"},
+  "footer":{"desc":"Business software, AI automation and custom digital systems for ambitious companies.","company":"Company","solutions":"Solutions","contact":"Contact"}
+}

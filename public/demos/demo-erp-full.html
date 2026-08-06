@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Full ERP Simulation — SystemMaster</title>
+<meta name="description" content="Full ERP simulation — login, dashboard, leads, customers, reports. Sample data only.">
+<link rel="icon" type="image/png" href="logo/systemmaster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>
+/* ERP Simulation-specific styles */
+.erp-shell { display: none; min-height: 100vh; }
+.erp-shell.active { display: block; }
+.erp-login { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 40px 20px; }
+.erp-login-card {
+  width: 100%; max-width: 460px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid var(--line-strong);
+  border-radius: 22px;
+  padding: 40px 36px;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-lg);
+}
+.erp-login-card .lc-head { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+.erp-login-card .lc-logo { width: 56px; height: 56px; border-radius: 14px; overflow: hidden; }
+.erp-login-card .lc-logo img { width: 100%; height: 100%; object-fit: contain; }
+.erp-login-card .lc-title { font-family: 'Sora'; font-weight: 800; font-size: 1.4rem; color: var(--white); }
+.erp-login-card .lc-sub { color: var(--gold); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.erp-login-card h2 { font-size: 1.6rem; margin-bottom: 6px; color: var(--white); }
+.erp-login-card h2 span { color: var(--gold); }
+.erp-login-card .lc-tag { color: var(--silver); margin-bottom: 22px; font-size: 0.93rem; }
+.erp-login-card .demo-creds {
+  background: rgba(0, 255, 163, 0.08);
+  border: 1px solid rgba(0, 255, 163, 0.25);
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  font-size: 0.85rem;
+  color: var(--neon-green);
+}
+.erp-login-card .demo-creds b { color: var(--white); }
+
+/* ERP App Shell */
+.erp-app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.erp-side {
+  background: rgba(5, 10, 24, 0.7);
+  border-right: 1px solid var(--line);
+  padding: 22px 14px;
+  backdrop-filter: blur(14px);
+}
+.erp-side .es-brand { display: flex; align-items: center; gap: 10px; padding: 8px 10px; margin-bottom: 24px; }
+.erp-side .es-brand img { width: 40px; height: 40px; object-fit: contain; }
+.erp-side .es-brand-name { color: var(--white); font-family: 'Sora'; font-weight: 800; font-size: 1rem; }
+.erp-side .es-brand-tag { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.erp-side .es-section { font-size: 0.7rem; color: var(--slate); letter-spacing: 0.08em; text-transform: uppercase; padding: 14px 12px 8px; font-weight: 700; }
+.es-nav { display: flex; flex-direction: column; gap: 2px; }
+.es-nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border-radius: 10px;
+  color: var(--silver); font-size: 0.9rem; font-weight: 600;
+  transition: all .2s;
+  cursor: pointer;
+}
+.es-nav a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+.es-nav a.active { background: linear-gradient(135deg, rgba(61,126,240,0.2), rgba(229,169,60,0.08)); color: var(--white); border-left: 3px solid var(--gold); }
+.es-nav a i { width: 18px; text-align: center; color: var(--gold); }
+.es-logout { margin-top: 30px; padding: 10px 14px; color: #ff8a8a; font-size: 0.88rem; cursor: pointer; border-radius: 10px; }
+.es-logout:hover { background: rgba(255,107,107,0.1); }
+
+.erp-main { padding: 24px 30px; overflow-x: auto; }
+.erp-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; gap: 14px; flex-wrap: wrap; }
+.erp-topbar h2 { color: var(--white); margin: 0; font-size: 1.5rem; }
+.erp-topbar .em-right { display: flex; align-items: center; gap: 14px; }
+.erp-topbar .em-user { display: flex; align-items: center; gap: 10px; color: var(--silver); font-size: 0.9rem; }
+.erp-topbar .em-user .av {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--gold)); color: #2a1c00;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem;
+}
+
+.erp-page { display: none; }
+.erp-page.active { display: block; }
+
+@media (max-width: 800px) {
+  .erp-app { grid-template-columns: 1fr; }
+  .erp-side { display: none; }
+  .erp-side.open { display: block; position: fixed; top: 0; left: 0; width: 240px; height: 100vh; z-index: 200; }
+  .erp-main { padding: 16px; }
+  .mobile-menu-btn { display: block !important; }
+}
+.mobile-menu-btn { display: none; background: var(--glass); border: 1px solid var(--line-strong); color: var(--white); padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<!-- ============== LOGIN SCREEN ============== -->
+<div class="erp-shell active" id="loginScreen">
+  <div class="erp-login">
+    <div class="erp-login-card">
+      <div class="lc-head">
+        <div class="lc-logo"><img src="logo/systemmaster.png" alt="SystemMaster"/></div>
+        <div>
+          <div class="lc-title">SystemMaster ERP</div>
+          <div class="lc-sub">CRM &amp; Sales Management</div>
+        </div>
+      </div>
+      <h2>Welcome <span>Back</span></h2>
+      <p class="lc-tag">Sign in to continue to your dashboard</p>
+
+      <div class="demo-creds">
+        <b>📌 Demo Login (any value works):</b><br>
+        Email: <b>demo@systemmaster.in</b><br>
+        Password: <b>demo</b>
+      </div>
+
+      <form id="erpLoginForm" onsubmit="event.preventDefault();erpLogin();">
+        <div class="field"><label>User ID / Email</label><input type="text" id="erpUser" value="demo@systemmaster.in" placeholder="your email"></div>
+        <div class="field"><label>Password</label><input type="password" id="erpPass" value="demo" placeholder="password"></div>
+        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;margin-top:8px;">
+          <i class="fa-solid fa-right-to-bracket"></i> &nbsp;SIGN IN →
+        </button>
+      </form>
+
+      <p style="text-align:center;margin-top:18px;font-size:0.85rem;color:var(--slate);">
+        <a href="login.html" style="color:var(--gold);">← Back to Website</a>
+      </p>
+
+      <div style="text-align:center;margin-top:22px;padding-top:22px;border-top:1px solid var(--line);font-size:0.82rem;color:var(--slate);">
+        © 2026 · Powered by <b style="color:var(--gold);">SystemMaster Automations</b><br>
+        📞 +91 90279 65956 · ✉️ connect@systemmaster.in
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== ERP APP (after login) ============== -->
+<div class="erp-shell" id="erpApp">
+  <div class="erp-app">
+    <!-- SIDEBAR -->
+    <aside class="erp-side" id="erpSide">
+      <div class="es-brand">
+        <img src="logo/systemmaster.png" alt="SystemMaster"/>
+        <div>
+          <div class="es-brand-name">SystemMaster</div>
+          <div class="es-brand-tag">ERP DEMO</div>
+        </div>
+      </div>
+
+      <div class="es-section">Main</div>
+      <nav class="es-nav">
+        <a class="active" onclick="showPage('dashboard', this)"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a onclick="showPage('leads', this)"><i class="fa-solid fa-bullseye"></i> Leads</a>
+        <a onclick="showPage('customers', this)"><i class="fa-solid fa-users"></i> Customers</a>
+        <a onclick="showPage('orders', this)"><i class="fa-solid fa-cart-shopping"></i> Orders</a>
+      </nav>
+
+      <div class="es-section">Reports</div>
+      <nav class="es-nav">
+        <a onclick="showPage('performance', this)"><i class="fa-solid fa-chart-line"></i> Performance</a>
+        <a onclick="showPage('reports', this)"><i class="fa-solid fa-file-lines"></i> Reports</a>
+      </nav>
+
+      <div class="es-section">Settings</div>
+      <nav class="es-nav">
+        <a onclick="showPage('users', this)"><i class="fa-solid fa-user-gear"></i> Users</a>
+      </nav>
+
+      <div class="es-logout" onclick="erpLogout()"><i class="fa-solid fa-right-from-bracket"></i> &nbsp;Logout</div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="erp-main">
+      <div class="erp-topbar">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="mobile-menu-btn" onclick="document.getElementById('erpSide').classList.toggle('open')"><i class="fa-solid fa-bars"></i></button>
+          <h2 id="pageTitle">Dashboard</h2>
+        </div>
+        <div class="em-right">
+          <span style="color:var(--gold);font-weight:700;"><span id="erpClock">--:--</span></span>
+          <div class="em-user">
+            <div class="av">DM</div>
+            <div><b style="color:var(--white);">Demo User</b><br><span style="font-size:0.78rem;">Admin</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: DASHBOARD -->
+      <div class="erp-page active" data-page="dashboard">
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-label">Total Leads</div><div class="kpi-value">1,247</div><div class="kpi-sub">+14 today</div></div>
+          <div class="kpi blue"><div class="kpi-label">IndiaMART</div><div class="kpi-value">842</div><div class="kpi-sub">67% of total</div></div>
+          <div class="kpi green"><div class="kpi-label">Won</div><div class="kpi-value">186</div><div class="kpi-sub">14.9% conversion</div></div>
+          <div class="kpi red"><div class="kpi-label">Lost</div><div class="kpi-value">98</div></div>
+          <div class="kpi orange"><div class="kpi-label">Open</div><div class="kpi-value">763</div></div>
+          <div class="kpi gold"><div class="kpi-label">Revenue (MTD)</div><div class="kpi-value" style="font-size:1.5rem;">₹14.6L</div><div class="kpi-sub">+22% vs last month</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:22px;">
+          <div class="panel">
+            <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-chart-line" style="color:var(--blue-light);"></i> Sales This Week</h3>
+            <div id="dashTrend" style="height:240px;"></div>
+          </div>
+          <div class="panel">
+            <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-chart-pie" style="color:var(--blue-light);"></i> Lead Sources</h3>
+            <div id="dashPie" style="height:240px;"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-clock" style="color:var(--gold);"></i> Recent Activity</h3>
+          <table class="demo-table">
+            <thead><tr><th>Time</th><th>Action</th><th>By</th></tr></thead>
+            <tbody>
+              <tr><td>2 min ago</td><td>New lead from <b style="color:var(--white);">Sharma Builders</b> (IndiaMART)</td><td>Auto-sync</td></tr>
+              <tr><td>15 min ago</td><td>Quote sent to <b style="color:var(--white);">Verma Interiors</b></td><td>Priya Sharma</td></tr>
+              <tr><td>1 hr ago</td><td>Order won — <b style="color:var(--white);">Mahalaxmi Plywood</b> ₹6.2L</td><td>Rajesh Kumar</td></tr>
+              <tr><td>3 hr ago</td><td>Follow-up scheduled with <b style="color:var(--white);">Royal Furnishing</b></td><td>Amit Verma</td></tr>
+              <tr><td>5 hr ago</td><td>Payment received — <b style="color:var(--white);">Krishna Constructions</b></td><td>Accounts</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PAGE: LEADS -->
+      <div class="erp-page" data-page="leads">
+        <div class="filter-bar">
+          <button class="chip active">All (1247)</button>
+          <button class="chip">IndiaMART (842)</button>
+          <button class="chip">Google (215)</button>
+          <button class="chip">WhatsApp (98)</button>
+          <button class="chip">JustDial (62)</button>
+          <button class="chip">Other (30)</button>
+          <a href="https://wa.me/919027965956" target="_blank" class="btn btn-gold" style="margin-left:auto;padding:8px 16px;font-size:0.85rem;"><i class="fa-solid fa-plus"></i> &nbsp;Get Real ERP</a>
+        </div>
+
+        <div class="panel">
+          <table class="demo-table">
+            <thead><tr><th>Company</th><th>Contact</th><th>Phone</th><th>Product</th><th>Value</th><th>Source</th><th>Status</th><th>Assigned</th></tr></thead>
+            <tbody id="leadsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PAGE: CUSTOMERS -->
+      <div class="erp-page" data-page="customers">
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-label">Total Customers</div><div class="kpi-value">186</div></div>
+          <div class="kpi green"><div class="kpi-label">Active</div><div class="kpi-value">142</div></div>
+          <div class="kpi gold"><div class="kpi-label">Repeat Buyers</div><div class="kpi-value">68</div></div>
+          <div class="kpi blue"><div class="kpi-label">Avg Order Value</div><div class="kpi-value" style="font-size:1.4rem;">₹78,400</div></div>
+        </div>
+        <div class="panel">
+          <h3 style="margin-bottom:14px;">Top Customers</h3>
+          <table class="demo-table">
+            <thead><tr><th>Customer</th><th>Orders</th><th>Total Value</th><th>Last Order</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><b style="color:var(--white);">Sharma Builders Pvt Ltd</b></td><td>14</td><td>₹18.4L</td><td>2 days ago</td><td><span class="badge b-won">Active</span></td></tr>
+              <tr><td><b style="color:var(--white);">Mahalaxmi Plywood Co.</b></td><td>11</td><td>₹14.8L</td><td>1 week ago</td><td><span class="badge b-won">Active</span></td></tr>
+              <tr><td><b style="color:var(--white);">Verma Interiors LLP</b></td><td>9</td><td>₹12.2L</td><td>3 days ago</td><td><span class="badge b-won">Active</span></td></tr>
+              <tr><td><b style="color:var(--white);">Krishna Constructions</b></td><td>8</td><td>₹10.6L</td><td>5 days ago</td><td><span class="badge b-won">Active</span></td></tr>
+              <tr><td><b style="color:var(--white);">Dev Modular Solutions</b></td><td>7</td><td>₹9.1L</td><td>2 weeks ago</td><td><span class="badge b-hold">Follow-up</span></td></tr>
+              <tr><td><b style="color:var(--white);">Royal Furnishing House</b></td><td>6</td><td>₹7.8L</td><td>1 day ago</td><td><span class="badge b-won">Active</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PAGE: ORDERS -->
+      <div class="erp-page" data-page="orders">
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-label">Total Orders</div><div class="kpi-value">412</div></div>
+          <div class="kpi green"><div class="kpi-label">Delivered</div><div class="kpi-value">368</div></div>
+          <div class="kpi orange"><div class="kpi-label">In Progress</div><div class="kpi-value">28</div></div>
+          <div class="kpi gold"><div class="kpi-label">Revenue (YTD)</div><div class="kpi-value" style="font-size:1.4rem;">₹2.4Cr</div></div>
+        </div>
+        <div class="panel">
+          <h3 style="margin-bottom:14px;">Recent Orders</h3>
+          <table class="demo-table">
+            <thead><tr><th>Order #</th><th>Customer</th><th>Items</th><th>Value</th><th>Date</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><b style="color:var(--gold);">#SM-2026-0412</b></td><td>Sharma Builders</td><td>3 items</td><td>₹2.4L</td><td>29 May</td><td><span class="badge b-won">Delivered</span></td></tr>
+              <tr><td><b style="color:var(--gold);">#SM-2026-0411</b></td><td>Mahalaxmi Plywood</td><td>5 items</td><td>₹6.2L</td><td>28 May</td><td><span class="badge b-open">Dispatched</span></td></tr>
+              <tr><td><b style="color:var(--gold);">#SM-2026-0410</b></td><td>Verma Interiors</td><td>2 items</td><td>₹1.8L</td><td>28 May</td><td><span class="badge b-won">Delivered</span></td></tr>
+              <tr><td><b style="color:var(--gold);">#SM-2026-0409</b></td><td>Royal Furnishing</td><td>4 items</td><td>₹3.1L</td><td>27 May</td><td><span class="badge b-hold">Processing</span></td></tr>
+              <tr><td><b style="color:var(--gold);">#SM-2026-0408</b></td><td>Krishna Constructions</td><td>6 items</td><td>₹4.7L</td><td>26 May</td><td><span class="badge b-won">Delivered</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PAGE: PERFORMANCE -->
+      <div class="erp-page" data-page="performance">
+        <div class="kpi-grid">
+          <div class="kpi blue"><div class="kpi-label">Team Size</div><div class="kpi-value">8</div></div>
+          <div class="kpi"><div class="kpi-label">Tasks (Month)</div><div class="kpi-value">650</div></div>
+          <div class="kpi green"><div class="kpi-label">On Time</div><div class="kpi-value">580</div><div class="kpi-sub">89%</div></div>
+          <div class="kpi red"><div class="kpi-label">Late</div><div class="kpi-value">52</div></div>
+          <div class="kpi orange"><div class="kpi-label">Pending</div><div class="kpi-value">18</div></div>
+          <div class="kpi gold"><div class="kpi-label">Top Performer</div><div class="kpi-value" style="font-size:1.05rem;">Anita Mehra</div><div class="kpi-sub">93% on-time</div></div>
+        </div>
+        <div class="panel">
+          <h3 style="margin-bottom:14px;">Team Leaderboard</h3>
+          <table class="lb-table">
+            <thead><tr><th>#</th><th>Employee</th><th>Role</th><th>Score</th></tr></thead>
+            <tbody>
+              <tr><td>🥇</td><td><span class="avatar">AM</span><b style="color:var(--white);">Anita Mehra</b></td><td style="color:var(--silver);">Customer Support</td><td><div class="progress-bar"><div class="progress-fill" style="width:93%;"></div></div> <b style="color:var(--white);">93%</b></td></tr>
+              <tr><td>🥈</td><td><span class="avatar">PS</span><b style="color:var(--white);">Priya Sharma</b></td><td style="color:var(--silver);">Sales Executive</td><td><div class="progress-bar"><div class="progress-fill" style="width:93%;"></div></div> <b style="color:var(--white);">93%</b></td></tr>
+              <tr><td>🥉</td><td><span class="avatar">NS</span><b style="color:var(--white);">Neha Singh</b></td><td style="color:var(--silver);">Operations</td><td><div class="progress-bar"><div class="progress-fill" style="width:93%;"></div></div> <b style="color:var(--white);">93%</b></td></tr>
+              <tr><td>#4</td><td><span class="avatar">RK</span><b style="color:var(--white);">Rajesh Kumar</b></td><td style="color:var(--silver);">Sales Manager</td><td><div class="progress-bar"><div class="progress-fill" style="width:89%;"></div></div> <b style="color:var(--white);">89%</b></td></tr>
+              <tr><td>#5</td><td><span class="avatar">DJ</span><b style="color:var(--white);">Deepak Joshi</b></td><td style="color:var(--silver);">Tele Caller</td><td><div class="progress-bar"><div class="progress-fill" style="width:87%;"></div></div> <b style="color:var(--white);">87%</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PAGE: REPORTS -->
+      <div class="erp-page" data-page="reports">
+        <div class="value-grid">
+          <div class="value-card">
+            <div class="vc-icon">📊</div>
+            <h3>Daily Sales Report</h3>
+            <p>Auto-generated every day at 9:00 AM. Emailed to admin + WhatsApp summary.</p>
+            <a href="https://wa.me/919027965956" target="_blank" class="btn btn-primary" style="margin-top:14px;"><i class="fa-brands fa-whatsapp"></i> Get Real ERP</a>
+          </div>
+          <div class="value-card">
+            <div class="vc-icon">📈</div>
+            <h3>Monthly P&amp;L</h3>
+            <p>Revenue, expenses, profit margins by month. Compare with last 12 months.</p>
+            <a href="https://wa.me/919027965956" target="_blank" class="btn btn-primary" style="margin-top:14px;"><i class="fa-brands fa-whatsapp"></i> Get Real ERP</a>
+          </div>
+          <div class="value-card">
+            <div class="vc-icon">🎯</div>
+            <h3>Lead Source ROI</h3>
+            <p>Which source brings best converting leads. Cost vs revenue per source.</p>
+            <a href="https://wa.me/919027965956" target="_blank" class="btn btn-primary" style="margin-top:14px;"><i class="fa-brands fa-whatsapp"></i> Get Real ERP</a>
+          </div>
+          <div class="value-card">
+            <div class="vc-icon">👤</div>
+            <h3>Employee Productivity</h3>
+            <p>Hours worked, tasks done, on-time %, attendance. By employee or team.</p>
+            <a href="https://wa.me/919027965956" target="_blank" class="btn btn-primary" style="margin-top:14px;"><i class="fa-brands fa-whatsapp"></i> Get Real ERP</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: USERS -->
+      <div class="erp-page" data-page="users">
+        <div class="panel">
+          <h3 style="margin-bottom:14px;">User Management</h3>
+          <table class="demo-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><b style="color:var(--white);">Demo Admin</b></td><td>demo@systemmaster.in</td><td><span class="badge b-im">Admin</span></td><td><span class="badge b-won">Active</span></td></tr>
+              <tr><td><b style="color:var(--white);">Rajesh Kumar</b></td><td>rajesh@example.com</td><td><span class="badge b-im">Manager</span></td><td><span class="badge b-won">Active</span></td></tr>
+              <tr><td><b style="color:var(--white);">Priya Sharma</b></td><td>priya@example.com</td><td><span class="badge b-mn">Sales</span></td><td><span class="badge b-won">Active</span></td></tr>
+              <tr><td><b style="color:var(--white);">Amit Verma</b></td><td>amit@example.com</td><td><span class="badge b-mn">Sales</span></td><td><span class="badge b-won">Active</span></td></tr>
+              <tr><td><b style="color:var(--white);">Neha Singh</b></td><td>neha@example.com</td><td><span class="badge b-jd">Operations</span></td><td><span class="badge b-won">Active</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BOTTOM CTA -->
+      <div class="cta-band" style="margin-top:30px;">
+        <h2>This Is A Demo — Get The Real ERP For Your Business</h2>
+        <p>Fully customised, your team, your products, your branding. Tap WhatsApp.</p>
+        <a href="https://wa.me/919027965956?text=I%20want%20the%20Full%20ERP%20for%20my%20business" target="_blank" class="btn btn-gold"><i class="fa-brands fa-whatsapp"></i> &nbsp;Get My ERP</a>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+function erpLogin(){
+  document.getElementById("loginScreen").classList.remove("active");
+  document.getElementById("erpApp").classList.add("active");
+  fillLeads();
+  drawDashboardCharts();
+}
+function erpLogout(){
+  document.getElementById("erpApp").classList.remove("active");
+  document.getElementById("loginScreen").classList.add("active");
+}
+function showPage(name, el){
+  document.querySelectorAll('.erp-page').forEach(function(p){ p.classList.remove('active'); });
+  var p = document.querySelector('.erp-page[data-page="'+name+'"]');
+  if(p) p.classList.add('active');
+  document.querySelectorAll('.es-nav a').forEach(function(a){ a.classList.remove('active'); });
+  if(el) el.classList.add('active');
+  document.getElementById('pageTitle').textContent = name.charAt(0).toUpperCase()+name.slice(1);
+  document.getElementById('erpSide').classList.remove('open');
+}
+
+/* Clock */
+function tickERP(){
+  var d=new Date(); function p(n){return n<10?"0"+n:n;}
+  var c = document.getElementById("erpClock");
+  if(c) c.textContent = p(d.getHours())+":"+p(d.getMinutes())+":"+p(d.getSeconds());
+}
+setInterval(tickERP, 1000); tickERP();
+
+/* Leads sample data */
+function fillLeads(){
+  var data = [
+    ["Sharma Builders Pvt Ltd","Rakesh Sharma","9876XXXXXX","Plywood Sheet","₹2,45,000","IndiaMART","Open","Rajesh Kumar"],
+    ["Verma Interiors LLP","Anita Verma","9988XXXXXX","MDF Board","₹1,85,000","Google","Won","Priya Sharma"],
+    ["Mahalaxmi Plywood Co.","Pradeep Kumar","9123XXXXXX","Block Board","₹6,20,000","Alibaba","Open","Amit Verma"],
+    ["Royal Furnishing House","Priya Singh","9012XXXXXX","Veneer Sheet","₹98,000","JustDial","Hold","Neha Singh"],
+    ["Krishna Constructions","Manoj Gupta","9876XXXXXX","Flush Door","₹3,10,000","WhatsApp","Won","Vikash Yadav"],
+    ["Dev Modular Solutions","Sandeep Yadav","9988XXXXXX","HDHMR Board","₹5,40,000","IndiaMART","Lost","Sanjay Iyer"],
+    ["Mehra Interiors","Ravi Mehra","9551XXXXXX","MDF Board","₹2,25,000","Website","Open","Priya Sharma"],
+    ["Sunshine Wood Industries","Suresh Iyer","9445XXXXXX","Plywood","₹3,80,000","Reference","Open","Rajesh Kumar"],
+    ["Kapoor Build Tech","Anil Kapoor","9334XXXXXX","Laminates","₹1,25,000","Google","Open","Amit Verma"],
+    ["Jain Plywood House","Vikram Jain","9223XXXXXX","Marine Plywood","₹4,70,000","IndiaMART","Won","Rajesh Kumar"]
+  ];
+  function badge(s){
+    var cls = {"Open":"b-open","Won":"b-won","Lost":"b-lost","Hold":"b-hold"}[s] || "b-open";
+    return '<span class="badge '+cls+'">'+s+'</span>';
+  }
+  function srcBadge(s){
+    var cls = {"IndiaMART":"b-im","Google":"b-gg","Alibaba":"b-ab","JustDial":"b-jd","WhatsApp":"b-wa","Website":"b-mn","Reference":"b-rf"}[s] || "b-mn";
+    return '<span class="badge '+cls+'">'+s+'</span>';
+  }
+  document.getElementById("leadsTable").innerHTML = data.map(function(r){
+    return "<tr><td><b style='color:var(--white);'>"+r[0]+"</b></td><td>"+r[1]+"</td><td style='font-family:monospace;color:var(--silver);'>"+r[2]+"</td><td>"+r[3]+"</td><td>"+r[4]+"</td><td>"+srcBadge(r[5])+"</td><td>"+badge(r[6])+"</td><td>"+r[7]+"</td></tr>";
+  }).join("");
+}
+
+function drawDashboardCharts(){
+  // Pie
+  var data = {IndiaMART:842, Google:215, WhatsApp:98, JustDial:62, Other:30};
+  var colors = {IndiaMART:"#E5A93C", Google:"#ff6b6b", WhatsApp:"#00FFA3", JustDial:"#a78bfa", Other:"#5fdcff"};
+  var keys = Object.keys(data);
+  var total = keys.reduce(function(s,k){return s+data[k];},0);
+  var cx=110, cy=110, r=85, a=-Math.PI/2;
+  var paths = keys.map(function(k){
+    var v = data[k]/total, ang = v*Math.PI*2;
+    var x1=cx+r*Math.cos(a), y1=cy+r*Math.sin(a);
+    a += ang;
+    var x2=cx+r*Math.cos(a), y2=cy+r*Math.sin(a);
+    var large = ang > Math.PI ? 1 : 0;
+    return '<path d="M'+cx+','+cy+' L'+x1+','+y1+' A'+r+','+r+' 0 '+large+' 1 '+x2+','+y2+' Z" fill="'+colors[k]+'" stroke="#0a1428" stroke-width="2"/>';
+  }).join("");
+  var legend = keys.map(function(k){
+    var pct = Math.round((data[k]/total)*100);
+    return '<div style="display:flex;gap:8px;align-items:center;font-size:0.82rem;color:var(--silver);margin:3px 0;"><span style="width:11px;height:11px;background:'+colors[k]+';border-radius:3px;"></span><b style="color:var(--white);">'+k+'</b> '+data[k]+' ('+pct+'%)</div>';
+  }).join("");
+  document.getElementById("dashPie").innerHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;height:100%;"><svg viewBox="0 0 220 220" width="180" height="180">'+paths+'</svg><div>'+legend+'</div></div>';
+
+  // Trend
+  var labels = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  var sales = [180000, 245000, 312000, 198000, 425000, 380000, 290000];
+  var w = 540, h = 240, pad = 40;
+  var max = Math.max.apply(null, sales) + 50000;
+  function pt(arr,i){
+    var x = pad + (i/(arr.length-1))*(w - pad*2);
+    var y = h - pad - (arr[i]/max)*(h - pad*2);
+    return [x,y];
+  }
+  var d2 = sales.map(function(v,i){ var p=pt(sales,i); return (i===0?"M":"L")+p[0]+","+p[1]; }).join(" ");
+  var area = d2 + " L"+(pad + (w-pad*2))+","+(h-pad)+" L"+pad+","+(h-pad)+" Z";
+  var dots = sales.map(function(v,i){ var p=pt(sales,i); return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="#E5A93C" stroke="#0a1428" stroke-width="2"/>'; }).join("");
+  var xlab = labels.map(function(lb,i){
+    var x = pad + (i/(labels.length-1))*(w - pad*2);
+    return '<text x="'+x+'" y="'+(h-12)+'" text-anchor="middle" fill="#8896b3" font-size="11">'+lb+'</text>';
+  }).join("");
+  var grid = "";
+  for(var g=0; g<=4; g++){
+    var gy = pad + g*((h-pad*2)/4);
+    grid += '<line x1="'+pad+'" y1="'+gy+'" x2="'+(w-pad)+'" y2="'+gy+'" stroke="rgba(255,255,255,0.08)"/>';
+  }
+  document.getElementById("dashTrend").innerHTML = '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="100%"><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(229,169,60,0.4)"/><stop offset="100%" stop-color="rgba(229,169,60,0)"/></linearGradient></defs>'+grid+'<path d="'+area+'" fill="url(#areaGrad)"/><path d="'+d2+'" fill="none" stroke="#E5A93C" stroke-width="3"/>'+dots+xlab+'</svg>';
+}
+</script>
+<script src="js/shyama.js"></script>
+<script src="js/sm-brand.js"></script>
+<script src="js/demo-gate.js" data-demo="Full ERP Simulation Demo"></script>
+</body>
+</html>

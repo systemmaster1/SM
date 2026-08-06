@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Analytics Demo — Full Company Analysis | SystemMaster</title>
+<meta name="description" content="Advanced Business Analytics demo — revenue, profit & loss, new vs existing customers, branch-wise, state & country-wise analysis with downloadable reports.">
+<link rel="icon" type="image/png" href="logo/systemmaster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.filter-bar select{padding:10px 12px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(15,35,71,0.9);color:var(--white);font-family:inherit;font-size:0.88rem;font-weight:600;}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;}
+.seg button{padding:9px 16px;background:transparent;border:none;color:var(--silver);font-family:inherit;font-weight:600;font-size:0.85rem;cursor:pointer;}
+.seg button.on{background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:#fff;}
+.pie{width:165px;height:165px;border-radius:50%;flex-shrink:0;}
+.legend{display:flex;flex-direction:column;gap:7px;font-size:0.82rem;}
+.legend .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;}
+.hbar{display:flex;align-items:center;gap:10px;font-size:0.8rem;margin-bottom:9px;}
+.hbar .nm{width:140px;color:var(--white);text-align:right;flex-shrink:0;}
+.hbar .tr{flex:1;height:14px;border-radius:99px;background:rgba(255,255,255,0.07);overflow:hidden;}
+.hbar .tr i{display:block;height:100%;border-radius:99px;}
+.linechart{width:100%;height:200px;}
+.pl-row{display:flex;justify-content:space-between;padding:9px 4px;border-bottom:1px dashed var(--line);font-size:0.9rem;}
+.pl-row b{color:var(--white);}
+.tag-profit{background:rgba(0,255,163,0.12);color:var(--neon-green);}
+.tag-loss{background:rgba(255,107,107,0.15);color:#ff6b6b;}
+@media(max-width:900px){.two-col,.three-col{grid-template-columns:1fr !important;}.hbar .nm{width:105px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"><img src="logo/systemmaster.png" alt="SystemMaster Automations"/></div>
+      <div class="brand-text">
+        <span class="brand-name">SystemMaster Automations</span>
+        <span class="brand-tag">Workflow &amp; ERP Solutions</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="btn btn-ghost nav-cta" style="padding:9px 18px;"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get a Free Demo</a>
+    </nav>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-banner">
+  <div class="wrap">
+    <h1>Business Analytics — Full Company Analysis</h1>
+    <p>Revenue, profit &amp; loss, new vs existing customers, branch-wise, state &amp; country-wise — your entire company in one dashboard.</p>
+    <div class="clock-line"><span id="clockTime">--:--:--</span> · <span id="clockDate"></span></div>
+    <div class="crumb"><a href="index.html">Home</a> / <a href="projects.html">Projects</a> / Business Analytics</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+
+    <div class="demo-bar">
+      <i class="fa-solid fa-circle-info" style="font-size:1.2rem;"></i>
+      <div><b>Live analytics demo with sample company data.</b> Switch between Weekly / Monthly / Yearly views, filter by branch and region — every chart, KPI and the P&amp;L statement updates instantly. Download the full analysis as a branded PDF or Excel report.</div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="panel">
+      <div class="filter-bar" style="justify-content:space-between;">
+        <div class="filter-bar">
+          <div class="seg" id="periodSeg">
+            <button data-p="W" onclick="setPeriod('W')">Weekly</button>
+            <button data-p="M" class="on" onclick="setPeriod('M')">Monthly</button>
+            <button data-p="Y" onclick="setPeriod('Y')">Yearly</button>
+          </div>
+          <select id="fBranch" onchange="render()">
+            <option value="">All Branches</option>
+            <option>Delhi HQ</option><option>Mumbai</option><option>Jaipur</option><option>Lucknow</option><option>Dubai (UAE)</option>
+          </select>
+          <select id="fRegion" onchange="render()">
+            <option value="">All States / Countries</option>
+            <option>Delhi</option><option>Maharashtra</option><option>Rajasthan</option><option>Uttar Pradesh</option><option>Gujarat</option><option>UAE</option><option>Nepal</option>
+          </select>
+        </div>
+        <div class="filter-bar">
+          <button class="btn btn-primary" onclick="exportPDF()"><i class="fa-solid fa-file-pdf"></i> &nbsp;Download PDF Report</button>
+          <button class="btn btn-gold" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> &nbsp;Excel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI -->
+    <div class="kpi-grid">
+      <div class="kpi gold"><div class="kpi-label">Revenue</div><div class="kpi-value" id="kRev">₹0</div><div class="kpi-sub" id="kRevSub"></div></div>
+      <div class="kpi red"><div class="kpi-label">Expenses</div><div class="kpi-value" id="kExp">₹0</div></div>
+      <div class="kpi green"><div class="kpi-label">Net Profit</div><div class="kpi-value" id="kProf">₹0</div><div class="kpi-sub" id="kMargin"></div></div>
+      <div class="kpi blue"><div class="kpi-label">Total Orders</div><div class="kpi-value" id="kOrd">0</div></div>
+      <div class="kpi"><div class="kpi-label">New Customers</div><div class="kpi-value" id="kNew" style="color:var(--blue-light);">0</div></div>
+      <div class="kpi"><div class="kpi-label">Existing / Repeat</div><div class="kpi-value" id="kExist" style="color:var(--purple);">0</div></div>
+    </div>
+
+    <!-- TREND -->
+    <div class="panel">
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><i class="fa-solid fa-chart-line" style="color:var(--blue-light);"></i> Revenue vs Profit Trend <span id="trendTitle" style="font-size:0.8rem;color:var(--slate);font-weight:400;"></span></h3>
+      <div style="display:flex;gap:16px;font-size:0.78rem;color:var(--slate);margin-bottom:8px;">
+        <span><span style="display:inline-block;width:18px;height:3px;background:#5A9FFF;border-radius:2px;vertical-align:middle;"></span> Revenue</span>
+        <span><span style="display:inline-block;width:18px;height:3px;background:#00FFA3;border-radius:2px;vertical-align:middle;"></span> Profit</span>
+      </div>
+      <svg class="linechart" id="trend" viewBox="0 0 800 200" preserveAspectRatio="none"></svg>
+      <div id="trendLbl" style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--slate);"></div>
+    </div>
+
+    <!-- PIES + TOP PRODUCTS -->
+    <div class="three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;">
+      <div class="panel">
+        <h3 style="font-size:0.95rem;margin-bottom:14px;"><i class="fa-solid fa-code-branch" style="color:var(--gold);"></i> Revenue by Branch</h3>
+        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+          <div class="pie" id="brPie"></div><div class="legend" id="brLegend"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3 style="font-size:0.95rem;margin-bottom:14px;"><i class="fa-solid fa-users" style="color:var(--blue-light);"></i> New vs Existing Customers</h3>
+        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+          <div class="pie" id="cuPie"></div><div class="legend" id="cuLegend"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3 style="font-size:0.95rem;margin-bottom:14px;"><i class="fa-solid fa-ranking-star" style="color:var(--gold);"></i> Top Products</h3>
+        <div id="topProd"></div>
+      </div>
+    </div>
+
+    <!-- REGION + P&L -->
+    <div class="two-col" style="display:grid;grid-template-columns:1.25fr 1fr;gap:22px;">
+      <div class="panel">
+        <h3 style="font-size:0.95rem;margin-bottom:14px;"><i class="fa-solid fa-earth-asia" style="color:var(--neon-green);"></i> State &amp; Country-wise Sales</h3>
+        <div id="regionBars"></div>
+      </div>
+      <div class="panel">
+        <h3 style="font-size:0.95rem;margin-bottom:14px;"><i class="fa-solid fa-scale-balanced" style="color:var(--gold);"></i> Profit &amp; Loss Statement <span id="plBadge"></span></h3>
+        <div id="plBox"></div>
+      </div>
+    </div>
+
+    <!-- BRANCH TABLE -->
+    <div class="panel">
+      <h3 style="font-size:0.95rem;margin-bottom:14px;"><i class="fa-solid fa-table-list" style="color:var(--blue-light);"></i> Branch-wise Performance</h3>
+      <div style="overflow-x:auto;">
+        <table class="demo-table">
+          <thead><tr><th>Branch</th><th>Region</th><th>Orders</th><th>Revenue (₹)</th><th>Expenses (₹)</th><th>Profit (₹)</th><th>Margin</th><th>Status</th></tr></thead>
+          <tbody id="brTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cta-band reveal" style="margin-top:30px;">
+      <h2>Your Entire Company — One Analytics Dashboard</h2>
+      <p>Connected to your ERP, CRM and accounts — live KPIs, auto email reports and custom analysis built for your business.</p>
+      <a href="https://wa.me/919027965956?text=I'm%20interested%20in%20Business%20Analytics" target="_blank" class="btn btn-gold"><i class="fa-brands fa-whatsapp"></i> &nbsp;Chat on WhatsApp</a>
+      <a href="contact.html" class="btn btn-ghost" style="margin-left:10px;">Request a Call</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;">
+      <span>© 2026 SystemMaster — Workflow &amp; ERP Solutions. All rights reserved.</span>
+      <div style="font-size:0.85rem;"><a href="privacy.html" style="color:var(--slate);margin:0 8px;">Privacy Policy</a> · <a href="terms.html" style="color:var(--slate);margin:0 8px;">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919027965956" class="wa-float" title="Chat on WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/shyama.js"></script>
+<script src="js/sm-brand.js"></script>
+<script src="js/demo-gate.js" data-demo="Business Analytics Demo"></script>
+<script>
+/* ===== Sample company dataset (deterministic, looks real) ===== */
+var BRANCHES=[
+  {name:"Delhi HQ",   region:"Delhi",         base:920000, expRatio:0.71},
+  {name:"Mumbai",     region:"Maharashtra",   base:780000, expRatio:0.74},
+  {name:"Jaipur",     region:"Rajasthan",     base:430000, expRatio:0.69},
+  {name:"Lucknow",    region:"Uttar Pradesh", base:360000, expRatio:0.82},
+  {name:"Dubai (UAE)",region:"UAE",           base:540000, expRatio:0.66}
+];
+var EXTRA_REGIONS=[{region:"Gujarat", share:0.06},{region:"Nepal", share:0.03}];
+var PRODUCTS=[["ERP Licences",0.30],["AMC & Support",0.22],["Custom Software",0.20],["Mobile Apps",0.16],["Automation Workflows",0.12]];
+var PERIOD="M";
+/* deterministic pseudo-random */
+function pr(i,j){ var x=Math.sin(i*127.1+j*311.7)*43758.5453; return x-Math.floor(x); }
+
+function periodCfg(){
+  if(PERIOD==="W") return {n:7,  lbl:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], scale:1/26, title:"(this week, day-wise)"};
+  if(PERIOD==="Y") return {n:5,  lbl:["2022","2023","2024","2025","2026"],        scale:12,   title:"(last 5 years)"};
+  return {n:12, lbl:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], scale:1, title:"(this year, month-wise)"};
+}
+function dataset(){
+  var cfg=periodCfg();
+  var fb=document.getElementById("fBranch").value;
+  var fr=document.getElementById("fRegion").value;
+  var brs=BRANCHES.filter(function(b){
+    if(fb && b.name!==fb) return false;
+    if(fr && b.region!==fr) return false;
+    return true;
+  });
+  /* region filter for extra regions only when no branch matches */
+  var series=[], totRev=0, totExp=0, branchAgg=[];
+  brs.forEach(function(b,bi){
+    var rev=0, exp=0;
+    for(var i=0;i<cfg.n;i++){
+      var grow = PERIOD==="Y" ? (0.55+0.13*i) : 1;
+      var v=b.base*cfg.scale*grow*(0.78+0.5*pr(bi+1,i+1));
+      var e=v*(b.expRatio*(0.92+0.18*pr(bi+5,i+3)));
+      series[i]=series[i]||{rev:0,prof:0};
+      series[i].rev+=v; series[i].prof+=(v-e);
+      rev+=v; exp+=e;
+    }
+    totRev+=rev; totExp+=exp;
+    branchAgg.push({name:b.name,region:b.region,rev:rev,exp:exp,orders:Math.round(rev/52000)});
+  });
+  var ordTot=branchAgg.reduce(function(s,b){return s+b.orders;},0);
+  var newCust=Math.round(ordTot*0.31), exist=ordTot-newCust;
+  return {cfg:cfg,series:series,totRev:totRev,totExp:totExp,branches:branchAgg,orders:ordTot,newCust:newCust,exist:exist,fb:fb,fr:fr};
+}
+
+function fmt(n){ return Math.round(n).toLocaleString("en-IN"); }
+function fmtL(n){ // lakh format for KPIs
+  if(Math.abs(n)>=10000000) return "₹"+(n/10000000).toFixed(2)+" Cr";
+  if(Math.abs(n)>=100000) return "₹"+(n/100000).toFixed(1)+" L";
+  return "₹"+fmt(n);
+}
+var PIE_COLS=["#3D7EF0","#E5A93C","#00FFA3","#a78bfa","#FF9A3C","#5A9FFF","#ff6b6b"];
+function drawPie(elPie, elLeg, parts, money){
+  var tot=parts.reduce(function(s,p){return s+p.val;},0);
+  var pie=document.getElementById(elPie), leg=document.getElementById(elLeg);
+  if(!tot){ pie.style.background="rgba(255,255,255,0.08)"; leg.innerHTML='<span style="color:var(--slate);">No data for this filter.</span>'; return; }
+  var acc=0, stops=[], lg="";
+  parts.forEach(function(p,i){
+    if(!p.val) return;
+    var c=p.col||PIE_COLS[i%PIE_COLS.length];
+    var from=acc/tot*360; acc+=p.val; var to=acc/tot*360;
+    stops.push(c+" "+from+"deg "+to+"deg");
+    lg+='<div><span class="sw" style="background:'+c+';"></span>'+p.label+' — <b style="color:var(--white);">'+(money?fmtL(p.val):p.val)+'</b> ('+Math.round(p.val/tot*100)+'%)</div>';
+  });
+  pie.style.background="conic-gradient("+stops.join(",")+")";
+  leg.innerHTML=lg;
+}
+
+function setPeriod(p){
+  PERIOD=p;
+  document.querySelectorAll("#periodSeg button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-p")===p); });
+  render();
+}
+
+function render(){
+  var D=dataset();
+  var prof=D.totRev-D.totExp;
+  document.getElementById("kRev").textContent=fmtL(D.totRev);
+  document.getElementById("kRevSub").textContent=(PERIOD==="W"?"this week":PERIOD==="Y"?"last 5 years":"this year");
+  document.getElementById("kExp").textContent=fmtL(D.totExp);
+  document.getElementById("kProf").textContent=fmtL(prof);
+  document.getElementById("kMargin").textContent="margin "+(D.totRev?Math.round(prof/D.totRev*100):0)+"%";
+  document.getElementById("kOrd").textContent=fmt(D.orders);
+  document.getElementById("kNew").textContent=fmt(D.newCust);
+  document.getElementById("kExist").textContent=fmt(D.exist);
+
+  /* trend */
+  document.getElementById("trendTitle").textContent=D.cfg.title;
+  var svg=document.getElementById("trend");
+  var mx=Math.max.apply(null,D.series.map(function(s){return s.rev;}))||1;
+  function line(key,color){
+    var pts=D.series.map(function(s,i){
+      var x=25+i*(750/Math.max(1,D.series.length-1));
+      var y=180-(s[key]/mx)*155;
+      return [x.toFixed(1),y.toFixed(1)];
+    });
+    return {poly:pts.map(function(p){return p[0]+","+p[1];}).join(" "), pts:pts, color:color};
+  }
+  var L1=line("rev","#5A9FFF"), L2=line("prof","#00FFA3");
+  var area=L1.poly+" "+L1.pts[L1.pts.length-1][0]+",190 25,190";
+  svg.innerHTML='<defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3D7EF0" stop-opacity="0.3"/><stop offset="1" stop-color="#3D7EF0" stop-opacity="0"/></linearGradient></defs>'+
+    '<polygon points="'+area+'" fill="url(#g1)"/>'+
+    '<polyline points="'+L1.poly+'" fill="none" stroke="'+L1.color+'" stroke-width="2.5"/>'+
+    '<polyline points="'+L2.poly+'" fill="none" stroke="'+L2.color+'" stroke-width="2.5" stroke-dasharray="1,0"/>'+
+    L1.pts.map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.2" fill="#E5A93C"/>';}).join("");
+  document.getElementById("trendLbl").innerHTML=D.cfg.lbl.map(function(l){return "<span>"+l+"</span>";}).join("");
+
+  /* branch pie */
+  drawPie("brPie","brLegend",D.branches.map(function(b,i){return {label:b.name,val:Math.round(b.rev)};}),true);
+  /* customers pie */
+  drawPie("cuPie","cuLegend",[{label:"New customers",val:D.newCust,col:"#5A9FFF"},{label:"Existing / repeat",val:D.exist,col:"#a78bfa"}],false);
+
+  /* top products */
+  var mxp=PRODUCTS[0][1]*D.totRev||1;
+  document.getElementById("topProd").innerHTML=PRODUCTS.map(function(p,i){
+    var v=p[1]*D.totRev;
+    return '<div class="hbar"><div class="nm">'+p[0]+'</div><div class="tr"><i style="width:'+Math.round(v/mxp*100)+'%;background:linear-gradient(90deg,var(--blue),var(--blue-light));"></i></div><div style="color:var(--gold);font-weight:700;white-space:nowrap;">'+fmtL(v)+'</div></div>';
+  }).join("");
+
+  /* regions */
+  var regs={};
+  D.branches.forEach(function(b){ regs[b.region]=(regs[b.region]||0)+b.rev; });
+  if(!D.fb && !D.fr){ EXTRA_REGIONS.forEach(function(r){ regs[r.region]=(regs[r.region]||0)+D.totRev*r.share; }); }
+  var rl=Object.keys(regs).map(function(k){return {k:k,v:regs[k]};}).sort(function(a,b){return b.v-a.v;});
+  var mr=rl.length?rl[0].v:1;
+  document.getElementById("regionBars").innerHTML=rl.map(function(r,i){
+    var col=PIE_COLS[i%PIE_COLS.length];
+    return '<div class="hbar"><div class="nm">'+r.k+'</div><div class="tr"><i style="width:'+Math.round(r.v/mr*100)+'%;background:'+col+';"></i></div><div style="color:var(--white);font-weight:700;white-space:nowrap;">'+fmtL(r.v)+'</div></div>';
+  }).join("")||'<span style="color:var(--slate);font-size:0.85rem;">No data for this filter.</span>';
+
+  /* P&L */
+  var gross=D.totRev, cogs=D.totExp*0.62, opex=D.totExp*0.28, other=D.totExp*0.10;
+  var net=gross-cogs-opex-other;
+  document.getElementById("plBadge").innerHTML=net>=0?'<span class="badge tag-profit">PROFIT</span>':'<span class="badge tag-loss">LOSS</span>';
+  document.getElementById("plBox").innerHTML=
+    '<div class="pl-row"><span>Revenue (Sales)</span><b>'+fmtL(gross)+'</b></div>'+
+    '<div class="pl-row"><span>Cost of Goods / Delivery</span><b style="color:#ff6b6b;">− '+fmtL(cogs)+'</b></div>'+
+    '<div class="pl-row"><span>Gross Profit</span><b>'+fmtL(gross-cogs)+'</b></div>'+
+    '<div class="pl-row"><span>Operating Expenses (salary, rent...)</span><b style="color:#ff6b6b;">− '+fmtL(opex)+'</b></div>'+
+    '<div class="pl-row"><span>Other Expenses</span><b style="color:#ff6b6b;">− '+fmtL(other)+'</b></div>'+
+    '<div class="pl-row" style="border-bottom:none;font-size:1rem;"><span style="color:var(--white);font-weight:700;">Net Profit</span><b style="color:'+(net>=0?'var(--neon-green)':'#ff6b6b')+';font-family:Sora;">'+fmtL(net)+'</b></div>';
+
+  /* branch table */
+  document.getElementById("brTbody").innerHTML=D.branches.map(function(b){
+    var p=b.rev-b.exp, m=Math.round(p/b.rev*100);
+    return '<tr><td style="color:var(--white);font-weight:600;">'+b.name+'</td><td>'+b.region+'</td><td>'+b.orders+'</td><td>₹'+fmt(b.rev)+'</td><td>₹'+fmt(b.exp)+'</td><td style="color:'+(p>=0?'var(--neon-green)':'#ff6b6b')+';font-weight:700;">₹'+fmt(p)+'</td><td>'+m+'%</td><td>'+(p>=0?'<span class="badge tag-profit">PROFIT</span>':'<span class="badge tag-loss">LOSS</span>')+'</td></tr>';
+  }).join("")||'<tr><td colspan="8" style="text-align:center;color:var(--slate);">No data for this filter.</td></tr>';
+}
+
+/* ===== Exports ===== */
+function filterLabel(){
+  var p=PERIOD==="W"?"Weekly":PERIOD==="Y"?"Yearly":"Monthly";
+  var b=document.getElementById("fBranch").value||"All Branches";
+  var r=document.getElementById("fRegion").value||"All Regions";
+  return p+" view  |  "+b+"  |  "+r;
+}
+function exportPDF(){
+  smLoadLogo(function(){
+    var D=dataset(), prof=D.totRev-D.totExp;
+    var doc=new jspdf.jsPDF();
+    var y=smBrandHeader(doc,"Business Analytics — Full Company Report",filterLabel()+"   |   Generated: "+new Date().toLocaleString("en-IN"));
+    doc.autoTable({ startY:y, head:[["KPI","Value"]], body:[
+      ["Revenue", "Rs "+fmt(D.totRev)],["Expenses","Rs "+fmt(D.totExp)],
+      ["Net Profit","Rs "+fmt(prof)],["Profit Margin",(D.totRev?Math.round(prof/D.totRev*100):0)+"%"],
+      ["Total Orders",fmt(D.orders)],["New Customers",fmt(D.newCust)],["Existing / Repeat Customers",fmt(D.exist)]
+    ], headStyles:{fillColor:[201,142,31]}, styles:{fontSize:9}, margin:{left:8,right:8,bottom:16} });
+    var y2=doc.lastAutoTable.finalY+8;
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(31,95,214);
+    doc.text("Branch-wise Performance",8,y2);
+    doc.autoTable({ startY:y2+3, head:[["Branch","Region","Orders","Revenue (Rs)","Expenses (Rs)","Profit (Rs)","Margin"]],
+      body:D.branches.map(function(b){var p=b.rev-b.exp;return [b.name,b.region,b.orders,fmt(b.rev),fmt(b.exp),fmt(p),Math.round(p/b.rev*100)+"%"];}),
+      headStyles:{fillColor:[15,35,71]}, styles:{fontSize:8.5}, margin:{left:8,right:8,bottom:16} });
+    var y3=doc.lastAutoTable.finalY+8;
+    doc.setFontSize(12); doc.setTextColor(31,95,214);
+    doc.text("Top Products (by revenue share)",8,y3);
+    doc.autoTable({ startY:y3+3, head:[["Product / Service","Revenue (Rs)","Share"]],
+      body:PRODUCTS.map(function(p){return [p[0],fmt(p[1]*D.totRev),Math.round(p[1]*100)+"%"];}),
+      headStyles:{fillColor:[15,35,71]}, styles:{fontSize:8.5}, margin:{left:8,right:8,bottom:16} });
+    smBrandFinish(doc);
+    doc.save("Business-Analytics-Report-SystemMaster.pdf");
+  });
+}
+function exportExcel(){
+  var D=dataset(), prof=D.totRev-D.totExp;
+  var wb=XLSX.utils.book_new();
+  var brand=smExcelBrandRows("Business Analytics Report ("+filterLabel()+")");
+  var ws1=XLSX.utils.aoa_to_sheet(brand.concat([["KPI","Value"],
+    ["Revenue (Rs)",Math.round(D.totRev)],["Expenses (Rs)",Math.round(D.totExp)],
+    ["Net Profit (Rs)",Math.round(prof)],["Orders",D.orders],["New Customers",D.newCust],["Existing Customers",D.exist]]));
+  XLSX.utils.book_append_sheet(wb,ws1,"Summary");
+  var ws2=XLSX.utils.aoa_to_sheet(brand.concat([["Branch","Region","Orders","Revenue (Rs)","Expenses (Rs)","Profit (Rs)"]]).concat(
+    D.branches.map(function(b){return [b.name,b.region,b.orders,Math.round(b.rev),Math.round(b.exp),Math.round(b.rev-b.exp)];})));
+  XLSX.utils.book_append_sheet(wb,ws2,"Branches");
+  XLSX.writeFile(wb,"Business-Analytics-SystemMaster.xlsx");
+}
+render();
+</script>
+</body>
+</html>

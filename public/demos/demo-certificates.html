@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Certificate Generator + TV Awards Demo | SystemMaster</title>
+<meta name="description" content="Generate company certificates (Best Employee, Best Sales, custom awards) as A4 landscape PDF + live TV congratulation display.">
+<link rel="icon" type="image/png" href="logo/systemmaster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>
+.cert-wrap{width:100%;max-width:840px;margin:0 auto;}
+.cert{position:relative;width:100%;aspect-ratio:297/210;background:#fdfaf2;border-radius:6px;overflow:hidden;color:#1d2a44;box-shadow:0 28px 70px rgba(0,0,0,0.55);}
+.cert .bord{position:absolute;inset:14px;border:3px solid #c98e1f;border-radius:4px;}
+.cert .bord2{position:absolute;inset:22px;border:1px solid rgba(201,142,31,0.55);border-radius:3px;}
+.cert .corner{position:absolute;width:70px;height:70px;border:3px solid #1F5FD6;}
+.cert .c1{top:14px;left:14px;border-right:none;border-bottom:none;}
+.cert .c2{top:14px;right:14px;border-left:none;border-bottom:none;}
+.cert .c3{bottom:14px;left:14px;border-right:none;border-top:none;}
+.cert .c4{bottom:14px;right:14px;border-left:none;border-top:none;}
+.cert-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:5.5% 8% 4.5%;}
+.cert .co{font-family:Sora;font-weight:800;font-size:clamp(0.7rem,1.8vw,1.05rem);letter-spacing:2px;color:#1F5FD6;text-transform:uppercase;}
+.cert .ttl{font-family:Sora;font-weight:800;font-size:clamp(1rem,3.2vw,1.9rem);color:#c98e1f;margin:1.5% 0 0.5%;text-transform:uppercase;letter-spacing:1px;}
+.cert .sub{font-size:clamp(0.6rem,1.4vw,0.85rem);color:#5a6478;}
+.cert .nm{font-family:'Great Vibes',cursive;font-size:clamp(1.7rem,5.6vw,3.4rem);color:#1d2a44;margin:0.8% 0;line-height:1.15;}
+.cert .nm-line{width:42%;border-top:1.5px solid #c98e1f;margin:0 auto 1.2%;}
+.cert .ds{font-size:clamp(0.56rem,1.25vw,0.8rem);max-width:78%;color:#44506b;line-height:1.5;}
+.cert .period{font-family:Sora;font-weight:700;font-size:clamp(0.6rem,1.3vw,0.85rem);color:#1F5FD6;margin-top:1.4%;}
+.cert .sigrow{display:flex;justify-content:space-between;align-items:flex-end;width:84%;margin-top:auto;font-size:clamp(0.52rem,1.15vw,0.74rem);color:#44506b;}
+.cert .sig{width:34%;}
+.cert .sig b{display:block;border-top:1.5px solid #44506b;padding-top:4px;margin-top:16px;font-family:Sora;font-size:clamp(0.5rem,1.1vw,0.72rem);}
+.cert .seal{width:clamp(54px,9.5vw,86px);height:clamp(54px,9.5vw,86px);border-radius:50%;border:2.5px solid #c98e1f;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#c98e1f;font-family:Sora;background:radial-gradient(circle at 50% 38%,#fff7e6,#fdf3dd);box-shadow:0 4px 14px rgba(201,142,31,0.35), inset 0 0 0 4px #fdfaf2, inset 0 0 0 5.5px rgba(201,142,31,0.7);}
+.cert .seal .y{font-weight:800;font-size:clamp(0.62rem,1.4vw,0.95rem);line-height:1;}
+.cert .seal .t{font-weight:700;font-size:clamp(0.36rem,0.8vw,0.55rem);letter-spacing:1.5px;margin-top:3px;}
+.cert .seal .st{color:#E5A93C;font-size:clamp(0.45rem,1vw,0.7rem);letter-spacing:2px;}
+.pro-badge{display:flex;gap:10px;align-items:center;padding:11px 14px;border-radius:12px;background:rgba(0,255,163,0.06);border:1px solid rgba(0,255,163,0.3);font-size:0.84rem;margin-bottom:16px;}
+#tvMode{position:fixed;inset:0;z-index:99990;display:none;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,#0f2347,#06101f);text-align:center;overflow:hidden;}
+#tvMode .big1{font-family:Sora;font-weight:800;font-size:clamp(1.6rem,5vw,4rem);color:var(--gold);text-transform:uppercase;letter-spacing:3px;animation:pop 1s ease;}
+#tvMode .big2{font-family:'Great Vibes',cursive;font-size:clamp(3rem,9vw,7rem);color:#fff;margin:10px 0;animation:pop 1.4s ease;}
+#tvMode .big3{font-family:Sora;font-size:clamp(1rem,2.6vw,1.8rem);color:var(--silver);animation:pop 1.8s ease;}
+@keyframes pop{0%{transform:scale(0.6);opacity:0;}60%{transform:scale(1.08);}100%{transform:scale(1);opacity:1;}}
+.confetti{position:absolute;top:-12px;width:10px;height:16px;opacity:0.9;animation:fall linear infinite;}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);}}
+@media(max-width:860px){.two-col{grid-template-columns:1fr !important;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"><img src="logo/systemmaster.png" alt="SystemMaster Automations"/></div>
+      <div class="brand-text">
+        <span class="brand-name">SystemMaster Automations</span>
+        <span class="brand-tag">Workflow &amp; ERP Solutions</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="btn btn-ghost nav-cta" style="padding:9px 18px;"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get a Free Demo</a>
+    </nav>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-banner">
+  <div class="wrap">
+    <h1>Certificate Generator + TV Awards</h1>
+    <p>Generate company certificates (Best Employee, Best Sales, custom awards...) as A4 landscape PDFs — plus a live congratulation display for your office TV.</p>
+    <div class="clock-line"><span id="clockTime">--:--:--</span> · <span id="clockDate"></span></div>
+    <div class="crumb"><a href="index.html">Home</a> / <a href="projects.html">Projects</a> / Certificates</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+
+    <div class="demo-bar">
+      <i class="fa-solid fa-circle-info" style="font-size:1.2rem;"></i>
+      <div><b>Live working demo.</b> Fill in the details — the certificate builds in live preview with your own company name, and downloads as an <b>A4 landscape PDF</b> in one click. Use "TV Mode" for a full-screen congratulation display on your office screen 🎉</div>
+    </div>
+
+    <div class="two-col" style="display:grid;grid-template-columns:390px 1fr;gap:22px;align-items:start;">
+      <!-- FORM -->
+      <div class="panel">
+        <div class="pro-badge">
+          <i class="fa-solid fa-gem" style="color:var(--neon-green);font-size:1.1rem;"></i>
+          <div><b style="color:var(--white);">PRO Feature — currently FREE.</b><br><span style="color:var(--slate);font-size:0.78rem;">Included free with subscription for our Pro customers. Limited-period free access for everyone right now.</span></div>
+        </div>
+        <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-award" style="color:var(--gold);"></i> Certificate Details</h3>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="field"><label>Award Type</label>
+            <select id="cType" onchange="typeChanged()">
+              <option>Best Employee of the Month</option>
+              <option>Best Sales Performer</option>
+              <option>Star of the Month</option>
+              <option>Best Team Player</option>
+              <option>Perfect Attendance Award</option>
+              <option>Years of Service Award</option>
+              <option>Certificate of Appreciation</option>
+              <option>Training Completion Certificate</option>
+              <option value="CUSTOM">✏️ Custom Award Title (type your own)</option>
+            </select>
+          </div>
+          <div class="field" id="customTitleWrap" style="display:none;"><label>Custom Award Title</label><input type="text" id="cCustom" placeholder="e.g. Safety Champion of the Year" oninput="renderCert()"></div>
+          <div class="field"><label>Employee / Recipient Name</label><input type="text" id="cName" value="Rahul Sharma" oninput="renderCert()"></div>
+          <div class="field"><label>Your Company Name <span style="color:var(--slate);font-weight:400;">(appears on the certificate)</span></label><input type="text" id="cCo" value="Your Company Pvt Ltd" oninput="renderCert()"></div>
+          <div class="field"><label>Month / Period</label><input type="text" id="cPeriod" value="May 2026" oninput="renderCert()"></div>
+          <div class="field"><label>Message Line</label><input type="text" id="cMsg" value="In recognition of outstanding performance, dedication and commitment towards the growth of the organisation." oninput="renderCert()"></div>
+          <div class="field"><label>Signed By <span style="color:var(--slate);font-weight:400;">(change anytime)</span></label><input type="text" id="cSign" value="Managing Director" oninput="renderCert()"></div>
+          <button class="btn btn-gold" style="justify-content:center;" onclick="downloadPDF()"><i class="fa-solid fa-file-pdf"></i> &nbsp;Download A4 Landscape PDF</button>
+          <button class="btn btn-primary" style="justify-content:center;" onclick="tvMode()"><i class="fa-solid fa-tv"></i> &nbsp;TV Mode — Live Congratulation 🎉</button>
+        </div>
+      </div>
+
+      <!-- PREVIEW -->
+      <div>
+        <div class="cert-wrap">
+          <div class="cert" id="certBox">
+            <div class="bord"></div><div class="bord2"></div>
+            <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+            <div class="cert-inner">
+              <div class="co" id="pCo">YOUR COMPANY PVT LTD</div>
+              <div class="ttl" id="pType">Best Employee of the Month</div>
+              <div class="sub">This certificate is proudly presented to</div>
+              <div class="nm" id="pName">Rahul Sharma</div>
+              <div class="nm-line"></div>
+              <div class="ds" id="pMsg">In recognition of outstanding performance...</div>
+              <div class="period" id="pPeriod">May 2026</div>
+              <div class="sigrow">
+                <div class="sig">Date<b id="pDate"></b></div>
+                <div class="seal"><span class="st">★ ★ ★</span><span class="y" id="sealYear">2026</span><span class="t">AWARD</span></div>
+                <div class="sig" style="text-align:right;"><span>&nbsp;</span><b id="pSign">Managing Director</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:0.8rem;color:var(--slate);margin-top:10px;">Live preview — the PDF is generated in this same A4 landscape design. The real system also adds your logo, signature image and stamp.</p>
+      </div>
+    </div>
+
+    <div class="cta-band reveal" style="margin-top:30px;">
+      <h2>Want An Award System For Your Company?</h2>
+      <p>Automated certificates + TV display + monthly winner selection from performance data — all integrated.</p>
+      <a href="https://wa.me/919027965956?text=I'm%20interested%20in%20the%20Certificate%20%2B%20TV%20Awards%20System" target="_blank" class="btn btn-gold"><i class="fa-brands fa-whatsapp"></i> &nbsp;Chat on WhatsApp</a>
+      <a href="contact.html" class="btn btn-ghost" style="margin-left:10px;">Request a Call</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- TV MODE OVERLAY -->
+<div id="tvMode" onclick="this.style.display='none';document.body.style.overflow='';">
+  <div>
+    <div class="big1">🎉 Congratulations 🎉</div>
+    <div class="big2" id="tvName">Rahul Sharma</div>
+    <div class="big3" id="tvAward">Best Employee of the Month — May 2026</div>
+    <div style="margin-top:14px;font-family:Sora;color:var(--gold);font-size:0.95rem;" id="tvCo"></div>
+    <div style="margin-top:30px;color:var(--slate);font-size:0.85rem;">(Click anywhere to exit — play fullscreen on your office TV)</div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;">
+      <span>© 2026 SystemMaster — Workflow &amp; ERP Solutions. All rights reserved.</span>
+      <div style="font-size:0.85rem;"><a href="privacy.html" style="color:var(--slate);margin:0 8px;">Privacy Policy</a> · <a href="terms.html" style="color:var(--slate);margin:0 8px;">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919027965956" class="wa-float" title="Chat on WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/shyama.js"></script>
+<script src="js/sm-brand.js"></script>
+<script src="js/demo-gate.js" data-demo="Certificate Generator + TV Awards Demo"></script>
+<script>
+function v(id){ return document.getElementById(id).value.trim(); }
+function awardTitle(){
+  var t=document.getElementById("cType").value;
+  if(t==="CUSTOM") return v("cCustom")||"Custom Award";
+  return t;
+}
+function typeChanged(){
+  document.getElementById("customTitleWrap").style.display =
+    document.getElementById("cType").value==="CUSTOM" ? "block" : "none";
+  renderCert();
+}
+function renderCert(){
+  document.getElementById("pCo").textContent = (v("cCo")||"YOUR COMPANY").toUpperCase();
+  document.getElementById("pType").textContent = awardTitle();
+  document.getElementById("pName").textContent = v("cName") || "Recipient Name";
+  document.getElementById("pMsg").textContent = v("cMsg");
+  document.getElementById("pPeriod").textContent = v("cPeriod");
+  document.getElementById("pSign").textContent = v("cSign")||"Authorised Signatory";
+  document.getElementById("pDate").textContent = new Date().toLocaleDateString("en-IN");
+  document.getElementById("sealYear").textContent = new Date().getFullYear();
+}
+function tvMode(){
+  document.getElementById("tvName").textContent = v("cName") || "Recipient Name";
+  document.getElementById("tvAward").textContent = awardTitle() + " — " + v("cPeriod");
+  document.getElementById("tvCo").textContent = (v("cCo")||"").toUpperCase();
+  var tv=document.getElementById("tvMode");
+  tv.querySelectorAll(".confetti").forEach(function(c){c.remove();});
+  var cols=["#E5A93C","#5A9FFF","#00FFA3","#FF9A3C","#a78bfa","#ff6b6b"];
+  for(var i=0;i<60;i++){
+    var c=document.createElement("div"); c.className="confetti";
+    c.style.left=(Math.random()*100)+"%";
+    c.style.background=cols[i%cols.length];
+    c.style.animationDuration=(2.5+Math.random()*3)+"s";
+    c.style.animationDelay=(Math.random()*2)+"s";
+    tv.appendChild(c);
+  }
+  tv.style.display="flex"; document.body.style.overflow="hidden";
+  if(tv.requestFullscreen) tv.requestFullscreen().catch(function(){});
+}
+function downloadPDF(){
+  smLoadLogo(function(){
+    var doc = new jspdf.jsPDF({orientation:"landscape", unit:"mm", format:"a4"}); // 297 x 210
+    var W=297, H=210, year=new Date().getFullYear();
+    doc.setFillColor(253,250,242); doc.rect(0,0,W,H,"F");
+    // faint logo watermark behind content
+    if (SM_BRAND.logo && doc.saveGraphicsState){
+      try{
+        doc.saveGraphicsState();
+        doc.setGState(new doc.GState({opacity:0.05}));
+        var s=110; doc.addImage(SM_BRAND.logo,"PNG",(W-s)/2,(H-s)/2,s,s);
+        doc.restoreGraphicsState();
+      }catch(e){}
+    }
+    // borders
+    doc.setDrawColor(201,142,31); doc.setLineWidth(1.6); doc.rect(10,10,W-20,H-20);
+    doc.setLineWidth(0.4); doc.rect(15,15,W-30,H-30);
+    // blue corners
+    doc.setDrawColor(31,95,214); doc.setLineWidth(1.4);
+    doc.line(10,28,10,10); doc.line(10,10,28,10);
+    doc.line(W-28,10,W-10,10); doc.line(W-10,10,W-10,28);
+    doc.line(10,H-28,10,H-10); doc.line(10,H-10,28,H-10);
+    doc.line(W-28,H-10,W-10,H-10); doc.line(W-10,H-28,W-10,H-10);
+    // company
+    doc.setFont("helvetica","bold"); doc.setFontSize(15); doc.setTextColor(31,95,214);
+    doc.text((v("cCo")||"YOUR COMPANY").toUpperCase(), W/2, 38, {align:"center"});
+    // title
+    doc.setFontSize(26); doc.setTextColor(201,142,31);
+    doc.text(awardTitle().toUpperCase(), W/2, 57, {align:"center", maxWidth:240});
+    // sub
+    doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(90,100,120);
+    doc.text("This certificate is proudly presented to", W/2, 72, {align:"center"});
+    // name
+    doc.setFont("times","bolditalic"); doc.setFontSize(38); doc.setTextColor(29,42,68);
+    doc.text(v("cName")||"Recipient Name", W/2, 93, {align:"center"});
+    doc.setDrawColor(201,142,31); doc.setLineWidth(0.5); doc.line(W/2-60, 98, W/2+60, 98);
+    // message
+    doc.setFont("helvetica","normal"); doc.setFontSize(11); doc.setTextColor(68,80,107);
+    var lines = doc.splitTextToSize(v("cMsg"), 190);
+    doc.text(lines, W/2, 110, {align:"center"});
+    // period
+    doc.setFont("helvetica","bold"); doc.setFontSize(12); doc.setTextColor(31,95,214);
+    doc.text("Period: "+v("cPeriod"), W/2, 130, {align:"center"});
+    // signature lines (left date, right signed by)
+    doc.setDrawColor(68,80,107); doc.setLineWidth(0.4);
+    doc.line(38,172,103,172); doc.line(W-103,172,W-38,172);
+    doc.setFont("helvetica","normal"); doc.setFontSize(9.5); doc.setTextColor(68,80,107);
+    doc.text("Date: "+new Date().toLocaleDateString("en-IN"), 70.5, 178, {align:"center"});
+    doc.text(v("cSign")||"Authorised Signatory", W-70.5, 178, {align:"center"});
+    // professional seal — centered between signature lines
+    var cx=W/2, cy=166, r=14;
+    doc.setDrawColor(201,142,31); doc.setLineWidth(1);
+    doc.circle(cx,cy,r);
+    doc.setLineWidth(0.4); doc.circle(cx,cy,r-2.2);
+    doc.setFont("helvetica","bold"); doc.setFontSize(6.5); doc.setTextColor(229,169,60);
+    doc.text("\u2605 \u2605 \u2605", cx, cy-5.5, {align:"center"});
+    doc.setFontSize(11); doc.setTextColor(201,142,31);
+    doc.text(String(year), cx, cy+0.5, {align:"center"});
+    doc.setFontSize(5.8);
+    doc.text("A W A R D", cx, cy+5.5, {align:"center"});
+    // footer branding
+    doc.setFontSize(7.5); doc.setTextColor(150,155,170);
+    doc.text("Generated with SystemMaster Automations  ·  "+SM_BRAND.email+"  ·  "+SM_BRAND.phone+"  ·  "+SM_BRAND.web, W/2, H-14, {align:"center"});
+    doc.save("Certificate-"+(v("cName")||"Award").replace(/\s+/g,"-")+".pdf");
+  });
+}
+typeChanged();
+</script>
+</body>
+</html>

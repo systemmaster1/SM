@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact Us — SystemMaster | Free Demo &amp; Consultation</title>
+<meta name="description" content="Get in touch with SystemMaster. Free demo, honest consultation. We respond within hours.">
+<link rel="icon" type="image/png" href="logo/systemmaster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"><img src="logo/systemmaster.png" alt="SystemMaster Automations"/></div>
+      <div class="brand-text">
+        <span class="brand-name">SystemMaster Automations</span>
+        <span class="brand-tag">Workflow &amp; ERP Solutions</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="login.html" class="btn btn-ghost nav-cta" style="padding:9px 18px;"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get a Free Demo</a>
+    </nav>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- BANNER -->
+<section class="page-banner">
+  <div class="wrap">
+    <h1>Get In Touch</h1>
+    <p>Tell us your requirement — we'll show you the right solution.</p>
+    <div class="clock-line"><span id="clockTime">--:--:--</span> · <span id="clockDate"></span></div>
+    <div class="crumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Contact</div>
+  </div>
+</section>
+
+<!-- CONTACT GRID -->
+<section>
+  <div class="wrap split">
+    <!-- LEFT INFO -->
+    <div class="split-text reveal">
+      <span class="eyebrow">Contact Us</span>
+      <h2>Let's Talk About Your Business</h2>
+      <p>Whether you need a ready-made system or a fully custom solution, we're happy to understand your requirement and guide you honestly. No obligation.</p>
+
+      <div class="split-visual" style="margin-top:24px;">
+        <div class="mock-row"><div class="mi">👤</div><div class="mt"><b>Sunil Tiwari</b><span>Founder · SystemMaster</span></div></div>
+        <div class="mock-row"><div class="mi">📞</div><div class="mt"><b>+91 90279 65956</b><span><a href="tel:+919027965956" style="color:var(--gold);">Call or WhatsApp →</a></span></div></div>
+        <div class="mock-row"><div class="mi">✉️</div><div class="mt"><b>Connect@systemmaster.in</b><span><a href="mailto:Connect@systemmaster.in" style="color:var(--gold);">Send us an email →</a></span></div></div>
+        <div class="mock-row"><div class="mi">🌐</div><div class="mt"><b>www.systemmaster.in</b><span>Our website</span></div></div>
+      </div>
+
+      <a href="https://wa.me/919027965956?text=Hi%20SystemMaster%2C%20I'd%20like%20to%20know%20more%20about%20your%20services" target="_blank" class="btn btn-gold" style="margin-top:24px;">
+        <i class="fa-brands fa-whatsapp"></i> &nbsp;Chat on WhatsApp
+      </a>
+    </div>
+
+    <!-- RIGHT FORM -->
+    <div class="form-card reveal d2">
+      <h3 style="margin-bottom:6px;"><i class="fa-solid fa-paper-plane" style="color:var(--gold);"></i> &nbsp;Request A Free Demo</h3>
+      <p style="color:var(--silver);font-size:0.92rem;margin-bottom:22px;">Fill your details and we'll get back within working hours.</p>
+      <form id="enquiryForm">
+        <div class="field"><label>Your Name *</label><input type="text" name="name" required placeholder="Enter your full name"></div>
+        <div class="field"><label>Designation *</label>
+          <select name="designation" required>
+            <option value="">Select your role</option>
+            <option>MD / Owner</option>
+            <option>Director</option>
+            <option>CEO</option>
+            <option>Sales Head / Manager</option>
+            <option>HR Manager</option>
+            <option>Operations Manager</option>
+            <option>Accounts / Finance</option>
+            <option>IT / Admin</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Company Name *</label><input type="text" name="company" required placeholder="Your company / firm name"></div>
+        <div class="field"><label>GST Number</label><input type="text" name="gst" placeholder="GST number (optional)"></div>
+        <div class="field"><label>Phone Number *</label><input type="tel" name="phone" required placeholder="Enter your mobile number"></div>
+        <div class="field"><label>Email *</label><input type="email" name="email" required placeholder="you@email.com"></div>
+        <div class="field"><label>Address</label><input type="text" name="address" placeholder="City / full address"></div>
+        <div class="field"><label>Company Website</label><input type="text" name="website" placeholder="www.yourcompany.com (optional)"></div>
+        <div class="field"><label>Service You Need *</label>
+          <select name="service" required>
+            <option value="">Select a service</option>
+            <option>ERP System</option>
+            <option>Workflow Tracker / Delegation</option>
+            <option>Advanced Sales System / CRM</option>
+            <option>Inquiry System</option>
+            <option>HRMS / Hiring System</option>
+            <option>Billing &amp; Invoicing</option>
+            <option>Mobile App (AppSheet)</option>
+            <option>Custom Website / Landing Page</option>
+            <option>AI Calling Agent / Chatbot</option>
+            <option>n8n Automation Workflows</option>
+            <option>WhatsApp / Email Marketing</option>
+            <option>Performance Tracker</option>
+            <option>Zoho Setup &amp; Integration</option>
+            <option>Data Scraping</option>
+            <option>Custom Requirement</option>
+          </select>
+        </div>
+        <div class="field"><label>Your Requirement</label><textarea name="message" placeholder="Tell us briefly what you need..."></textarea></div>
+
+        <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%;justify-content:center;">
+          <i class="fa-solid fa-paper-plane"></i> &nbsp;Submit Request →
+        </button>
+      </form>
+      <div id="thankYou" style="display:none;text-align:center;padding:30px 10px;">
+        <div style="font-size:3rem;margin-bottom:10px;">✅</div>
+        <h3 style="color:var(--neon-green);margin-bottom:10px;">Thank you!</h3>
+        <p style="color:var(--silver);line-height:1.7;">
+          Your request has been received. Our team will reach out to you shortly.<br><br>
+          For urgent queries:<br>
+          <a href="tel:+919027965956" style="color:var(--gold);font-weight:700;">📞 +91 90279 65956</a><br>
+          <a href="mailto:Connect@systemmaster.in" style="color:var(--gold);font-weight:700;">✉️ Connect@systemmaster.in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO CARDS -->
+<section>
+  <div class="wrap">
+    <div class="value-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="value-card reveal">
+        <div class="vc-icon">🕐</div>
+        <h3>Working Hours</h3>
+        <p>Monday to Saturday — 10:00 AM to 7:00 PM. WhatsApp messages welcome anytime.</p>
+      </div>
+      <div class="value-card reveal d1">
+        <div class="vc-icon">⚡</div>
+        <h3>Quick Response</h3>
+        <p>We reply to most enquiries within a few hours. For urgent needs, call or WhatsApp directly.</p>
+      </div>
+      <div class="value-card reveal d2">
+        <div class="vc-icon">🤝</div>
+        <h3>Free Consultation</h3>
+        <p>First discussion is always free. We understand your need before suggesting anything.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <h2>Your Smarter Business Starts Here</h2>
+      <p>One message is all it takes. Let's build the right system for your business together.</p>
+      <a href="https://wa.me/919027965956" target="_blank" class="btn btn-gold"><i class="fa-brands fa-whatsapp"></i> &nbsp;Message Us Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand" style="margin-bottom:8px;">
+          <div class="brand-mark"><img src="logo/systemmaster.png" alt="SystemMaster Automations"/></div>
+          <div class="brand-text">
+            <span class="brand-name">SystemMaster Automations</span>
+            <span class="brand-tag">Workflow &amp; ERP Solutions</span>
+          </div>
+        </div>
+        <p>We help growing businesses run smarter with ERP, workflow automation, AI agents and custom software.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="services.html">ERP System</a>
+        <a href="services.html">Workflow Tracker</a>
+        <a href="services.html">Sales CRM</a>
+        <a href="services.html">AI &amp; Automation</a>
+        <a href="services.html">Mobile Apps</a>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Get In Touch</h4>
+        <div class="fc-row"><span class="ic">✉️</span><a href="mailto:Connect@systemmaster.in">Connect@systemmaster.in</a></div>
+        <div class="fc-row"><span class="ic">📞</span><a href="tel:+919027965956">+91 90279 65956</a></div>
+        <div class="fc-row"><span class="ic">🌐</span><span>www.systemmaster.in</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-social">
+        <a href="https://wa.me/919027965956" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="mailto:Connect@systemmaster.in" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="tel:+919027965956" title="Phone"><i class="fa-solid fa-phone"></i></a>
+      </div>
+      <span>© 2026 SystemMaster — Workflow &amp; ERP Solutions. All rights reserved.</span>
+      <div style="font-size:0.85rem;">
+        <a href="privacy.html" style="color:var(--slate);margin:0 8px;">Privacy Policy</a> ·
+        <a href="terms.html" style="color:var(--slate);margin:0 8px;">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919027965956" class="wa-float" title="Chat on WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script src="js/main.js"></script>
+<script src="js/shyama.js"></script>
+<script>
+/* Send contact form -> Apps Script -> Google Sheet "Responses" tab */
+var SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwNuVmFIsigEJRrLy8sGKJeQYoa3wVRY9EpmixKeNtXa7rYeg_TDiLjF2fkz6EejZTrCg/exec";
+
+document.getElementById("enquiryForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  var form = e.target, btn = document.getElementById("submitBtn");
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> &nbsp;Sending...';
+  var data = {
+    formType: "contact",
+    timestamp: new Date().toLocaleString("en-IN"),
+    name: form.name.value.trim(),
+    designation: form.designation.value,
+    company: form.company.value.trim(),
+    gst: form.gst.value.trim(),
+    phone: form.phone.value.trim(),
+    email: form.email.value.trim(),
+    address: form.address.value.trim(),
+    website: form.website.value.trim(),
+    service: form.service.value,
+    message: form.message.value.trim()
+  };
+  function done(){
+    form.style.display = "none";
+    document.getElementById("thankYou").style.display = "block";
+  }
+  fetch(SHEET_WEBHOOK_URL, {
+    method: "POST", mode: "no-cors",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data)
+  }).then(done).catch(done);
+});
+</script>
+</body>
+</html>

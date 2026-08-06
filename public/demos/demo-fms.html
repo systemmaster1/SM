@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FMS — Flow Management Demo | SystemMaster</title>
+<meta name="description" content="Flow Management System demo — order entry to dispatch with bilty tracking, delivery confirmation, payment follow-up, on-time dispatch analysis & reports.">
+<link rel="icon" type="image/png" href="logo/systemmaster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>
+.flow-steps{display:flex;gap:0;overflow-x:auto;padding:6px 0 14px;}
+.fstep{flex:1;min-width:104px;text-align:center;position:relative;}
+.fstep::after{content:"";position:absolute;top:17px;left:50%;width:100%;height:2px;background:rgba(255,255,255,0.12);z-index:0;}
+.fstep:last-child::after{display:none;}
+.fstep .dot{width:34px;height:34px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;font-size:0.85rem;background:rgba(255,255,255,0.08);color:var(--slate);border:2px solid rgba(255,255,255,0.15);}
+.fstep.done .dot{background:rgba(0,255,163,0.15);color:var(--neon-green);border-color:var(--neon-green);}
+.fstep.done::after{background:var(--neon-green);}
+.fstep.now .dot{background:rgba(229,169,60,0.2);color:var(--gold);border-color:var(--gold);box-shadow:0 0 14px rgba(229,169,60,0.4);}
+.fstep .fl{font-size:0.7rem;color:var(--silver);font-weight:600;}
+.fstep .fd{font-size:0.64rem;color:var(--slate);}
+.order-card{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,0.03);padding:18px;margin-bottom:16px;}
+.tag-paid{background:rgba(0,255,163,0.12);color:var(--neon-green);}
+.tag-due{background:rgba(255,154,60,0.15);color:var(--neon-orange);}
+.tag-over{background:rgba(255,107,107,0.15);color:#ff6b6b;}
+.tag-ontime{background:rgba(0,255,163,0.12);color:var(--neon-green);}
+.tag-late{background:rgba(255,107,107,0.15);color:#ff6b6b;}
+.tag-new{background:rgba(90,159,255,0.15);color:var(--blue-light);}
+.tag-exist{background:rgba(167,139,250,0.15);color:var(--purple);}
+.doer{display:inline-flex;align-items:center;gap:6px;font-size:0.76rem;color:var(--slate);}
+.doer b{width:22px;height:22px;border-radius:50%;background:rgba(61,126,240,0.2);color:var(--blue-light);display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;}
+.role-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:14px 16px;border-radius:14px;background:rgba(61,126,240,0.07);border:1px solid rgba(61,126,240,0.3);margin-bottom:20px;}
+.role-bar select{padding:10px 12px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(15,35,71,0.9);color:var(--white);font-family:inherit;font-weight:600;}
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;}
+.filter-bar input[type=date],.filter-bar select{padding:10px 12px;border-radius:10px;border:1px solid var(--line-strong);background:rgba(255,255,255,0.05);color:var(--white);font-family:inherit;font-size:0.88rem;}
+.pie{width:160px;height:160px;border-radius:50%;flex-shrink:0;}
+.legend{display:flex;flex-direction:column;gap:7px;font-size:0.82rem;}
+.legend .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;}
+.hbar{display:flex;align-items:center;gap:10px;font-size:0.8rem;margin-bottom:8px;}
+.hbar .nm{width:150px;color:var(--white);text-align:right;flex-shrink:0;}
+.hbar .tr{flex:1;height:14px;border-radius:99px;background:rgba(255,255,255,0.07);overflow:hidden;}
+.hbar .tr i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--blue-light));}
+.linechart{width:100%;height:170px;}
+@media(max-width:900px){.two-col,.three-col{grid-template-columns:1fr !important;}.hbar .nm{width:110px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div class="brand-mark"><img src="logo/systemmaster.png" alt="SystemMaster Automations"/></div>
+      <div class="brand-text">
+        <span class="brand-name">SystemMaster Automations</span>
+        <span class="brand-tag">Workflow &amp; ERP Solutions</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" class="btn btn-ghost nav-cta" style="padding:9px 18px;"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get a Free Demo</a>
+    </nav>
+    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="page-banner">
+  <div class="wrap">
+    <h1>FMS — Flow Management Demo</h1>
+    <p>From order entry to dispatch with bilty tracking, delivery confirmation and payment follow-up based on customer credit days — with full reports &amp; analysis.</p>
+    <div class="clock-line"><span id="clockTime">--:--:--</span> · <span id="clockDate"></span></div>
+    <div class="crumb"><a href="index.html">Home</a> / <a href="projects.html">Projects</a> / FMS Demo</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+
+    <div class="demo-bar">
+      <i class="fa-solid fa-circle-info" style="font-size:1.2rem;"></i>
+      <div><b>Live FMS demo.</b> Every order moves through a step-by-step flow — each step has a fixed <b>doer (responsible person)</b>, bilty/LR is tracked, and the payment due date is auto-calculated from the customer's <b>credit days</b>. Click "Next Step →" to move an order forward, and switch the login role to see <b>User vs Admin access control</b>.</div>
+    </div>
+
+    <!-- ROLE BAR -->
+    <div class="role-bar">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <i class="fa-solid fa-user-shield" style="color:var(--blue-light);font-size:1.2rem;"></i>
+        <b style="color:var(--white);">Logged in as:</b>
+        <select id="roleSel" onchange="render()">
+          <option value="ADMIN">Admin (full access)</option>
+          <option>Ramesh (Sales)</option>
+          <option>Deepak (Store / SCE)</option>
+          <option>MD / Approver</option>
+          <option>Amit (Accounts)</option>
+          <option>Packing Department</option>
+          <option>Pooja (Dispatch)</option>
+        </select>
+      </div>
+      <div style="font-size:0.82rem;color:var(--silver);">👤 A <b style="color:var(--white);">User</b> can move an order forward only when the current step is assigned to them — otherwise the button is <b style="color:var(--neon-orange);">locked 🔒</b>. The <b style="color:var(--white);">Admin</b> can move any step. This role system works in every SystemMaster product.</div>
+    </div>
+
+    <!-- KPI -->
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Total Orders</div><div class="kpi-value" id="kTot">0</div></div>
+      <div class="kpi green"><div class="kpi-label">On-Time Dispatch</div><div class="kpi-value" id="kOn">0</div></div>
+      <div class="kpi red"><div class="kpi-label">Delayed Dispatch</div><div class="kpi-value" id="kDelay">0</div></div>
+      <div class="kpi orange"><div class="kpi-label">Payment Pending</div><div class="kpi-value" id="kPend">₹0</div></div>
+      <div class="kpi"><div class="kpi-label">Overdue</div><div class="kpi-value" id="kOver" style="color:#ff6b6b;">₹0</div></div>
+      <div class="kpi gold"><div class="kpi-label">Collected</div><div class="kpi-value" id="kColl">₹0</div></div>
+    </div>
+
+    <!-- NEW ORDER -->
+    <div class="panel">
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-plus-circle" style="color:var(--gold);"></i> New Order Entry</h3>
+      <div class="add-form">
+        <input type="text" id="nCust" placeholder="Customer name">
+        <input type="text" id="nItem" placeholder="Item / Product">
+        <input type="number" id="nAmt" placeholder="Order value (₹)" min="0">
+        <select id="nCredit"><option value="0">Advance / Cash</option><option value="7">7 days credit</option><option value="15" selected>15 days credit</option><option value="30">30 days credit</option><option value="45">45 days credit</option></select>
+        <input type="number" id="nDays" placeholder="Dispatch within (days)" min="1" value="3">
+      </div>
+      <button class="btn btn-primary" onclick="addOrder()"><i class="fa-solid fa-plus"></i> &nbsp;Create Order</button>
+      <button class="btn btn-ghost" style="margin-left:8px;" onclick="resetDemo()"><i class="fa-solid fa-rotate-left"></i> &nbsp;Reset Demo</button>
+    </div>
+
+    <!-- ORDERS -->
+    <div id="orderList"></div>
+
+    <!-- REPORTS & ANALYSIS -->
+    <div class="panel" style="margin-top:26px;">
+      <h3 style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><i class="fa-solid fa-magnifying-glass-chart" style="color:var(--gold);"></i> Reports &amp; Analysis</h3>
+      <p style="font-size:0.88rem;margin-bottom:14px;">On-time vs delayed dispatch, new vs existing customers, top products and order trend — filter by date range and download branded PDF / Excel reports.</p>
+      <div class="filter-bar">
+        <input type="date" id="fFrom"> <span style="color:var(--slate);">to</span> <input type="date" id="fTo">
+        <select id="fCust"><option value="">All Customers</option></select>
+        <button class="btn btn-ghost" style="padding:9px 16px;" onclick="render()"><i class="fa-solid fa-filter"></i> Apply</button>
+        <button class="btn btn-primary" onclick="exportPDF()"><i class="fa-solid fa-file-pdf"></i> &nbsp;Export PDF</button>
+        <button class="btn btn-gold" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> &nbsp;Export Excel</button>
+      </div>
+
+      <div class="three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;">
+        <div>
+          <h4 style="color:var(--white);font-size:0.92rem;margin-bottom:12px;"><i class="fa-solid fa-truck-fast" style="color:var(--neon-green);"></i> Dispatch Performance</h4>
+          <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+            <div class="pie" id="dispPie"></div>
+            <div class="legend" id="dispLegend"></div>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:var(--white);font-size:0.92rem;margin-bottom:12px;"><i class="fa-solid fa-users" style="color:var(--blue-light);"></i> New vs Existing Customers</h4>
+          <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+            <div class="pie" id="custPie"></div>
+            <div class="legend" id="custLegend"></div>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:var(--white);font-size:0.92rem;margin-bottom:12px;"><i class="fa-solid fa-ranking-star" style="color:var(--gold);"></i> Top Products (by value)</h4>
+          <div id="topProd"></div>
+        </div>
+      </div>
+
+      <div class="two-col" style="display:grid;grid-template-columns:1.3fr 1fr;gap:22px;margin-top:24px;">
+        <div>
+          <h4 style="color:var(--white);font-size:0.92rem;margin-bottom:12px;"><i class="fa-solid fa-chart-line" style="color:var(--blue-light);"></i> Order Value Trend (period)</h4>
+          <svg class="linechart" id="trend" viewBox="0 0 600 170" preserveAspectRatio="none"></svg>
+          <div id="trendLbl" style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--slate);"></div>
+        </div>
+        <div>
+          <h4 style="color:var(--white);font-size:0.92rem;margin-bottom:12px;"><i class="fa-solid fa-user-tag" style="color:var(--purple);"></i> Customer-wise Summary</h4>
+          <div style="overflow-x:auto;">
+            <table class="demo-table">
+              <thead><tr><th>Customer</th><th>Orders</th><th>Value (₹)</th><th>Type</th></tr></thead>
+              <tbody id="custTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-band reveal" style="margin-top:30px;">
+      <h2>From Order To Payment — One Connected Flow</h2>
+      <p>A custom FMS built on your business process — a clear owner for every step and follow-up for every rupee.</p>
+      <a href="https://wa.me/919027965956?text=I'm%20interested%20in%20the%20FMS%20Flow%20Management%20System" target="_blank" class="btn btn-gold"><i class="fa-brands fa-whatsapp"></i> &nbsp;Chat on WhatsApp</a>
+      <a href="contact.html" class="btn btn-ghost" style="margin-left:10px;">Request a Call</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none;">
+      <span>© 2026 SystemMaster — Workflow &amp; ERP Solutions. All rights reserved.</span>
+      <div style="font-size:0.85rem;"><a href="privacy.html" style="color:var(--slate);margin:0 8px;">Privacy Policy</a> · <a href="terms.html" style="color:var(--slate);margin:0 8px;">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919027965956" class="wa-float" title="Chat on WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/shyama.js"></script>
+<script src="js/sm-brand.js"></script>
+<script src="js/demo-gate.js" data-demo="FMS — Flow Management Demo"></script>
+<script>
+var FMS_KEY="sm_demo_fms_v2";
+var STEPS=[
+  {l:"Order Entry",        ic:"📝", doer:"Ramesh (Sales)"},
+  {l:"Stock Check",        ic:"📋", doer:"Deepak (Store / SCE)"},
+  {l:"Approval",           ic:"✅", doer:"MD / Approver"},
+  {l:"Invoicing",          ic:"🧾", doer:"Amit (Accounts)"},
+  {l:"Packing",            ic:"📦", doer:"Packing Department"},
+  {l:"Dispatch + Bilty",   ic:"🚚", doer:"Pooja (Dispatch)"},
+  {l:"Delivery Confirm",   ic:"🏁", doer:"Pooja (Dispatch)"},
+  {l:"Payment Follow-up",  ic:"💰", doer:"Amit (Accounts)"},
+  {l:"Payment Received",   ic:"🎉", doer:"Amit (Accounts)"}
+];
+var DISPATCH_STEP=5, DELIVERY_STEP=6, PAID_STEP=8;
+
+function dstr(off){ var x=new Date(); x.setDate(x.getDate()+off); return x.toISOString().slice(0,10); }
+function seed(){
+  return [
+    {id:"ORD-3101", cust:"Sharma Builders Pvt Ltd", item:"Plywood 18mm",      amt:174000, credit:30, step:8, isNew:false, orderDate:dstr(-40), promised:dstr(-37), dispatchedOn:dstr(-38), bilty:"LR-88421 · VRL Logistics", deliveredOn:dstr(-35), paid:true},
+    {id:"ORD-3102", cust:"Verma Interiors LLP",     item:"MDF Board 12mm",    amt:78400,  credit:15, step:7, isNew:false, orderDate:dstr(-26), promised:dstr(-23), dispatchedOn:dstr(-24), bilty:"LR-88474 · Safexpress",   deliveredOn:dstr(-22), paid:false},
+    {id:"ORD-3103", cust:"Royal Furnishing House",  item:"Flush Door 30mm",   amt:84000,  credit:15, step:7, isNew:false, orderDate:dstr(-10), promised:dstr(-8),  dispatchedOn:dstr(-7),  bilty:"LR-88512 · Own Vehicle",  deliveredOn:dstr(-6),  paid:false},
+    {id:"ORD-3104", cust:"Dev Modular Solutions",   item:"Kitchen Shutters",  amt:132000, credit:30, step:4, isNew:false, orderDate:dstr(-4),  promised:dstr(-1),  dispatchedOn:null,      bilty:"",                        deliveredOn:null,      paid:false},
+    {id:"ORD-3105", cust:"Kapoor Build Tech",       item:"Laminate Sheets",   amt:108000, credit:7,  step:1, isNew:true,  orderDate:dstr(-1),  promised:dstr(2),   dispatchedOn:null,      bilty:"",                        deliveredOn:null,      paid:false},
+    {id:"ORD-3106", cust:"Sunrise Decor Studio",    item:"Plywood 18mm",      amt:96500,  credit:15, step:6, isNew:true,  orderDate:dstr(-9),  promised:dstr(-7),  dispatchedOn:dstr(-5),  bilty:"LR-88541 · VRL Logistics", deliveredOn:dstr(-4), paid:false}
+  ];
+}
+function load(){ try{var r=localStorage.getItem(FMS_KEY); if(r) return JSON.parse(r);}catch(e){} return seed(); }
+function save(){ try{ localStorage.setItem(FMS_KEY, JSON.stringify(orders)); }catch(e){} }
+var orders=load();
+var nextId=3101+orders.length;
+orders.forEach(function(o){ var n=parseInt(String(o.id).replace(/\D/g,""))||0; if(n>=nextId) nextId=n+1; });
+
+function esc(s){ return String(s||"").replace(/[<>&"']/g,function(c){return {"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&#39;"}[c];}); }
+function fmt(n){ return Number(n||0).toLocaleString("en-IN"); }
+function role(){ return document.getElementById("roleSel").value; }
+
+function addOrder(){
+  var c=document.getElementById("nCust").value.trim();
+  var it=document.getElementById("nItem").value.trim();
+  var a=parseInt(document.getElementById("nAmt").value)||0;
+  var cr=parseInt(document.getElementById("nCredit").value)||0;
+  var dd=parseInt(document.getElementById("nDays").value)||3;
+  if(!c||!a){ alert("Please enter customer name and order value"); return; }
+  var isNew=!orders.some(function(o){return o.cust.toLowerCase()===c.toLowerCase();});
+  orders.unshift({id:"ORD-"+(nextId++), cust:c, item:it||"—", amt:a, credit:cr, step:0, isNew:isNew, orderDate:dstr(0), promised:dstr(dd), dispatchedOn:null, bilty:"", deliveredOn:null, paid:false});
+  save();
+  ["nCust","nItem","nAmt"].forEach(function(id){document.getElementById(id).value="";});
+  render();
+}
+function nextStep(i){
+  var o=orders[i];
+  if(o.step>=STEPS.length-1) return;
+  var doer=STEPS[o.step].doer;
+  if(role()!=="ADMIN" && role()!==doer){
+    alert("🔒 Locked — the current step \""+STEPS[o.step].l+"\" is assigned to "+doer+". Switch to that user or to Admin.");
+    return;
+  }
+  o.step++;
+  if(o.step===DISPATCH_STEP+1 && !o.dispatchedOn){ o.dispatchedOn=dstr(0); }
+  if(o.step===DISPATCH_STEP+1 && !o.bilty){
+    var b=prompt("Enter Bilty / LR number (with transporter):","LR-"+(88500+Math.floor(Math.random()*400))+" · VRL Logistics");
+    o.bilty=b||"LR-pending";
+  }
+  if(o.step===DELIVERY_STEP+1 && !o.deliveredOn){ o.deliveredOn=dstr(0); }
+  if(o.step===PAID_STEP){ o.paid=true; }
+  save(); render();
+}
+function resetDemo(){ if(confirm("Reset demo data?")){ orders=seed(); save(); render(); } }
+
+function payInfo(o){
+  if(o.paid) return {label:"PAID ✓", cls:"tag-paid", note:"Payment received"};
+  if(!o.deliveredOn) return {label:"NOT DUE", cls:"", note:"Credit period starts after delivery confirmation"};
+  var due=new Date(o.deliveredOn); due.setDate(due.getDate()+o.credit);
+  var today=new Date(dstr(0));
+  var diff=Math.round((due-today)/(24*60*60*1000));
+  var ds=due.toISOString().slice(0,10);
+  if(diff<0) return {label:"OVERDUE "+Math.abs(diff)+"d", cls:"tag-over", note:"Due date "+ds+" has passed — daily follow-up alert is active"};
+  return {label:"DUE in "+diff+"d", cls:"tag-due", note:"Due date: "+ds+" ("+o.credit+" days credit)"};
+}
+function dispatchInfo(o){
+  if(!o.dispatchedOn) {
+    var late = new Date(dstr(0)) > new Date(o.promised) && o.step<=DISPATCH_STEP;
+    return {status: late?"PENDING (past promised date)":"PENDING", cls: late?"tag-late":"", onTime:null};
+  }
+  var on = new Date(o.dispatchedOn) <= new Date(o.promised);
+  return {status: on?"ON TIME":"DELAYED", cls: on?"tag-ontime":"tag-late", onTime:on};
+}
+function inRange(o){
+  var f=document.getElementById("fFrom").value, t=document.getElementById("fTo").value;
+  var c=document.getElementById("fCust").value;
+  if(f && o.orderDate<f) return false;
+  if(t && o.orderDate>t) return false;
+  if(c && o.cust!==c) return false;
+  return true;
+}
+
+var PIE_COLS=["#00FFA3","#ff6b6b","#3D7EF0","#E5A93C","#a78bfa"];
+function drawPie(elPie, elLeg, parts){ // parts: [{label,val,col}]
+  var tot=parts.reduce(function(s,p){return s+p.val;},0);
+  var pie=document.getElementById(elPie), leg=document.getElementById(elLeg);
+  if(!tot){ pie.style.background="rgba(255,255,255,0.08)"; leg.innerHTML='<span style="color:var(--slate);">No data in this range.</span>'; return; }
+  var acc=0, stops=[], lg="";
+  parts.forEach(function(p){
+    if(!p.val) return;
+    var from=acc/tot*360; acc+=p.val; var to=acc/tot*360;
+    stops.push(p.col+" "+from+"deg "+to+"deg");
+    lg+='<div><span class="sw" style="background:'+p.col+';"></span>'+p.label+' — <b style="color:var(--white);">'+p.val+'</b> ('+Math.round(p.val/tot*100)+'%)</div>';
+  });
+  pie.style.background="conic-gradient("+stops.join(",")+")";
+  leg.innerHTML=lg;
+}
+
+function render(){
+  // customer filter options
+  var fc=document.getElementById("fCust"); var keep=fc.value;
+  var names=[]; orders.forEach(function(o){ if(names.indexOf(o.cust)<0) names.push(o.cust); });
+  fc.innerHTML='<option value="">All Customers</option>'+names.map(function(n){return '<option>'+esc(n)+'</option>';}).join("");
+  if(keep) fc.value=keep;
+
+  var R=orders.filter(inRange);
+  var on=0,delay=0,pend=0,over=0,coll=0;
+  R.forEach(function(o){
+    var di=dispatchInfo(o);
+    if(di.onTime===true) on++; if(di.onTime===false) delay++;
+    if(o.paid) coll+=o.amt;
+    else if(o.deliveredOn){ pend+=o.amt; if(payInfo(o).cls==="tag-over") over+=o.amt; }
+  });
+  document.getElementById("kTot").textContent=R.length;
+  document.getElementById("kOn").textContent=on;
+  document.getElementById("kDelay").textContent=delay;
+  document.getElementById("kPend").textContent="₹"+fmt(pend);
+  document.getElementById("kOver").textContent="₹"+fmt(over);
+  document.getElementById("kColl").textContent="₹"+fmt(coll);
+
+  // order cards
+  document.getElementById("orderList").innerHTML=orders.map(function(o,i){
+    var p=payInfo(o), di=dispatchInfo(o);
+    var stepsHtml=STEPS.map(function(s,si){
+      var cls = si<o.step ? "done" : (si===o.step ? "now" : "");
+      return '<div class="fstep '+cls+'"><div class="dot">'+s.ic+'</div><div class="fl">'+s.l+'</div><div class="fd">'+s.doer+'</div></div>';
+    }).join("");
+    var curDoer = STEPS[Math.min(o.step,STEPS.length-1)].doer;
+    var canMove = role()==="ADMIN" || role()===STEPS[Math.min(o.step,STEPS.length-1)].doer;
+    var newTag = o.isNew?'<span class="badge tag-new">NEW CUSTOMER</span>':'<span class="badge tag-exist">EXISTING</span>';
+    return '<div class="order-card reveal in">'+
+      '<div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;">'+
+        '<div><b style="color:var(--white);font-family:Sora;">'+o.id+'</b> &nbsp;<span style="color:var(--silver);">'+esc(o.cust)+'</span> '+newTag+
+        '<div style="font-size:0.82rem;color:var(--slate);">'+esc(o.item)+' · ₹'+fmt(o.amt)+' · Ordered: '+o.orderDate+' · Promised dispatch: '+o.promised+(o.bilty?' · 🚚 '+esc(o.bilty):'')+'</div></div>'+
+        '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">'+
+          (di.cls?'<span class="badge '+di.cls+'">DISPATCH: '+di.status+'</span>':'')+
+          '<span class="doer"><b>'+curDoer.charAt(0)+'</b> Current owner: <span style="color:var(--white);">'+curDoer+'</span></span>'+
+          '<span class="badge '+p.cls+'" style="'+(p.cls?'':'background:rgba(255,255,255,0.08);color:var(--silver);')+'">'+p.label+'</span>'+
+          (o.step<STEPS.length-1
+            ? (canMove
+              ? '<button class="btn btn-primary" style="padding:8px 16px;font-size:0.82rem;" onclick="nextStep('+i+')">Next Step →</button>'
+              : '<button class="btn btn-ghost" style="padding:8px 16px;font-size:0.82rem;opacity:0.6;cursor:not-allowed;" onclick="nextStep('+i+')"><i class="fa-solid fa-lock"></i> Locked</button>')
+            : '<span class="badge tag-paid">COMPLETED 🎉</span>')+
+        '</div>'+
+      '</div>'+
+      '<div class="flow-steps">'+stepsHtml+'</div>'+
+      '<div style="font-size:0.8rem;color:var(--slate);">💰 '+p.note+'</div>'+
+    '</div>';
+  }).join("");
+
+  // charts
+  drawPie("dispPie","dispLegend",[
+    {label:"On-time dispatch", val:on, col:"#00FFA3"},
+    {label:"Delayed dispatch", val:delay, col:"#ff6b6b"},
+    {label:"Pending dispatch", val:R.filter(function(o){return !o.dispatchedOn;}).length, col:"#E5A93C"}
+  ]);
+  var nw=R.filter(function(o){return o.isNew;}).length;
+  drawPie("custPie","custLegend",[
+    {label:"New customers", val:nw, col:"#5A9FFF"},
+    {label:"Existing customers", val:R.length-nw, col:"#a78bfa"}
+  ]);
+
+  // top products
+  var prod={};
+  R.forEach(function(o){ prod[o.item]=(prod[o.item]||0)+o.amt; });
+  var top=Object.keys(prod).map(function(k){return {k:k,v:prod[k]};}).sort(function(a,b){return b.v-a.v;}).slice(0,5);
+  var mx=top.length?top[0].v:1;
+  document.getElementById("topProd").innerHTML=top.map(function(t){
+    return '<div class="hbar"><div class="nm">'+esc(t.k)+'</div><div class="tr"><i style="width:'+Math.round(t.v/mx*100)+'%;"></i></div><div style="color:var(--gold);font-weight:700;white-space:nowrap;">₹'+fmt(t.v)+'</div></div>';
+  }).join("")||'<span style="color:var(--slate);font-size:0.85rem;">No data in this range.</span>';
+
+  // trend line (order value by date)
+  var byDate={};
+  R.forEach(function(o){ byDate[o.orderDate]=(byDate[o.orderDate]||0)+o.amt; });
+  var dates=Object.keys(byDate).sort();
+  var svg=document.getElementById("trend");
+  if(dates.length<2){ svg.innerHTML='<text x="300" y="90" fill="#8896b3" font-size="13" text-anchor="middle">Add more orders / widen date range to see the trend</text>'; document.getElementById("trendLbl").innerHTML=""; }
+  else{
+    var mxv=Math.max.apply(null,dates.map(function(d){return byDate[d];}));
+    var pts=dates.map(function(d,i){
+      var x=20+i*(560/(dates.length-1));
+      var y=150-(byDate[d]/mxv)*125;
+      return [x,y];
+    });
+    var poly=pts.map(function(p){return p[0]+","+p[1];}).join(" ");
+    var area=poly+" "+pts[pts.length-1][0]+",160 20,160";
+    svg.innerHTML='<defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3D7EF0" stop-opacity="0.35"/><stop offset="1" stop-color="#3D7EF0" stop-opacity="0"/></linearGradient></defs>'+
+      '<polygon points="'+area+'" fill="url(#g1)"/>'+
+      '<polyline points="'+poly+'" fill="none" stroke="#5A9FFF" stroke-width="2.5"/>'+
+      pts.map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" fill="#E5A93C"/>';}).join("");
+    document.getElementById("trendLbl").innerHTML='<span>'+dates[0]+'</span><span>'+dates[dates.length-1]+'</span>';
+  }
+
+  // customer summary
+  var cs={};
+  R.forEach(function(o){ if(!cs[o.cust]) cs[o.cust]={n:0,v:0,isNew:o.isNew}; cs[o.cust].n++; cs[o.cust].v+=o.amt; });
+  document.getElementById("custTbody").innerHTML=Object.keys(cs).map(function(k){
+    var c=cs[k];
+    return '<tr><td style="color:var(--white);">'+esc(k)+'</td><td>'+c.n+'</td><td style="color:var(--gold);font-weight:700;">₹'+fmt(c.v)+'</td><td>'+(c.isNew?'<span class="badge tag-new">NEW</span>':'<span class="badge tag-exist">EXISTING</span>')+'</td></tr>';
+  }).join("")||'<tr><td colspan="4" style="text-align:center;color:var(--slate);">No data in this range.</td></tr>';
+}
+
+/* ===== Branded exports ===== */
+function rangeLabel(){
+  var f=document.getElementById("fFrom").value||"Beginning", t=document.getElementById("fTo").value||"Today";
+  return f+" to "+t;
+}
+function reportRows(){
+  return orders.filter(inRange).map(function(o){
+    var di=dispatchInfo(o), p=payInfo(o);
+    return [o.id,o.cust,(o.isNew?"New":"Existing"),o.item,o.amt,o.orderDate,o.promised,o.dispatchedOn||"—",di.status,STEPS[Math.min(o.step,8)].l,p.label];
+  });
+}
+function exportPDF(){
+  smLoadLogo(function(){
+    var doc=new jspdf.jsPDF({orientation:"landscape"});
+    var R=orders.filter(inRange);
+    var on=R.filter(function(o){return dispatchInfo(o).onTime===true;}).length;
+    var dl=R.filter(function(o){return dispatchInfo(o).onTime===false;}).length;
+    var y=smBrandHeader(doc,"FMS — Order Flow & Dispatch Report","Period: "+rangeLabel()+"   |   Orders: "+R.length+"   |   On-time dispatch: "+on+"   |   Delayed: "+dl+"   |   Generated: "+new Date().toLocaleString("en-IN"));
+    doc.autoTable({ startY:y, head:[["Order","Customer","Type","Product","Value (Rs)","Order Date","Promised","Dispatched","Dispatch Status","Current Step","Payment"]],
+      body:reportRows(), headStyles:{fillColor:[15,35,71]}, styles:{fontSize:7.8}, margin:{left:8,right:8,bottom:16} });
+    smBrandFinish(doc);
+    doc.save("FMS-Order-Report-SystemMaster.pdf");
+  });
+}
+function exportExcel(){
+  var wb=XLSX.utils.book_new();
+  var brand=smExcelBrandRows("FMS Order Flow & Dispatch Report ("+rangeLabel()+")");
+  var ws=XLSX.utils.aoa_to_sheet(brand.concat([["Order","Customer","Type","Product","Value (Rs)","Order Date","Promised Dispatch","Dispatched On","Dispatch Status","Current Step","Payment Status"]]).concat(reportRows()));
+  XLSX.utils.book_append_sheet(wb,ws,"Orders");
+  XLSX.writeFile(wb,"FMS-Order-Report-SystemMaster.xlsx");
+}
+render();
+</script>
+</body>
+</html>
