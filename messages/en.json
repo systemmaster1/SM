@@ -433,5 +433,38 @@
         "a": "Yes. Multilingual interfaces can be planned for products and custom systems. This website itself supports English and Hindi."
       }
     }
+  },
+  "resourcesPage": {
+    "eyebrow": "Resources & Insights",
+    "title": "Practical guides for software, automation and business systems",
+    "desc": "Explore implementation guides, business automation ideas and practical decision-making resources from SystemMaster.",
+    "featured": "Featured Guides",
+    "allArticles": "Latest Articles",
+    "caseStudies": "Case Studies",
+    "caseStudiesDesc": "See how business problems can be mapped into measurable software and automation outcomes.",
+    "readArticle": "Read Article",
+    "viewCases": "View Case Studies",
+    "minutes": "min read",
+    "ctaTitle": "Need advice for your own workflow?",
+    "ctaDesc": "Share your current process, bottlenecks and tools. We can help identify whether a ready product or custom system is the better fit.",
+    "cta": "Discuss Your Requirement"
+  },
+  "caseStudiesPage": {
+    "eyebrow": "Case Studies",
+    "title": "From operational problems to clear digital workflows",
+    "desc": "These examples show how common business challenges can be converted into structured systems, dashboards and automation.",
+    "challenge": "Challenge",
+    "solution": "Solution",
+    "outcome": "Outcome",
+    "cta": "Build a Similar Solution"
+  },
+  "blogPage": {
+    "back": "Back to Resources",
+    "published": "Published",
+    "category": "Category",
+    "related": "Related Resources",
+    "ctaTitle": "Want to apply this to your business?",
+    "ctaDesc": "Talk to SystemMaster about your workflow, current tools and automation opportunities.",
+    "cta": "Book Free Consultation"
   }
 }
