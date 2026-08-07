@@ -1,18 +1,150 @@
 {
-  "nav":{"home":"Home","products":"Products","services":"Services","industries":"Industries","portfolio":"Portfolio","pricing":"Pricing","about":"About","contact":"Contact","login":"Login","demo":"Book a Free Demo"},
-  "hero":{"badge":"8+ years in business automation","title1":"Run your whole business on","title2":"one intelligent system","desc":"Ready-to-use SaaS products and custom software built for growing businesses — from ERP and HRMS to AI automation, mobile apps and workflow systems.","primary":"Book a Free Demo","secondary":"Explore Products"},
-  "stats":{"yearsValue":"8+","yearsLabel":"Years","productsValue":"3","productsLabel":"Live SaaS","supportValue":"24/7","supportLabel":"Support"},
-  "dashboard":{"title":"Live Business Command Center","subtitle":"All operations connected in real time","live":"LIVE","sales":"Sales Pipeline","salesSub":"14 new qualified leads","workflow":"Workflow Tracker","workflowSub":"29 active tasks","whatsapp":"WhatsApp Agent","whatsappSub":"248 replies automated","reports":"Auto Reports","reportsSub":"Daily report delivered"},
-  "products":{"eyebrow":"Ready-to-use SaaS","title":"Live products your team can start using today","desc":"Choose a production-ready cloud product, or ask us to tailor a complete system around your workflow.","ready":"Ready to Use","visit":"Visit Product","demo":"Book Demo","trial":"Start Free Trial"},
-  "custom":{"eyebrow":"Custom software development","title":"Need software built around your exact process?","desc":"We design, develop and deploy secure business software for your industry, team and growth plan.","cta":"Discuss Your Project"},
-  "industries":{"eyebrow":"Industry solutions","title":"Built for the way your industry works","cardDesc":"ERP, automation and industry-specific workflows."},
-  "why":{"eyebrow":"Why SystemMaster","title":"One partner from discovery to long-term support","secureTitle":"Secure & scalable","secureDesc":"Production-ready architecture and role-based security.","premiumTitle":"Premium experience","premiumDesc":"Professional UI, motion and conversion-focused journeys.","supportTitle":"Long-term support","supportDesc":"Training, maintenance and continuous improvements.","automationTitle":"Automation first","automationDesc":"Reduce repetitive work and make decisions faster."},
-  "cta":{"title":"Ready to make your business run smarter?","desc":"Share your workflow with us. We will recommend a ready product or design a custom solution.","button":"Get Free Consultation"},
-  "productsPage":{"eyebrow":"Ready-to-use cloud software","title":"Start today with proven SystemMaster products","desc":"Choose a live SaaS product for immediate use, or speak with us for a tailored implementation.","ready":"Ready to Use","explore":"Explore","visit":"Visit Product","customEyebrow":"Custom Development","customTitle":"Need a customized version?","customDesc":"We can extend modules, workflows, reports, integrations and permissions around your business.","talk":"Talk to an Expert"},
-  "servicesPage":{"eyebrow":"Custom development","title":"Software built around the way your business works","desc":"From discovery to deployment, we design secure, scalable business systems with clear ownership and long-term support.","cardDesc":"Strategy, UI/UX, development, integrations, testing, deployment and ongoing support.","explore":"Explore Service"},
-  "industriesPage":{"eyebrow":"Industry solutions","title":"Built for real operational workflows","desc":"We combine ready products and custom development for industry-specific processes, reporting and automation.","cardDesc":"ERP, CRM, reporting, mobile workflows and automation designed around industry operations.","explore":"View Solution"},
-  "portfolioPage":{"eyebrow":"Portfolio & live demos","title":"See the systems we can build","desc":"Explore working ERP, workflow, inventory, analytics and performance demonstrations.","cardDesc":"Interactive demonstration of a real business workflow and reporting experience.","openDemo":"Open Live Demo"},
-  "pricingPage":{"eyebrow":"Simple product pricing","title":"Start small. Scale as your team grows.","desc":"Ready-to-use products have transparent pricing. Custom software is scoped after understanding your workflow.","monthlyNote":"Cloud product pricing","viewProduct":"View Product","customEyebrow":"Custom Software","customTitle":"Custom solutions are priced around scope, users and workflow complexity.","customDesc":"Tell us what you need. We will recommend a practical architecture and commercial proposal.","requestQuote":"Request a Quote"},
-  "contactPage":{"eyebrow":"Free consultation","title":"Tell us what you want to automate","desc":"Share your business process and challenges. We will suggest the most practical product or custom solution.","contactTitle":"Contact SystemMaster","whatsapp":"Chat on WhatsApp","name":"Name","company":"Company","phone":"Phone","email":"Email","requirement":"Requirement / Business Process","submit":"Send Requirement"},
-  "footer":{"desc":"Business software, AI automation and custom digital systems for ambitious companies.","company":"Company","solutions":"Solutions","contact":"Contact","about":"About","portfolio":"Portfolio","contactLink":"Contact","products":"Products","services":"Services","industries":"Industries"}
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "services": "Services",
+    "industries": "Industries",
+    "portfolio": "Portfolio",
+    "pricing": "Pricing",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "demo": "Book a Free Demo"
+  },
+  "hero": {
+    "badge": "8+ years in business automation",
+    "title1": "Run your whole business on",
+    "title2": "one intelligent system",
+    "desc": "Ready-to-use SaaS products and custom software built for growing businesses — from ERP and HRMS to AI automation, mobile apps and workflow systems.",
+    "primary": "Book a Free Demo",
+    "secondary": "Explore Products"
+  },
+  "stats": {
+    "yearsValue": "8+",
+    "yearsLabel": "Years",
+    "productsValue": "3",
+    "productsLabel": "Live SaaS",
+    "supportValue": "24/7",
+    "supportLabel": "Support"
+  },
+  "dashboard": {
+    "title": "Live Business Command Center",
+    "subtitle": "All operations connected in real time",
+    "live": "LIVE",
+    "sales": "Sales Pipeline",
+    "salesSub": "14 new qualified leads",
+    "workflow": "Workflow Tracker",
+    "workflowSub": "29 active tasks",
+    "whatsapp": "WhatsApp Agent",
+    "whatsappSub": "248 replies automated",
+    "reports": "Auto Reports",
+    "reportsSub": "Daily report delivered"
+  },
+  "products": {
+    "eyebrow": "Ready-to-use SaaS",
+    "title": "Live products your team can start using today",
+    "desc": "Choose a production-ready cloud product, or ask us to tailor a complete system around your workflow.",
+    "ready": "Ready to Use",
+    "visit": "Visit Product",
+    "demo": "Book Demo",
+    "trial": "Start Free Trial"
+  },
+  "custom": {
+    "eyebrow": "Custom software development",
+    "title": "Need software built around your exact process?",
+    "desc": "We design, develop and deploy secure business software for your industry, team and growth plan.",
+    "cta": "Discuss Your Project"
+  },
+  "industries": {
+    "eyebrow": "Industry solutions",
+    "title": "Built for the way your industry works",
+    "cardDesc": "ERP, automation and industry-specific workflows."
+  },
+  "why": {
+    "eyebrow": "Why SystemMaster",
+    "title": "One partner from discovery to long-term support",
+    "secureTitle": "Secure & scalable",
+    "secureDesc": "Production-ready architecture and role-based security.",
+    "premiumTitle": "Premium experience",
+    "premiumDesc": "Professional UI, motion and conversion-focused journeys.",
+    "supportTitle": "Long-term support",
+    "supportDesc": "Training, maintenance and continuous improvements.",
+    "automationTitle": "Automation first",
+    "automationDesc": "Reduce repetitive work and make decisions faster."
+  },
+  "cta": {
+    "title": "Ready to make your business run smarter?",
+    "desc": "Share your workflow with us. We will recommend a ready product or design a custom solution.",
+    "button": "Get Free Consultation"
+  },
+  "productsPage": {
+    "eyebrow": "Ready-to-use cloud software",
+    "title": "Start today with proven SystemMaster products",
+    "desc": "Choose a live SaaS product for immediate use, or speak with us for a tailored implementation.",
+    "ready": "Ready to Use",
+    "explore": "Explore",
+    "visit": "Visit Product",
+    "customEyebrow": "Custom Development",
+    "customTitle": "Need a customized version?",
+    "customDesc": "We can extend modules, workflows, reports, integrations and permissions around your business.",
+    "talk": "Talk to an Expert"
+  },
+  "servicesPage": {
+    "eyebrow": "Custom development",
+    "title": "Software built around the way your business works",
+    "desc": "From discovery to deployment, we design secure, scalable business systems with clear ownership and long-term support.",
+    "cardDesc": "Strategy, UI/UX, development, integrations, testing, deployment and ongoing support.",
+    "explore": "Explore Service"
+  },
+  "industriesPage": {
+    "eyebrow": "Industry solutions",
+    "title": "Built for real operational workflows",
+    "desc": "We combine ready products and custom development for industry-specific processes, reporting and automation.",
+    "cardDesc": "ERP, CRM, reporting, mobile workflows and automation designed around industry operations.",
+    "explore": "View Solution"
+  },
+  "portfolioPage": {
+    "eyebrow": "Portfolio & live demos",
+    "title": "Explore real business system experiences",
+    "desc": "See interactive ERP, workflow, inventory, manufacturing, analytics and automation demos — then ask us to tailor one around your business.",
+    "cardDesc": "Explore a practical business workflow and reporting experience.",
+    "openDemo": "Open Live Demo",
+    "viewProject": "View Details"
+  },
+  "pricingPage": {
+    "eyebrow": "Simple product pricing",
+    "title": "Start small. Scale as your team grows.",
+    "desc": "Ready-to-use products have transparent pricing. Custom software is scoped after understanding your workflow.",
+    "monthlyNote": "Cloud product pricing",
+    "viewProduct": "View Product",
+    "customEyebrow": "Custom Software",
+    "customTitle": "Custom solutions are priced around scope, users and workflow complexity.",
+    "customDesc": "Tell us what you need. We will recommend a practical architecture and commercial proposal.",
+    "requestQuote": "Request a Quote"
+  },
+  "contactPage": {
+    "eyebrow": "Free consultation",
+    "title": "Tell us what you want to automate",
+    "desc": "Share your business process and challenges. We will suggest the most practical product or custom solution.",
+    "contactTitle": "Contact SystemMaster",
+    "whatsapp": "Chat on WhatsApp",
+    "name": "Name",
+    "company": "Company",
+    "phone": "Phone",
+    "email": "Email",
+    "requirement": "Requirement / Business Process",
+    "submit": "Send Requirement"
+  },
+  "footer": {
+    "desc": "Business software, AI automation and custom digital systems for ambitious companies.",
+    "company": "Company",
+    "solutions": "Solutions",
+    "contact": "Contact",
+    "about": "About",
+    "portfolio": "Portfolio",
+    "contactLink": "Contact",
+    "products": "Products",
+    "services": "Services",
+    "industries": "Industries"
+  }
 }
