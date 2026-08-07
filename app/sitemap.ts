@@ -1,4 +1,16 @@
 import type {MetadataRoute} from 'next';
 import {productSlugs,serviceSlugs} from '@/data/catalog';
 import {industrySlugs} from '@/data/industries';
-export default function sitemap():MetadataRoute.Sitemap{const base='https://systemmaster.in';const locales=['en','hi'];const core=['','products','services','industries','portfolio','pricing','about','contact','privacy','terms'];const entries:MetadataRoute.Sitemap=[];for(const locale of locales){for(const path of core){entries.push({url:`${base}/${locale}${path?`/${path}`:''}`,lastModified:new Date(),changeFrequency:path?'monthly':'weekly',priority:path?0.8:1});}for(const slug of productSlugs)entries.push({url:`${base}/${locale}/products/${slug}`,lastModified:new Date(),changeFrequency:'monthly',priority:.9});for(const slug of serviceSlugs)entries.push({url:`${base}/${locale}/services/${slug}`,lastModified:new Date(),changeFrequency:'monthly',priority:.85});for(const slug of industrySlugs)entries.push({url:`${base}/${locale}/industries/${slug}`,lastModified:new Date(),changeFrequency:'monthly',priority:.85});}return entries;}
+import {portfolioSlugs} from '@/data/portfolio';
+
+export default function sitemap():MetadataRoute.Sitemap{
+ const base='https://systemmaster.in';const locales=['en','hi'];const core=['','products','services','industries','portfolio','pricing','about','contact','privacy','terms'];const entries:MetadataRoute.Sitemap=[];
+ for(const locale of locales){
+  for(const path of core)entries.push({url:`${base}/${locale}${path?`/${path}`:''}`,lastModified:new Date(),changeFrequency:path?'monthly':'weekly',priority:path?0.8:1});
+  for(const slug of productSlugs)entries.push({url:`${base}/${locale}/products/${slug}`,lastModified:new Date(),changeFrequency:'monthly',priority:.9});
+  for(const slug of serviceSlugs)entries.push({url:`${base}/${locale}/services/${slug}`,lastModified:new Date(),changeFrequency:'monthly',priority:.85});
+  for(const slug of industrySlugs)entries.push({url:`${base}/${locale}/industries/${slug}`,lastModified:new Date(),changeFrequency:'monthly',priority:.85});
+  for(const slug of portfolioSlugs)entries.push({url:`${base}/${locale}/portfolio/${slug}`,lastModified:new Date(),changeFrequency:'monthly',priority:.8});
+ }
+ return entries;
+}
