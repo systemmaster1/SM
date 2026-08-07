@@ -1,6 +1,8 @@
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {IndustryDetailPage} from '@/components/pages/industry-detail-page';
+import {BreadcrumbSchema} from '@/components/seo/breadcrumb-schema';
+import {ServiceSchema} from '@/components/seo/entity-schema';
 import {industryDetails, industrySlugs} from '@/data/industries';
 import type {Locale} from '@/data/catalog';
 
@@ -20,15 +22,16 @@ export async function generateMetadata({
 
   if (!industry) return {};
 
-  const currentLocale: Locale = locale === 'hi' ? 'hi' : 'en';
-  const title = `${industry.name[currentLocale]} | SystemMaster Automations`;
-  const description = industry.description[currentLocale];
+  const l: Locale = locale === 'hi' ? 'hi' : 'en';
+  const title = `${industry.name[l]} | SystemMaster Automations`;
+  const description = industry.description[l];
+  const canonical = `https://systemmaster.in/${l}/industries/${industry.slug}`;
 
   return {
     title,
     description,
     alternates: {
-      canonical: `https://systemmaster.in/${currentLocale}/industries/${industry.slug}`,
+      canonical,
       languages: {
         en: `https://systemmaster.in/en/industries/${industry.slug}`,
         hi: `https://systemmaster.in/hi/industries/${industry.slug}`
@@ -37,8 +40,16 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://systemmaster.in/${currentLocale}/industries/${industry.slug}`,
-      type: 'website'
+      url: canonical,
+      siteName: 'SystemMaster Automations',
+      type: 'website',
+      images: ['/opengraph-image']
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/opengraph-image']
     }
   };
 }
@@ -53,10 +64,24 @@ export default async function Page({
 
   if (!industry) notFound();
 
+  const l: Locale = locale === 'hi' ? 'hi' : 'en';
+  const pageUrl = `https://systemmaster.in/${l}/industries/${industry.slug}`;
+
   return (
-    <IndustryDetailPage
-      industry={industry}
-      locale={locale === 'hi' ? 'hi' : 'en'}
-    />
+    <>
+      <BreadcrumbSchema
+        items={[
+          {name: 'SystemMaster', url: `https://systemmaster.in/${l}`},
+          {name: l === 'hi' ? 'इंडस्ट्री' : 'Industries', url: `https://systemmaster.in/${l}/industries`},
+          {name: industry.name[l], url: pageUrl}
+        ]}
+      />
+      <ServiceSchema
+        name={`${industry.name[l]} ${l === 'hi' ? 'बिजनेस सॉफ्टवेयर समाधान' : 'Business Software Solutions'}`}
+        description={industry.description[l]}
+        url={pageUrl}
+      />
+      <IndustryDetailPage industry={industry} locale={l} />
+    </>
   );
 }
