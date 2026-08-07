@@ -10,7 +10,9 @@
     "contact": "Contact",
     "login": "Login",
     "demo": "Book a Free Demo",
-    "resources": "Resources"
+    "resources": "Resources",
+    "blog": "Blog",
+    "caseStudies": "Case Studies"
   },
   "hero": {
     "badge": "8+ years in business automation",
@@ -154,7 +156,10 @@
     "terms": "Terms & Conditions",
     "rights": "All rights reserved.",
     "whatsapp": "WhatsApp",
-    "bookDemo": "Book a Demo"
+    "bookDemo": "Book a Demo",
+    "resources": "Resources",
+    "guides": "Guides & Insights",
+    "caseStudies": "Case Studies"
   },
   "aboutPage": {
     "eyebrow": "About SystemMaster",
@@ -447,7 +452,13 @@
     "minutes": "min read",
     "ctaTitle": "Need advice for your own workflow?",
     "ctaDesc": "Share your current process, bottlenecks and tools. We can help identify whether a ready product or custom system is the better fit.",
-    "cta": "Discuss Your Requirement"
+    "cta": "Discuss Your Requirement",
+    "seoTitle": "ERP, CRM, Automation & Business Software Resources",
+    "seoDescription": "Practical guides and insights for ERP, CRM, HRMS, manufacturing systems, WhatsApp automation and custom software planning.",
+    "browseByTopic": "Browse by Topic",
+    "topicAll": "All",
+    "featuredLabel": "Featured",
+    "articleCount": "articles"
   },
   "caseStudiesPage": {
     "eyebrow": "Case Studies",
