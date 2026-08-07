@@ -282,5 +282,100 @@
       "desc": "Tell us your process, current tools and bottlenecks. We will help you decide whether a ready SystemMaster product or a custom solution fits better.",
       "button": "Get Free Consultation"
     }
+  },
+  "homeTrust": {
+    "tech": {
+      "eyebrow": "Technology & Delivery",
+      "title": "Modern technology, selected for business reliability",
+      "desc": "We use proven web, cloud, database, automation and AI tools according to the real requirements of each project."
+    },
+    "process": {
+      "eyebrow": "Implementation Process",
+      "title": "A transparent path from requirement to go-live",
+      "desc": "Every project moves through clear stages so scope, responsibility and delivery expectations stay visible.",
+      "steps": {
+        "discovery": {
+          "title": "Discovery",
+          "desc": "Understand goals, workflows, users and current systems."
+        },
+        "planning": {
+          "title": "Planning",
+          "desc": "Define scope, architecture, roles, integrations and milestones."
+        },
+        "design": {
+          "title": "UI/UX",
+          "desc": "Design responsive, role-focused and easy-to-use screens."
+        },
+        "build": {
+          "title": "Development",
+          "desc": "Build modular features with clean, maintainable code."
+        },
+        "test": {
+          "title": "Testing",
+          "desc": "Validate workflows, permissions, devices and edge cases."
+        },
+        "launch": {
+          "title": "Go Live",
+          "desc": "Deploy, hand over and prepare the system for real usage."
+        }
+      }
+    },
+    "trust": {
+      "eyebrow": "Built for Business Confidence",
+      "title": "More than development — clarity, ownership and long-term usability",
+      "desc": "The goal is not only to deliver software, but to create a system your team can depend on.",
+      "items": {
+        "ownership": {
+          "title": "Clear project ownership",
+          "desc": "Defined scope, deliverables and handover for custom projects."
+        },
+        "security": {
+          "title": "Secure by design",
+          "desc": "Role-based access, input validation and secure deployment practices."
+        },
+        "scale": {
+          "title": "Ready to scale",
+          "desc": "Architecture designed for more users, branches, modules and integrations."
+        },
+        "support": {
+          "title": "Post-launch support",
+          "desc": "Improvements, maintenance and future expansion can continue after launch."
+        },
+        "responsive": {
+          "title": "Mobile-ready UX",
+          "desc": "Interfaces are designed for desktop, tablet and mobile usage."
+        },
+        "integration": {
+          "title": "Integration-friendly",
+          "desc": "APIs and third-party services can be connected when the workflow requires them."
+        }
+      }
+    },
+    "productsProof": {
+      "eyebrow": "Already Live",
+      "title": "Start with a ready product or build exactly what your business needs",
+      "desc": "SystemMaster offers live SaaS products for immediate use and custom development for unique workflows.",
+      "ready": "Ready-to-use SaaS",
+      "custom": "Custom software",
+      "readyDesc": "Live cloud products with defined pricing and quick onboarding.",
+      "customDesc": "Tailored ERP, CRM, apps and automation based on your process.",
+      "productsCta": "View Products",
+      "customCta": "Discuss Custom Project"
+    },
+    "founder": {
+      "eyebrow": "Founder-led Product Thinking",
+      "title": "Direct focus on practical business outcomes",
+      "desc": "SystemMaster is led with a practical approach: understand the workflow, reduce manual work, improve visibility and build systems that teams can actually use.",
+      "name": "Sunil Tiwari",
+      "role": "Founder, SystemMaster Automations",
+      "cta": "About SystemMaster"
+    },
+    "final": {
+      "badge": "Ready to modernize your operations?",
+      "title": "Choose a live product or discuss a custom business system",
+      "desc": "Tell us what your team currently manages in Excel, WhatsApp, disconnected apps or manual reports. We will help map the right next step.",
+      "primary": "Book Free Consultation",
+      "secondary": "Explore Portfolio"
+    }
   }
 }
