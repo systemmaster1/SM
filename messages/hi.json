@@ -146,5 +146,141 @@
     "products": "प्रोडक्ट्स",
     "services": "सेवाएँ",
     "industries": "इंडस्ट्री"
+  },
+  "aboutPage": {
+    "eyebrow": "SystemMaster के बारे में",
+    "title": "वास्तविक बिजनेस वर्कफ़्लो के अनुसार बनाए गए एंटरप्राइज सॉफ्टवेयर, ऑटोमेशन और डिजिटल सिस्टम",
+    "desc": "SystemMaster Automations बढ़ते व्यवसायों को रेडी-टू-यूज़ SaaS प्रोडक्ट और कस्टम सॉफ्टवेयर अपनाने में मदद करता है, बिना उनकी टीम को कठोर और अनावश्यक प्रक्रियाओं में बाँधे।",
+    "primary": "अपने प्रोजेक्ट पर चर्चा करें",
+    "secondary": "प्रोडक्ट देखें",
+    "stats": {
+      "years": "बिजनेस ऑटोमेशन में वर्ष",
+      "products": "लाइव रेडी-टू-यूज़ SaaS प्रोडक्ट",
+      "services": "सॉल्यूशन और डेवलपमेंट श्रेणियाँ",
+      "languages": "वेबसाइट भाषाएँ"
+    },
+    "mission": {
+      "eyebrow": "हमारा मिशन",
+      "title": "बिजनेस सॉफ्टवेयर को सरल, जुड़ा हुआ और व्यावहारिक बनाना",
+      "desc": "हमारा मिशन बिखरे हुए टूल, बार-बार होने वाले मैनुअल काम और अलग-अलग रिपोर्टिंग को कम करना है, ताकि लोग, प्रक्रियाएँ और डेटा एक जुड़े हुए सिस्टम में काम कर सकें।"
+    },
+    "vision": {
+      "eyebrow": "हमारी दृष्टि",
+      "title": "बढ़ते व्यवसायों के लिए एक इंटेलिजेंट ऑपरेटिंग लेयर",
+      "desc": "हम ऐसे भविष्य की दिशा में काम कर रहे हैं जहाँ बिजनेस सेल्स, टीम, फाइनेंस, ऑपरेशंस, ऑटोमेशन और निर्णय लेने की प्रक्रिया को जुड़े हुए डिजिटल सिस्टम से संभाल सके।"
+    },
+    "why": {
+      "eyebrow": "SystemMaster क्यों",
+      "title": "सिर्फ लॉन्च के लिए नहीं, लंबे समय के बिजनेस उपयोग के लिए बनाया गया",
+      "items": {
+        "architecture": {
+          "title": "स्केलेबल आर्किटेक्चर",
+          "desc": "आधुनिक और मॉड्यूलर सिस्टम जो यूज़र, ब्रांच, वर्कफ़्लो और इंटीग्रेशन के साथ बढ़ सकें।"
+        },
+        "workflow": {
+          "title": "वर्कफ़्लो-फर्स्ट अप्रोच",
+          "desc": "रेडी प्रोडक्ट सुझाने या कस्टम सॉफ्टवेयर बनाने से पहले हम समझते हैं कि आपकी टीम वास्तव में कैसे काम करती है।"
+        },
+        "automation": {
+          "title": "ऑटोमेशन सोच",
+          "desc": "हम दोहराए जाने वाले काम, देरी और मैनुअल रिपोर्टिंग को पहचानकर उन्हें ऑटोमेशन से सरल बनाने के अवसर खोजते हैं।"
+        },
+        "support": {
+          "title": "लॉन्ग-टर्म सपोर्ट",
+          "desc": "डिप्लॉयमेंट अंतिम चरण नहीं है। हम उपयोग, सुधार, मेंटेनेंस और भविष्य की स्केलिंग को भी ध्यान में रखते हैं।"
+        }
+      }
+    },
+    "timeline": {
+      "eyebrow": "कंपनी की यात्रा",
+      "title": "ऑटोमेशन प्रोजेक्ट से जुड़े हुए SaaS इकोसिस्टम तक",
+      "items": {
+        "foundation": {
+          "title": "बिजनेस ऑटोमेशन की नींव",
+          "desc": "व्यावहारिक ऑटोमेशन के जरिए वर्कफ़्लो और रिपोर्टिंग की समस्याएँ हल करना शुरू किया।"
+        },
+        "systems": {
+          "title": "कस्टम बिजनेस सिस्टम",
+          "desc": "ERP जैसे वर्कफ़्लो, डैशबोर्ड और ऑपरेशनल टूल तक विस्तार किया।"
+        },
+        "products": {
+          "title": "रेडी-टू-यूज़ SaaS प्रोडक्ट",
+          "desc": "अकाउंटिंग, HRMS, टास्क मैनेजमेंट, ERP और CRM के लाइव प्रोडक्ट लॉन्च किए।"
+        },
+        "ai": {
+          "title": "AI और वर्कफ़्लो ऑटोमेशन",
+          "desc": "AI एजेंट, WhatsApp ऑटोमेशन और जुड़े हुए वर्कफ़्लो की क्षमताएँ जोड़ीं।"
+        },
+        "platform": {
+          "title": "यूनिफाइड बिजनेस प्लेटफ़ॉर्म विज़न",
+          "desc": "रेडी प्रोडक्ट और कस्टम एंटरप्राइज डेवलपमेंट को जोड़ने वाला व्यापक इकोसिस्टम विकसित कर रहे हैं।"
+        }
+      }
+    },
+    "process": {
+      "eyebrow": "हम कैसे काम करते हैं",
+      "title": "Requirement से deployment तक एक स्पष्ट प्रक्रिया",
+      "items": {
+        "discovery": {
+          "title": "डिस्कवरी",
+          "desc": "लक्ष्य, यूज़र, प्रोसेस गैप और वर्तमान टूल समझना।"
+        },
+        "planning": {
+          "title": "प्लानिंग",
+          "desc": "स्कोप, आर्किटेक्चर, इंटीग्रेशन और डिलीवरी प्राथमिकताएँ तय करना।"
+        },
+        "design": {
+          "title": "UI/UX डिजाइन",
+          "desc": "स्पष्ट, responsive और role-focused user experience बनाना।"
+        },
+        "development": {
+          "title": "डेवलपमेंट",
+          "desc": "मॉड्यूलर, सुरक्षित और maintainable features बनाना।"
+        },
+        "testing": {
+          "title": "टेस्टिंग",
+          "desc": "वर्कफ़्लो, permissions, responsive behavior और edge cases validate करना।"
+        },
+        "deployment": {
+          "title": "डिप्लॉयमेंट",
+          "desc": "Production configuration, handover और monitoring readiness के साथ launch करना।"
+        },
+        "support": {
+          "title": "सपोर्ट",
+          "desc": "बिजनेस के बढ़ने के साथ system को improve, maintain और extend करना।"
+        }
+      }
+    },
+    "technology": {
+      "eyebrow": "टेक्नोलॉजी",
+      "title": "विश्वसनीय वेब, ऐप और ऑटोमेशन प्रोजेक्ट के लिए आधुनिक टेक्नोलॉजी",
+      "desc": "हम project requirement, scale, security और maintainability के अनुसार technology चुनते हैं।"
+    },
+    "trust": {
+      "eyebrow": "एंटरप्राइज भरोसा",
+      "title": "स्पष्ट ownership, सुरक्षित development और practical delivery",
+      "items": {
+        "source": "कस्टम प्रोजेक्ट के लिए source-code handover",
+        "security": "Role-based access और सुरक्षित development practices",
+        "responsive": "Responsive web और mobile-ready experiences",
+        "cloud": "Cloud-ready deployment architecture",
+        "integration": "API और third-party integration support",
+        "documentation": "Structured handover और implementation guidance"
+      }
+    },
+    "founder": {
+      "eyebrow": "फाउंडर",
+      "role": "Founder, SystemMaster Automations",
+      "desc": "व्यावहारिक सॉफ्टवेयर, ऑटोमेशन और जुड़े हुए बिजनेस सिस्टम बनाने पर केंद्रित, ताकि मैनुअल काम कम हो और ऑपरेशंस की visibility बेहतर हो।",
+      "email": "ईमेल",
+      "call": "कॉल",
+      "whatsapp": "WhatsApp",
+      "meeting": "मीटिंग बुक करें"
+    },
+    "cta": {
+      "title": "अपने बिजनेस सिस्टम पर चर्चा करने के लिए तैयार हैं?",
+      "desc": "अपना process, current tools और bottlenecks बताइए। हम आपको बताएँगे कि SystemMaster का ready product बेहतर रहेगा या custom solution।",
+      "button": "फ्री कंसल्टेशन लें"
+    }
   }
 }
