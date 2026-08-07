@@ -9,7 +9,8 @@
     "about": "हमारे बारे में",
     "contact": "संपर्क",
     "login": "लॉगिन",
-    "demo": "फ्री डेमो बुक करें"
+    "demo": "फ्री डेमो बुक करें",
+    "resources": "रिसोर्स"
   },
   "hero": {
     "badge": "बिजनेस ऑटोमेशन में 8+ वर्ष",
@@ -145,7 +146,15 @@
     "contactLink": "संपर्क",
     "products": "प्रोडक्ट्स",
     "services": "सेवाएँ",
-    "industries": "इंडस्ट्री"
+    "industries": "इंडस्ट्री",
+    "readyProducts": "रेडी प्रोडक्ट",
+    "customDevelopment": "कस्टम डेवलपमेंट",
+    "legal": "कानूनी",
+    "privacy": "प्राइवेसी पॉलिसी",
+    "terms": "नियम और शर्तें",
+    "rights": "सर्वाधिकार सुरक्षित।",
+    "whatsapp": "WhatsApp",
+    "bookDemo": "डेमो बुक करें"
   },
   "aboutPage": {
     "eyebrow": "SystemMaster के बारे में",
@@ -376,6 +385,53 @@
       "desc": "बताइए आपकी team अभी Excel, WhatsApp, अलग-अलग apps या manual reports में क्या manage करती है। हम सही अगला कदम तय करने में मदद करेंगे।",
       "primary": "फ्री कंसल्टेशन बुक करें",
       "secondary": "पोर्टफोलियो देखें"
+    }
+  },
+  "faq": {
+    "eyebrow": "अक्सर पूछे जाने वाले सवाल",
+    "title": "SystemMaster चुनने से पहले व्यवसाय आमतौर पर क्या पूछते हैं",
+    "desc": "रेडी प्रोडक्ट, कस्टम डेवलपमेंट, डिप्लॉयमेंट, ownership और support से जुड़े स्पष्ट जवाब।",
+    "items": {
+      "ready": {
+        "q": "SystemMaster के कौन से प्रोडक्ट तुरंत उपयोग के लिए तैयार हैं?",
+        "a": "SM-Books Accounting Software, SM-HRMS + Task Management और SM-ERP + CRM लाइव cloud products हैं। यदि standard workflow आपकी जरूरत से मेल खाता है, तो आप ready product से जल्दी शुरू कर सकते हैं।"
+      },
+      "custom": {
+        "q": "क्या आप हमारे exact workflow के अनुसार software बना सकते हैं?",
+        "a": "हाँ। Custom ERP, CRM, HRMS, dashboards, portals, mobile apps, workflow automation, AI solutions और integrations आपके process के अनुसार design किए जा सकते हैं।"
+      },
+      "difference": {
+        "q": "Ready product और custom development में क्या अंतर है?",
+        "a": "Ready products पहले से developed होते हैं और published pricing पर जल्दी adopt किए जा सकते हैं। Custom development आपके unique workflow, integrations, roles और business rules के अनुसार scope किया जाता है।"
+      },
+      "ownership": {
+        "q": "क्या custom project का source code हमें मिलेगा?",
+        "a": "Source-code ownership और handover project scope तथा commercial agreement में स्पष्ट रूप से तय किया जा सकता है। Development शुरू होने से पहले ownership terms clear रखे जाते हैं।"
+      },
+      "deployment": {
+        "q": "क्या software हमारे domain या cloud account पर deploy हो सकता है?",
+        "a": "हाँ, project architecture के अनुसार। Solution को Vercel, AWS, Supabase, अन्य supported cloud services या client-controlled environment के लिए plan किया जा सकता है।"
+      },
+      "mobile": {
+        "q": "क्या system mobile पर भी काम करेगा?",
+        "a": "Responsive web applications desktop, tablet और mobile के लिए design की जाती हैं। जरूरत होने पर dedicated mobile application भी develop किया जा सकता है।"
+      },
+      "integration": {
+        "q": "क्या SystemMaster WhatsApp, APIs या existing tools से integrate कर सकता है?",
+        "a": "हाँ। Technical feasibility के अनुसार API integrations, WhatsApp Business integrations, payment gateways, Google services, workflow platforms और अन्य supported systems जोड़े जा सकते हैं।"
+      },
+      "timeline": {
+        "q": "Custom software project में कितना समय लगता है?",
+        "a": "यह scope, modules, integrations और approval cycles पर निर्भर करता है। Discovery के बाद हम realistic milestones और implementation plan तय करते हैं।"
+      },
+      "support": {
+        "q": "Deployment के बाद support मिलता है?",
+        "a": "हाँ। Launch के बाद agreed support model के अनुसार maintenance, improvements, support और future modules plan किए जा सकते हैं।"
+      },
+      "language": {
+        "q": "क्या software English और Hindi support कर सकता है?",
+        "a": "हाँ। Products और custom systems में multilingual interface plan किया जा सकता है। यह website भी English और Hindi support करती है।"
+      }
     }
   }
 }
