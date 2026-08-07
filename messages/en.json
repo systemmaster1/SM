@@ -9,7 +9,8 @@
     "about": "About",
     "contact": "Contact",
     "login": "Login",
-    "demo": "Book a Free Demo"
+    "demo": "Book a Free Demo",
+    "resources": "Resources"
   },
   "hero": {
     "badge": "8+ years in business automation",
@@ -145,7 +146,15 @@
     "contactLink": "Contact",
     "products": "Products",
     "services": "Services",
-    "industries": "Industries"
+    "industries": "Industries",
+    "readyProducts": "Ready Products",
+    "customDevelopment": "Custom Development",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "rights": "All rights reserved.",
+    "whatsapp": "WhatsApp",
+    "bookDemo": "Book a Demo"
   },
   "aboutPage": {
     "eyebrow": "About SystemMaster",
@@ -376,6 +385,53 @@
       "desc": "Tell us what your team currently manages in Excel, WhatsApp, disconnected apps or manual reports. We will help map the right next step.",
       "primary": "Book Free Consultation",
       "secondary": "Explore Portfolio"
+    }
+  },
+  "faq": {
+    "eyebrow": "Frequently Asked Questions",
+    "title": "Questions businesses ask before choosing SystemMaster",
+    "desc": "Clear answers about ready products, custom development, deployment, ownership and support.",
+    "items": {
+      "ready": {
+        "q": "Which SystemMaster products are ready to use?",
+        "a": "SM-Books Accounting Software, SM-HRMS + Task Management, and SM-ERP + CRM are live cloud products. Businesses can choose a ready product when the standard workflow fits their requirement."
+      },
+      "custom": {
+        "q": "Can you build software according to our exact workflow?",
+        "a": "Yes. Custom ERP, CRM, HRMS, dashboards, portals, mobile apps, workflow automation, AI solutions and integrations can be designed around your process."
+      },
+      "difference": {
+        "q": "What is the difference between a ready product and custom development?",
+        "a": "Ready products are already developed and can be adopted quickly at published pricing. Custom development is scoped around your unique workflow, integrations, roles and business rules."
+      },
+      "ownership": {
+        "q": "Do we get source code for custom projects?",
+        "a": "Source-code ownership and handover can be defined in the project scope and commercial agreement. We keep ownership terms clear before development begins."
+      },
+      "deployment": {
+        "q": "Can the software be deployed on our domain or cloud account?",
+        "a": "Yes, depending on the project architecture. Solutions can be planned for Vercel, AWS, Supabase, other supported cloud services, or client-controlled environments."
+      },
+      "mobile": {
+        "q": "Will the system work on mobile devices?",
+        "a": "Responsive web applications are designed for desktop, tablet and mobile. Dedicated mobile applications can also be developed where the use case requires them."
+      },
+      "integration": {
+        "q": "Can SystemMaster integrate WhatsApp, APIs or existing tools?",
+        "a": "Yes. API integrations, WhatsApp Business integrations, payment gateways, Google services, workflow platforms and other supported systems can be connected based on technical feasibility."
+      },
+      "timeline": {
+        "q": "How long does a custom software project take?",
+        "a": "It depends on scope, modules, integrations and approval cycles. After discovery, we define milestones and an implementation plan instead of giving an unrealistic one-size-fits-all timeline."
+      },
+      "support": {
+        "q": "Do you provide support after deployment?",
+        "a": "Yes. Support, maintenance, improvements and future module development can be planned after launch according to the agreed support model."
+      },
+      "language": {
+        "q": "Can the software support English and Hindi?",
+        "a": "Yes. Multilingual interfaces can be planned for products and custom systems. This website itself supports English and Hindi."
+      }
     }
   }
 }
