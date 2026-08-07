@@ -39,6 +39,7 @@ export function Header() {
     ['industries', 'industries'],
     ['portfolio', 'portfolio'],
     ['pricing', 'pricing'],
+    ['resources', 'resources'],
     ['about', 'about']
   ] as const;
 
