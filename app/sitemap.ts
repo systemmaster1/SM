@@ -1,12 +1,13 @@
 import type {MetadataRoute} from 'next';
 import {articles} from '@/data/resources';
 import {portfolioProjects} from '@/data/portfolio';
-import {industries} from '@/data/industries';
-import {products, services} from '@/data/catalog';
+import {industryDetails} from '@/data/industries';
+import {productDetails, serviceDetails} from '@/data/catalog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = 'https://systemmaster.in';
-  const locales = ['en', 'hi'];
+  const locales = ['en', 'hi'] as const;
+
   const staticRoutes = [
     '',
     '/products',
@@ -20,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/terms',
     '/resources',
     '/resources/case-studies'
-  ];
+  ] as const;
 
   const urls: MetadataRoute.Sitemap = [];
 
@@ -33,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
 
-    for (const product of products) {
+    for (const product of productDetails) {
       urls.push({
         url: `${base}/${locale}/products/${product.slug}`,
         changeFrequency: 'monthly',
@@ -41,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
 
-    for (const service of services) {
+    for (const service of serviceDetails) {
       urls.push({
         url: `${base}/${locale}/services/${service.slug}`,
         changeFrequency: 'monthly',
@@ -49,7 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
 
-    for (const industry of industries) {
+    for (const industry of industryDetails) {
       urls.push({
         url: `${base}/${locale}/industries/${industry.slug}`,
         changeFrequency: 'monthly',
@@ -68,7 +69,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     for (const article of articles) {
       urls.push({
         url: `${base}/${locale}/resources/blog/${article.slug}`,
-        lastModified: article.publishedAt,
+        lastModified: new Date(article.publishedAt),
         changeFrequency: 'monthly',
         priority: 0.65
       });
