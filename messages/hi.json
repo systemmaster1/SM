@@ -282,5 +282,100 @@
       "desc": "अपना process, current tools और bottlenecks बताइए। हम आपको बताएँगे कि SystemMaster का ready product बेहतर रहेगा या custom solution।",
       "button": "फ्री कंसल्टेशन लें"
     }
+  },
+  "homeTrust": {
+    "tech": {
+      "eyebrow": "टेक्नोलॉजी और डिलीवरी",
+      "title": "बिजनेस की विश्वसनीयता के लिए चुनी गई आधुनिक टेक्नोलॉजी",
+      "desc": "हम हर प्रोजेक्ट की वास्तविक जरूरत के अनुसार भरोसेमंद वेब, क्लाउड, डेटाबेस, ऑटोमेशन और AI टेक्नोलॉजी का उपयोग करते हैं।"
+    },
+    "process": {
+      "eyebrow": "इम्प्लीमेंटेशन प्रक्रिया",
+      "title": "Requirement से go-live तक एक पारदर्शी प्रक्रिया",
+      "desc": "हर प्रोजेक्ट स्पष्ट चरणों से गुजरता है, ताकि scope, responsibility और delivery expectations साफ रहें।",
+      "steps": {
+        "discovery": {
+          "title": "डिस्कवरी",
+          "desc": "लक्ष्य, workflow, users और current systems को समझना।"
+        },
+        "planning": {
+          "title": "प्लानिंग",
+          "desc": "Scope, architecture, roles, integrations और milestones तय करना।"
+        },
+        "design": {
+          "title": "UI/UX",
+          "desc": "Responsive, role-focused और आसानी से उपयोग होने वाली screens design करना।"
+        },
+        "build": {
+          "title": "डेवलपमेंट",
+          "desc": "Clean और maintainable code के साथ modular features बनाना।"
+        },
+        "test": {
+          "title": "टेस्टिंग",
+          "desc": "Workflow, permissions, devices और edge cases validate करना।"
+        },
+        "launch": {
+          "title": "गो लाइव",
+          "desc": "Deploy, handover और real usage के लिए system तैयार करना।"
+        }
+      }
+    },
+    "trust": {
+      "eyebrow": "बिजनेस भरोसे के लिए बनाया गया",
+      "title": "सिर्फ development नहीं — clarity, ownership और long-term usability",
+      "desc": "उद्देश्य केवल software deliver करना नहीं, बल्कि ऐसा system बनाना है जिस पर आपकी team भरोसा कर सके।",
+      "items": {
+        "ownership": {
+          "title": "स्पष्ट प्रोजेक्ट ownership",
+          "desc": "Custom projects के लिए defined scope, deliverables और handover।"
+        },
+        "security": {
+          "title": "सुरक्षा को प्राथमिकता",
+          "desc": "Role-based access, input validation और secure deployment practices।"
+        },
+        "scale": {
+          "title": "स्केल करने के लिए तैयार",
+          "desc": "अधिक users, branches, modules और integrations के लिए तैयार architecture।"
+        },
+        "support": {
+          "title": "लॉन्च के बाद support",
+          "desc": "Launch के बाद भी improvements, maintenance और future expansion।"
+        },
+        "responsive": {
+          "title": "Mobile-ready UX",
+          "desc": "Desktop, tablet और mobile usage को ध्यान में रखकर interfaces design किए जाते हैं।"
+        },
+        "integration": {
+          "title": "Integration-friendly",
+          "desc": "Workflow की जरूरत के अनुसार APIs और third-party services जोड़ी जा सकती हैं।"
+        }
+      }
+    },
+    "productsProof": {
+      "eyebrow": "पहले से लाइव",
+      "title": "Ready product से शुरू करें या अपने बिजनेस के अनुसार custom system बनवाएँ",
+      "desc": "SystemMaster तुरंत उपयोग के लिए live SaaS products और unique workflows के लिए custom development दोनों उपलब्ध कराता है।",
+      "ready": "रेडी-टू-यूज़ SaaS",
+      "custom": "कस्टम सॉफ्टवेयर",
+      "readyDesc": "Defined pricing और quick onboarding के साथ live cloud products।",
+      "customDesc": "आपके process के अनुसार ERP, CRM, apps और automation।",
+      "productsCta": "प्रोडक्ट देखें",
+      "customCta": "कस्टम प्रोजेक्ट पर चर्चा करें"
+    },
+    "founder": {
+      "eyebrow": "Founder-led Product Thinking",
+      "title": "Practical business outcomes पर सीधा फोकस",
+      "desc": "SystemMaster का approach practical है: workflow समझना, manual work कम करना, visibility बढ़ाना और ऐसा system बनाना जिसे team वास्तव में उपयोग कर सके।",
+      "name": "Sunil Tiwari",
+      "role": "Founder, SystemMaster Automations",
+      "cta": "SystemMaster के बारे में"
+    },
+    "final": {
+      "badge": "अपने operations को modernize करने के लिए तैयार हैं?",
+      "title": "Live product चुनें या custom business system पर चर्चा करें",
+      "desc": "बताइए आपकी team अभी Excel, WhatsApp, अलग-अलग apps या manual reports में क्या manage करती है। हम सही अगला कदम तय करने में मदद करेंगे।",
+      "primary": "फ्री कंसल्टेशन बुक करें",
+      "secondary": "पोर्टफोलियो देखें"
+    }
   }
 }
