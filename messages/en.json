@@ -146,5 +146,141 @@
     "products": "Products",
     "services": "Services",
     "industries": "Industries"
+  },
+  "aboutPage": {
+    "eyebrow": "About SystemMaster",
+    "title": "Enterprise software, automation and digital systems built around real business workflows",
+    "desc": "SystemMaster Automations helps growing businesses adopt ready-to-use SaaS products and custom software without forcing teams into rigid processes.",
+    "primary": "Discuss Your Project",
+    "secondary": "Explore Products",
+    "stats": {
+      "years": "Years in business automation",
+      "products": "Live ready-to-use SaaS products",
+      "services": "Solution & development categories",
+      "languages": "Website languages"
+    },
+    "mission": {
+      "eyebrow": "Our Mission",
+      "title": "Make business software simpler, connected and practical",
+      "desc": "Our mission is to reduce scattered tools, repetitive work and disconnected reporting by building systems that connect people, processes and data."
+    },
+    "vision": {
+      "eyebrow": "Our Vision",
+      "title": "One intelligent operating layer for growing businesses",
+      "desc": "We are building toward a future where businesses can manage sales, people, finance, operations, automation and decision-making from connected digital systems."
+    },
+    "why": {
+      "eyebrow": "Why SystemMaster",
+      "title": "Built for long-term business use, not just a one-time launch",
+      "items": {
+        "architecture": {
+          "title": "Scalable architecture",
+          "desc": "Modern, modular systems designed to grow with users, branches, workflows and integrations."
+        },
+        "workflow": {
+          "title": "Workflow-first approach",
+          "desc": "We understand how your team actually works before recommending a ready product or building custom software."
+        },
+        "automation": {
+          "title": "Automation mindset",
+          "desc": "We look for repetitive work, delays and manual reporting that can be simplified with automation."
+        },
+        "support": {
+          "title": "Long-term support",
+          "desc": "Deployment is not the finish line. We plan for adoption, improvements, maintenance and future scale."
+        }
+      }
+    },
+    "timeline": {
+      "eyebrow": "Company Journey",
+      "title": "From automation projects to a connected SaaS ecosystem",
+      "items": {
+        "foundation": {
+          "title": "Business Automation Foundation",
+          "desc": "Started solving workflow and reporting problems with practical automation."
+        },
+        "systems": {
+          "title": "Custom Business Systems",
+          "desc": "Expanded into ERP-style workflows, dashboards and operational tools."
+        },
+        "products": {
+          "title": "Ready-to-Use SaaS Products",
+          "desc": "Launched live products for accounting, HRMS, task management, ERP and CRM."
+        },
+        "ai": {
+          "title": "AI & Workflow Automation",
+          "desc": "Added AI agents, WhatsApp automation and connected workflow capabilities."
+        },
+        "platform": {
+          "title": "Unified Business Platform Vision",
+          "desc": "Building a broader ecosystem that combines ready products with custom enterprise development."
+        }
+      }
+    },
+    "process": {
+      "eyebrow": "How We Work",
+      "title": "A clear path from requirement to deployment",
+      "items": {
+        "discovery": {
+          "title": "Discovery",
+          "desc": "Understand goals, users, process gaps and current tools."
+        },
+        "planning": {
+          "title": "Planning",
+          "desc": "Define scope, architecture, integrations and delivery priorities."
+        },
+        "design": {
+          "title": "UI/UX Design",
+          "desc": "Create clear, responsive and role-focused user experiences."
+        },
+        "development": {
+          "title": "Development",
+          "desc": "Build modular, secure and maintainable features."
+        },
+        "testing": {
+          "title": "Testing",
+          "desc": "Validate workflows, permissions, responsive behavior and edge cases."
+        },
+        "deployment": {
+          "title": "Deployment",
+          "desc": "Launch with production configuration, handover and monitoring readiness."
+        },
+        "support": {
+          "title": "Support",
+          "desc": "Improve, maintain and extend the system as the business evolves."
+        }
+      }
+    },
+    "technology": {
+      "eyebrow": "Technology",
+      "title": "Modern tools for reliable web, app and automation projects",
+      "desc": "We select technology according to project requirements, scale, security and maintainability."
+    },
+    "trust": {
+      "eyebrow": "Enterprise Trust",
+      "title": "Clear ownership, secure development and practical delivery",
+      "items": {
+        "source": "Source-code handover for custom projects",
+        "security": "Role-based access and secure development practices",
+        "responsive": "Responsive web and mobile-ready experiences",
+        "cloud": "Cloud-ready deployment architecture",
+        "integration": "API and third-party integration support",
+        "documentation": "Structured handover and implementation guidance"
+      }
+    },
+    "founder": {
+      "eyebrow": "Founder",
+      "role": "Founder, SystemMaster Automations",
+      "desc": "Focused on building practical software, automation and connected business systems that reduce manual work and improve operational visibility.",
+      "email": "Email",
+      "call": "Call",
+      "whatsapp": "WhatsApp",
+      "meeting": "Book a Meeting"
+    },
+    "cta": {
+      "title": "Ready to discuss your business system?",
+      "desc": "Tell us your process, current tools and bottlenecks. We will help you decide whether a ready SystemMaster product or a custom solution fits better.",
+      "button": "Get Free Consultation"
+    }
   }
 }
