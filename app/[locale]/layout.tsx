@@ -3,6 +3,7 @@ import {getMessages, setRequestLocale} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {Header} from '@/components/header';
 import {Footer} from '@/components/footer';
+import {OrganizationSchema} from '@/components/seo/organization-schema';
 
 const locales = ['en', 'hi'] as const;
 type Locale = (typeof locales)[number];
@@ -26,8 +27,15 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <OrganizationSchema locale={locale} />
+      <a
+        href="#main-content"
+        className="sr-only fixed left-4 top-4 z-[100] rounded-lg bg-[var(--text)] px-4 py-2 text-[var(--bg)] focus:not-sr-only"
+      >
+        Skip to content
+      </a>
       <Header />
-      {children}
+      <div id="main-content">{children}</div>
       <Footer locale={locale} />
     </NextIntlClientProvider>
   );
