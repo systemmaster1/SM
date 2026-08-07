@@ -1,154 +1,28 @@
-export type Locale = 'en' | 'hi';
+export type Locale='en'|'hi';
+export type Localized={en:string;hi:string};
+const L=(en:string,hi:string):Localized=>({en,hi});
 
-type Localized = { en: string; hi: string };
-
-export type ProductDetail = {
-  slug: 'books' | 'hrms' | 'erp';
-  name: string;
-  shortName: string;
-  price: string;
-  priceNote: Localized;
-  href: string;
-  logo: string;
-  accent: string;
-  tagline: Localized;
-  description: Localized;
-  highlights: Localized[];
-  modules: Localized[];
-  idealFor: Localized[];
-};
-
-export const productDetails: ProductDetail[] = [
-  {
-    slug: 'books',
-    name: 'SM-Books Accounting Software',
-    shortName: 'SM-Books',
-    price: 'Starting at ₹699',
-    priceNote: {en: 'Ready-to-use cloud accounting software', hi: 'तुरंत उपयोग के लिए क्लाउड अकाउंटिंग सॉफ्टवेयर'},
-    href: 'https://books.systemmaster.in',
-    logo: '/logo/sm-books.png',
-    accent: 'from-amber-400/25 to-blue-500/10',
-    tagline: {en: 'Simple accounting, billing and business finance in one place.', hi: 'अकाउंटिंग, बिलिंग और बिजनेस फाइनेंस एक ही जगह पर।'},
-    description: {en: 'Built for growing Indian businesses that need professional billing, GST-ready workflows, expense tracking and clear financial reports without unnecessary complexity.', hi: 'बढ़ते भारतीय व्यवसायों के लिए बनाया गया, जहाँ प्रोफेशनल बिलिंग, GST-ready workflow, खर्च ट्रैकिंग और स्पष्ट वित्तीय रिपोर्ट एक सरल सिस्टम में चाहिए।'},
-    highlights: [
-      {en:'GST-ready billing & invoicing',hi:'GST-ready बिलिंग और इनवॉइसिंग'},
-      {en:'Income & expense tracking',hi:'आय और खर्च ट्रैकिंग'},
-      {en:'Business reports & summaries',hi:'बिजनेस रिपोर्ट और सारांश'},
-      {en:'Cloud access from anywhere',hi:'कहीं से भी क्लाउड एक्सेस'}
-    ],
-    modules: [
-      {en:'Customers & Vendors',hi:'कस्टमर और वेंडर'},
-      {en:'Invoices & Payments',hi:'इनवॉइस और पेमेंट'},
-      {en:'Expenses',hi:'खर्च'},
-      {en:'GST & Tax Reports',hi:'GST और टैक्स रिपोर्ट'},
-      {en:'Business Dashboard',hi:'बिजनेस डैशबोर्ड'},
-      {en:'Financial Reports',hi:'फाइनेंशियल रिपोर्ट'}
-    ],
-    idealFor: [
-      {en:'Small businesses',hi:'छोटे व्यवसाय'},
-      {en:'Service companies',hi:'सर्विस कंपनियाँ'},
-      {en:'Traders & distributors',hi:'ट्रेडर और डिस्ट्रीब्यूटर'},
-      {en:'Growing teams',hi:'बढ़ती हुई टीमें'}
-    ]
-  },
-  {
-    slug: 'hrms',
-    name: 'SM-HRMS + Task Management',
-    shortName: 'SM-HRMS',
-    price: '₹19 per user / month',
-    priceNote: {en: 'Special offer price', hi: 'स्पेशल ऑफर प्राइस'},
-    href: 'https://hrms.systemmaster.in',
-    logo: '/logo/sm-hrms.png',
-    accent: 'from-sky-400/25 to-emerald-400/10',
-    tagline: {en: 'Manage people, attendance and tasks from one intelligent workspace.', hi: 'कर्मचारी, अटेंडेंस और टास्क एक ही स्मार्ट वर्कस्पेस से मैनेज करें।'},
-    description: {en: 'A ready-to-use HRMS and task management platform for teams that want employee records, leave, attendance, payroll workflows and daily task visibility in one system.', hi: 'टीमों के लिए तैयार HRMS और Task Management प्लेटफॉर्म, जिसमें employee records, leave, attendance, payroll workflow और daily task visibility एक ही सिस्टम में मिलती है।'},
-    highlights: [
-      {en:'Employee & attendance management',hi:'Employee और attendance management'},
-      {en:'Leave & approval workflows',hi:'Leave और approval workflows'},
-      {en:'Task assignment & tracking',hi:'Task assignment और tracking'},
-      {en:'Employee self-service portal',hi:'Employee self-service portal'}
-    ],
-    modules: [
-      {en:'Employee Directory',hi:'Employee Directory'},
-      {en:'Attendance',hi:'Attendance'},
-      {en:'Leave Management',hi:'Leave Management'},
-      {en:'Payroll Workflow',hi:'Payroll Workflow'},
-      {en:'Task Management',hi:'Task Management'},
-      {en:'Reports & Employee Portal',hi:'Reports और Employee Portal'}
-    ],
-    idealFor: [
-      {en:'Offices & SMEs',hi:'ऑफिस और SMEs'},
-      {en:'Field teams',hi:'फील्ड टीमें'},
-      {en:'Service businesses',hi:'सर्विस बिजनेस'},
-      {en:'Multi-team organizations',hi:'Multi-team organizations'}
-    ]
-  },
-  {
-    slug: 'erp',
-    name: 'SM-ERP + CRM',
-    shortName: 'SM-ERP',
-    price: '₹229 per user / month',
-    priceNote: {en: 'Special offer price', hi: 'स्पेशल ऑफर प्राइस'},
-    href: 'https://erp.systemmaster.in',
-    logo: '/logo/sm-erp.png',
-    accent: 'from-blue-500/25 to-amber-400/10',
-    tagline: {en: 'Connect leads, sales, inventory and operations in one business system.', hi: 'Leads, sales, inventory और operations को एक ही business system में जोड़ें।'},
-    description: {en: 'A production-ready ERP + CRM for businesses that need a single view of leads, customers, quotations, orders, purchasing, inventory, workflows, reporting and analytics.', hi: 'Businesses के लिए production-ready ERP + CRM जिसमें leads, customers, quotation, orders, purchase, inventory, workflows, reporting और analytics एक ही जगह पर मिलते हैं।'},
-    highlights: [
-      {en:'CRM & lead pipeline',hi:'CRM और lead pipeline'},
-      {en:'Sales, quotations & orders',hi:'Sales, quotations और orders'},
-      {en:'Inventory & purchase workflows',hi:'Inventory और purchase workflows'},
-      {en:'Dashboards & analytics',hi:'Dashboards और analytics'}
-    ],
-    modules: [
-      {en:'Lead Management',hi:'Lead Management'},
-      {en:'CRM & Follow-ups',hi:'CRM और Follow-ups'},
-      {en:'Quotation & Sales',hi:'Quotation और Sales'},
-      {en:'Purchase & Vendors',hi:'Purchase और Vendors'},
-      {en:'Inventory',hi:'Inventory'},
-      {en:'Reports & Analytics',hi:'Reports और Analytics'}
-    ],
-    idealFor: [
-      {en:'Manufacturing',hi:'Manufacturing'},
-      {en:'Logistics',hi:'Logistics'},
-      {en:'Trading & distribution',hi:'Trading और distribution'},
-      {en:'Service enterprises',hi:'Service enterprises'}
-    ]
-  }
+export type ProductDetail={slug:string;name:string;shortName:string;price:string;priceNote:Localized;href:string;logo:string;accent:string;tagline:Localized;description:Localized;highlights:Localized[];modules:Localized[];idealFor:Localized[]};
+export const productDetails:ProductDetail[]=[
+{slug:'books',name:'SM-Books Accounting Software',shortName:'SM-Books',price:'Starting at ₹699',priceNote:L('Starting price','शुरुआती कीमत'),href:'https://books.systemmaster.in',logo:'/logo/sm-books.png',accent:'from-amber-400/20 to-blue-500/10',tagline:L('Simple cloud accounting for growing businesses.','बढ़ते व्यवसायों के लिए सरल क्लाउड अकाउंटिंग।'),description:L('A ready-to-use accounting platform for billing, GST, expenses, customer and vendor records, reports and everyday business finance.','बिलिंग, GST, खर्च, कस्टमर और वेंडर रिकॉर्ड, रिपोर्ट और रोज़मर्रा के बिजनेस फाइनेंस के लिए तैयार अकाउंटिंग प्लेटफॉर्म।'),highlights:[L('GST billing and invoices','GST बिलिंग और इनवॉइस'),L('Income and expense tracking','आय और खर्च ट्रैकिंग'),L('Business reports and summaries','बिजनेस रिपोर्ट और सारांश'),L('Cloud access from anywhere','कहीं से भी क्लाउड एक्सेस')],modules:[L('Customers & Vendors','कस्टमर और वेंडर'),L('Invoices & Payments','इनवॉइस और पेमेंट'),L('Expenses','खर्च'),L('GST & Tax Reports','GST और टैक्स रिपोर्ट'),L('Business Dashboard','बिजनेस डैशबोर्ड'),L('Financial Reports','फाइनेंशियल रिपोर्ट')],idealFor:[L('Small businesses','छोटे व्यवसाय'),L('Service companies','सर्विस कंपनियाँ'),L('Traders & distributors','ट्रेडर और डिस्ट्रीब्यूटर'),L('Growing teams','बढ़ती हुई टीमें')]},
+{slug:'hrms',name:'SM-HRMS + Task Management',shortName:'SM-HRMS',price:'₹19 per user / month',priceNote:L('Special offer price','स्पेशल ऑफर प्राइस'),href:'https://hrms.systemmaster.in',logo:'/logo/sm-hrms.png',accent:'from-sky-400/25 to-emerald-400/10',tagline:L('Manage people, attendance and tasks from one intelligent workspace.','कर्मचारी, अटेंडेंस और टास्क एक ही स्मार्ट वर्कस्पेस से मैनेज करें।'),description:L('A ready-to-use HRMS and task management platform for employee records, leave, attendance, payroll workflows and daily task visibility.','एम्प्लॉयी रिकॉर्ड, लीव, अटेंडेंस, पेरोल वर्कफ़्लो और डेली टास्क विजिबिलिटी के लिए तैयार HRMS और Task Management प्लेटफॉर्म।'),highlights:[L('Employee & attendance management','एम्प्लॉयी और अटेंडेंस मैनेजमेंट'),L('Leave & approval workflows','लीव और अप्रूवल वर्कफ़्लो'),L('Task assignment & tracking','टास्क असाइनमेंट और ट्रैकिंग'),L('Employee self-service portal','एम्प्लॉयी सेल्फ-सर्विस पोर्टल')],modules:[L('Employee Directory','एम्प्लॉयी डायरेक्टरी'),L('Attendance','अटेंडेंस'),L('Leave Management','लीव मैनेजमेंट'),L('Payroll Workflow','पेरोल वर्कफ़्लो'),L('Task Management','टास्क मैनेजमेंट'),L('Reports & Employee Portal','रिपोर्ट और एम्प्लॉयी पोर्टल')],idealFor:[L('Offices & SMEs','ऑफिस और SMEs'),L('Field teams','फील्ड टीमें'),L('Service businesses','सर्विस बिजनेस'),L('Multi-team organizations','मल्टी-टीम ऑर्गेनाइजेशन')]},
+{slug:'erp',name:'SM-ERP + CRM',shortName:'SM-ERP',price:'₹229 per user / month',priceNote:L('Special offer price','स्पेशल ऑफर प्राइस'),href:'https://erp.systemmaster.in',logo:'/logo/sm-erp.png',accent:'from-blue-500/25 to-amber-400/10',tagline:L('Connect leads, sales, inventory and operations in one business system.','लीड, सेल्स, इन्वेंटरी और ऑपरेशंस को एक बिजनेस सिस्टम में जोड़ें।'),description:L('A production-ready ERP + CRM for leads, customers, quotations, orders, purchasing, inventory, workflows, reporting and analytics.','लीड, कस्टमर, कोटेशन, ऑर्डर, परचेज, इन्वेंटरी, वर्कफ़्लो, रिपोर्टिंग और एनालिटिक्स के लिए production-ready ERP + CRM।'),highlights:[L('CRM & lead pipeline','CRM और लीड पाइपलाइन'),L('Sales, quotations & orders','सेल्स, कोटेशन और ऑर्डर'),L('Inventory & purchase workflows','इन्वेंटरी और परचेज वर्कफ़्लो'),L('Dashboards & analytics','डैशबोर्ड और एनालिटिक्स')],modules:[L('Lead Management','लीड मैनेजमेंट'),L('CRM & Follow-ups','CRM और फॉलो-अप'),L('Quotation & Sales','कोटेशन और सेल्स'),L('Purchase & Vendors','परचेज और वेंडर'),L('Inventory','इन्वेंटरी'),L('Reports & Analytics','रिपोर्ट और एनालिटिक्स')],idealFor:[L('Manufacturing','मैन्युफैक्चरिंग'),L('Logistics','लॉजिस्टिक्स'),L('Trading & distribution','ट्रेडिंग और डिस्ट्रीब्यूशन'),L('Service enterprises','सर्विस एंटरप्राइज')]}
 ];
 
-export type ServiceDetail = {
-  slug: string;
-  name: string;
-  tagline: Localized;
-  description: Localized;
-  deliverables: Localized[];
-  stack: string[];
-  idealFor: Localized[];
-};
-
-export const serviceDetails: ServiceDetail[] = [
-  ['website-development','Website Development','High-converting websites that look premium and load fast.','Corporate websites, SaaS websites and industry-specific marketing sites built for trust, SEO and lead generation.',['UI/UX design','Responsive development','SEO foundation','Lead capture & integrations'],['Next.js','React','Tailwind','Framer Motion'],['B2B companies','SaaS brands','Manufacturers','Service businesses']],
-  ['web-app-development','Web Application Development','Secure web applications built around real business workflows.','From portals to internal tools, we design scalable web apps with clear permissions, dashboards, integrations and reporting.',['Product architecture','Role-based access','Dashboards & workflows','API & database integration'],['Next.js','React','TypeScript','PostgreSQL'],['Operations teams','SMEs','Enterprises','Startups']],
-  ['mobile-app-development','Mobile App Development','Business apps your teams can use from anywhere.','Responsive and mobile-first applications for field teams, sales, attendance, inventory, delivery, approvals and customer experiences.',['Android/iOS UX','Field workflows','Notifications','Offline-ready flows where required'],['React','PWA','Supabase','REST APIs'],['Field teams','Sales teams','Delivery operations','Service companies']],
-  ['erp-development','ERP Development','Custom ERP that follows your company process — not the other way around.','We map departments, approvals, transactions, reports and integrations into a scalable ERP tailored to your operational model.',['Process mapping','ERP modules','Approval workflows','Management reporting'],['Next.js','Node.js','PostgreSQL','Redis'],['Manufacturing','Logistics','Trading','Multi-department businesses']],
-  ['crm-development','CRM Development','Turn every lead into a measurable sales process.','Custom CRM systems for lead capture, assignment, follow-up, pipeline management, quotations, reminders and sales reporting.',['Lead sources','Pipeline stages','Follow-up automation','Sales analytics'],['Next.js','Supabase','WhatsApp API','n8n'],['Sales teams','Real estate','B2B services','Distributors']],
-  ['hrms-development','HRMS Development','HR workflows customized for your people and policies.','Employee lifecycle, attendance, leave, payroll workflows, tasks, approvals and reports built around your organization.',['Employee master','Attendance & leave','Payroll workflows','Tasks & approvals'],['Next.js','PostgreSQL','Role-based access','APIs'],['Corporate offices','Factories','Field teams','Multi-branch companies']],
-  ['ai-automation','AI Automation','Use AI where it actually saves time and improves response speed.','We design practical AI agents and automations for customer support, lead follow-up, document processing, reporting and repetitive operations.',['AI chat agents','Document workflows','Auto summaries','AI-assisted operations'],['OpenAI','Claude','Gemini','n8n'],['Sales','Support','Operations','Management']],
-  ['whatsapp-automation','WhatsApp Automation','Connect WhatsApp with your leads, CRM and workflows.','Official WhatsApp integrations for notifications, customer conversations, lead capture, reminders and workflow automation.',['WhatsApp API','Templates & notifications','CRM integration','Automation logs'],['WhatsApp Cloud API','n8n','Webhooks','CRM APIs'],['Sales teams','Support teams','Service businesses','E-commerce']],
-  ['dashboard-bi','Dashboard & BI','Turn operational data into decisions.','Executive dashboards, KPI systems and reports for sales, HR, inventory, production, finance and management teams.',['KPI architecture','Interactive dashboards','Filters & drilldowns','Automated reports'],['Recharts','PostgreSQL','APIs','Next.js'],['Management','Operations','Finance','Sales']],
-  ['api-integration','API Integration','Make your business tools work together.','Secure integrations between ERP, CRM, payments, websites, WhatsApp, Google services and third-party platforms.',['API mapping','Webhooks','Data sync','Monitoring & error handling'],['REST','Webhooks','OAuth','Node.js'],['SaaS teams','ERP users','Automation projects','Multi-system businesses']],
-  ['cloud-applications','Cloud Applications','Modern cloud systems designed for scale and remote access.','We build and deploy secure cloud applications with scalable databases, storage, authentication and production monitoring.',['Cloud architecture','Authentication','Database & storage','Deployment & monitoring'],['Vercel','AWS','Supabase','PostgreSQL'],['Growing businesses','Distributed teams','SaaS products','Enterprise apps']],
-  ['custom-enterprise','Custom Enterprise Software','One system built exactly around your business.','When off-the-shelf software is not enough, we design complete enterprise systems with modules, roles, workflows, integrations and reports tailored to you.',['Discovery & BRD','System architecture','Custom modules','Long-term support'],['Next.js','Node.js','PostgreSQL','Cloud'],['Complex workflows','Manufacturing','Logistics','Large operations']]
-].map(([slug,name,tagEn,descEn,delEn,stack,idealEn])=>({
-  slug: slug as string,
-  name: name as string,
-  tagline:{en:tagEn as string,hi:tagEn as string},
-  description:{en:descEn as string,hi:descEn as string},
-  deliverables:(delEn as string[]).map(x=>({en:x,hi:x})),
-  stack:stack as string[],
-  idealFor:(idealEn as string[]).map(x=>({en:x,hi:x}))
-}));
-
-export const productSlugs = productDetails.map(x=>x.slug);
-export const serviceSlugs = serviceDetails.map(x=>x.slug);
+export type ServiceDetail={slug:string;name:Localized;tagline:Localized;description:Localized;deliverables:Localized[];stack:string[];idealFor:Localized[]};
+export const serviceDetails:ServiceDetail[]=[
+{slug:'website-development',name:L('Website Development','वेबसाइट डेवलपमेंट'),tagline:L('High-converting websites that look premium and load fast.','प्रीमियम दिखने वाली और तेज़ लोड होने वाली high-converting वेबसाइट।'),description:L('Corporate, SaaS and industry-specific websites built for trust, SEO and lead generation.','ट्रस्ट, SEO और लीड जनरेशन के लिए कॉर्पोरेट, SaaS और इंडस्ट्री-स्पेसिफिक वेबसाइट।'),deliverables:[L('UI/UX design','UI/UX डिज़ाइन'),L('Responsive development','रेस्पॉन्सिव डेवलपमेंट'),L('SEO foundation','SEO फाउंडेशन'),L('Lead capture & integrations','लीड कैप्चर और इंटीग्रेशन')],stack:['Next.js','React','Tailwind','Framer Motion'],idealFor:[L('B2B companies','B2B कंपनियाँ'),L('SaaS brands','SaaS ब्रांड'),L('Manufacturers','मैन्युफैक्चरर'),L('Service businesses','सर्विस बिजनेस')]},
+{slug:'web-app-development',name:L('Web Application Development','वेब एप्लिकेशन डेवलपमेंट'),tagline:L('Secure web applications built around real business workflows.','वास्तविक बिजनेस वर्कफ़्लो के अनुसार सुरक्षित वेब एप्लिकेशन।'),description:L('From portals to internal tools, we build scalable apps with permissions, dashboards, integrations and reporting.','पोर्टल से इंटरनल टूल तक, हम परमिशन, डैशबोर्ड, इंटीग्रेशन और रिपोर्टिंग के साथ स्केलेबल ऐप बनाते हैं।'),deliverables:[L('Product architecture','प्रोडक्ट आर्किटेक्चर'),L('Role-based access','रोल-बेस्ड एक्सेस'),L('Dashboards & workflows','डैशबोर्ड और वर्कफ़्लो'),L('API & database integration','API और डेटाबेस इंटीग्रेशन')],stack:['Next.js','React','TypeScript','PostgreSQL'],idealFor:[L('Operations teams','ऑपरेशंस टीम'),L('SMEs','SMEs'),L('Enterprises','एंटरप्राइज'),L('Startups','स्टार्टअप')]},
+{slug:'mobile-app-development',name:L('Mobile App Development','मोबाइल ऐप डेवलपमेंट'),tagline:L('Business apps your teams can use from anywhere.','बिजनेस ऐप जिन्हें आपकी टीम कहीं से भी उपयोग कर सके।'),description:L('Mobile-first applications for field teams, sales, attendance, inventory, delivery, approvals and customer experiences.','फील्ड टीम, सेल्स, अटेंडेंस, इन्वेंटरी, डिलीवरी, अप्रूवल और कस्टमर एक्सपीरियंस के लिए mobile-first एप्लिकेशन।'),deliverables:[L('Android/iOS UX','Android/iOS UX'),L('Field workflows','फील्ड वर्कफ़्लो'),L('Notifications','नोटिफिकेशन'),L('Offline-ready flows where required','जरूरत अनुसार ऑफलाइन-रेडी फ्लो')],stack:['React','PWA','Supabase','REST APIs'],idealFor:[L('Field teams','फील्ड टीम'),L('Sales teams','सेल्स टीम'),L('Delivery operations','डिलीवरी ऑपरेशंस'),L('Service companies','सर्विस कंपनियाँ')]},
+{slug:'erp-development',name:L('ERP Development','ERP डेवलपमेंट'),tagline:L('Custom ERP that follows your company process — not the other way around.','कस्टम ERP जो आपकी कंपनी के प्रोसेस के अनुसार चले।'),description:L('We map departments, approvals, transactions, reports and integrations into a scalable ERP tailored to your operations.','हम departments, approvals, transactions, reports और integrations को आपके operations के अनुसार scalable ERP में map करते हैं।'),deliverables:[L('Process mapping','प्रोसेस मैपिंग'),L('ERP modules','ERP मॉड्यूल'),L('Approval workflows','अप्रूवल वर्कफ़्लो'),L('Management reporting','मैनेजमेंट रिपोर्टिंग')],stack:['Next.js','Node.js','PostgreSQL','Redis'],idealFor:[L('Manufacturing','मैन्युफैक्चरिंग'),L('Logistics','लॉजिस्टिक्स'),L('Trading','ट्रेडिंग'),L('Multi-department businesses','मल्टी-डिपार्टमेंट बिजनेस')]},
+{slug:'crm-development',name:L('CRM Development','CRM डेवलपमेंट'),tagline:L('Turn every lead into a measurable sales process.','हर लीड को measurable sales process में बदलें।'),description:L('Custom CRM for lead capture, assignment, follow-up, pipeline, quotations, reminders and sales reporting.','lead capture, assignment, follow-up, pipeline, quotations, reminders और sales reporting के लिए कस्टम CRM।'),deliverables:[L('Lead sources','लीड सोर्स'),L('Pipeline stages','पाइपलाइन स्टेज'),L('Follow-up automation','फॉलो-अप ऑटोमेशन'),L('Sales analytics','सेल्स एनालिटिक्स')],stack:['Next.js','Supabase','WhatsApp API','n8n'],idealFor:[L('Sales teams','सेल्स टीम'),L('Real estate','रियल एस्टेट'),L('B2B services','B2B सर्विस'),L('Distributors','डिस्ट्रीब्यूटर')]},
+{slug:'hrms-development',name:L('HRMS Development','HRMS डेवलपमेंट'),tagline:L('HR workflows customized for your people and policies.','आपकी टीम और पॉलिसी के अनुसार कस्टम HR वर्कफ़्लो।'),description:L('Employee lifecycle, attendance, leave, payroll workflows, tasks, approvals and reports built around your organization.','employee lifecycle, attendance, leave, payroll workflow, tasks, approvals और reports आपके organization के अनुसार।'),deliverables:[L('Employee master','एम्प्लॉयी मास्टर'),L('Attendance & leave','अटेंडेंस और लीव'),L('Payroll workflows','पेरोल वर्कफ़्लो'),L('Tasks & approvals','टास्क और अप्रूवल')],stack:['Next.js','PostgreSQL','Role-based access','APIs'],idealFor:[L('Corporate offices','कॉर्पोरेट ऑफिस'),L('Factories','फैक्टरी'),L('Field teams','फील्ड टीम'),L('Multi-branch companies','मल्टी-ब्रांच कंपनी')]},
+{slug:'ai-automation',name:L('AI Automation','AI ऑटोमेशन'),tagline:L('Use AI where it actually saves time and improves response speed.','AI का उपयोग वहाँ करें जहाँ वह समय बचाए और response speed बढ़ाए।'),description:L('Practical AI agents and automations for support, follow-up, document processing, reporting and repetitive operations.','support, follow-up, document processing, reporting और repetitive operations के लिए practical AI agents और automation।'),deliverables:[L('AI chat agents','AI चैट एजेंट'),L('Document workflows','डॉक्यूमेंट वर्कफ़्लो'),L('Auto summaries','ऑटो सारांश'),L('AI-assisted operations','AI-assisted ऑपरेशंस')],stack:['OpenAI','Claude','Gemini','n8n'],idealFor:[L('Sales','सेल्स'),L('Support','सपोर्ट'),L('Operations','ऑपरेशंस'),L('Management','मैनेजमेंट')]},
+{slug:'whatsapp-automation',name:L('WhatsApp Automation','WhatsApp ऑटोमेशन'),tagline:L('Connect WhatsApp with your leads, CRM and workflows.','WhatsApp को लीड, CRM और वर्कफ़्लो से जोड़ें।'),description:L('Official WhatsApp integrations for notifications, conversations, lead capture, reminders and workflow automation.','notification, conversation, lead capture, reminder और workflow automation के लिए official WhatsApp integration।'),deliverables:[L('WhatsApp API','WhatsApp API'),L('Templates & notifications','टेम्पलेट और नोटिफिकेशन'),L('CRM integration','CRM इंटीग्रेशन'),L('Automation logs','ऑटोमेशन लॉग')],stack:['WhatsApp Cloud API','n8n','Webhooks','CRM APIs'],idealFor:[L('Sales teams','सेल्स टीम'),L('Support teams','सपोर्ट टीम'),L('Service businesses','सर्विस बिजनेस'),L('E-commerce','ई-कॉमर्स')]},
+{slug:'dashboard-bi',name:L('Dashboard & BI','डैशबोर्ड और BI'),tagline:L('Turn operational data into decisions.','ऑपरेशनल डेटा को बेहतर निर्णय में बदलें।'),description:L('Executive dashboards and KPI systems for sales, HR, inventory, production, finance and management.','sales, HR, inventory, production, finance और management के लिए executive dashboard और KPI system।'),deliverables:[L('KPI architecture','KPI आर्किटेक्चर'),L('Interactive dashboards','इंटरैक्टिव डैशबोर्ड'),L('Filters & drilldowns','फिल्टर और ड्रिलडाउन'),L('Automated reports','ऑटोमेटेड रिपोर्ट')],stack:['Recharts','PostgreSQL','APIs','Next.js'],idealFor:[L('Management','मैनेजमेंट'),L('Operations','ऑपरेशंस'),L('Finance','फाइनेंस'),L('Sales','सेल्स')]},
+{slug:'api-integration',name:L('API Integration','API इंटीग्रेशन'),tagline:L('Make your business tools work together.','अपने बिजनेस टूल्स को आपस में कनेक्ट करें।'),description:L('Secure integrations between ERP, CRM, payments, websites, WhatsApp, Google services and third-party platforms.','ERP, CRM, payment, website, WhatsApp, Google services और third-party platforms के बीच secure integration।'),deliverables:[L('API mapping','API मैपिंग'),L('Webhooks','वेबहुक'),L('Data sync','डेटा सिंक'),L('Monitoring & error handling','मॉनिटरिंग और एरर हैंडलिंग')],stack:['REST','Webhooks','OAuth','Node.js'],idealFor:[L('SaaS teams','SaaS टीम'),L('ERP users','ERP यूज़र'),L('Automation projects','ऑटोमेशन प्रोजेक्ट'),L('Multi-system businesses','मल्टी-सिस्टम बिजनेस')]},
+{slug:'cloud-applications',name:L('Cloud Applications','क्लाउड एप्लिकेशन'),tagline:L('Modern cloud systems designed for scale and remote access.','स्केल और remote access के लिए modern cloud system।'),description:L('Secure cloud applications with scalable databases, storage, authentication and production monitoring.','scalable database, storage, authentication और production monitoring के साथ secure cloud application।'),deliverables:[L('Cloud architecture','क्लाउड आर्किटेक्चर'),L('Authentication','ऑथेंटिकेशन'),L('Database & storage','डेटाबेस और स्टोरेज'),L('Deployment & monitoring','डिप्लॉयमेंट और मॉनिटरिंग')],stack:['Vercel','AWS','Supabase','PostgreSQL'],idealFor:[L('Growing businesses','बढ़ते बिजनेस'),L('Distributed teams','डिस्ट्रिब्यूटेड टीम'),L('SaaS products','SaaS प्रोडक्ट'),L('Enterprise apps','एंटरप्राइज ऐप')]},
+{slug:'custom-enterprise',name:L('Custom Enterprise Software','कस्टम एंटरप्राइज सॉफ्टवेयर'),tagline:L('One system built exactly around your business.','आपके बिजनेस के अनुसार बनाया गया एक पूरा सिस्टम।'),description:L('Complete enterprise systems with modules, roles, workflows, integrations and reports tailored to complex operations.','complex operations के लिए modules, roles, workflows, integrations और reports के साथ complete enterprise system।'),deliverables:[L('Discovery & BRD','डिस्कवरी और BRD'),L('System architecture','सिस्टम आर्किटेक्चर'),L('Custom modules','कस्टम मॉड्यूल'),L('Long-term support','लॉन्ग-टर्म सपोर्ट')],stack:['Next.js','Node.js','PostgreSQL','Cloud'],idealFor:[L('Complex workflows','कॉम्प्लेक्स वर्कफ़्लो'),L('Manufacturing','मैन्युफैक्चरिंग'),L('Logistics','लॉजिस्टिक्स'),L('Large operations','बड़े ऑपरेशंस')]}
+];
+export const productSlugs=productDetails.map(x=>x.slug);
+export const serviceSlugs=serviceDetails.map(x=>x.slug);
