@@ -9,7 +9,7 @@ export async function Footer({locale}: {locale: string}) {
 
   return (
     <footer className="border-t border-[var(--line)] bg-[var(--surface)]/40">
-      <div className="container grid gap-10 py-14 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="container grid gap-10 py-14 lg:grid-cols-[1.35fr_1fr_1fr_1fr]">
         <div>
           <Link href={`/${locale}`} className="flex items-center gap-3">
             <Image
@@ -21,10 +21,14 @@ export async function Footer({locale}: {locale: string}) {
             />
             <div>
               <div className="display text-xl font-extrabold">SystemMaster</div>
-              <div className="text-xs font-bold uppercase tracking-[.16em] text-[var(--gold)]">Automations</div>
+              <div className="text-xs font-bold uppercase tracking-[.16em] text-[var(--gold)]">
+                Automations
+              </div>
             </div>
           </Link>
+
           <p className="muted mt-4 max-w-md leading-7">{t('desc')}</p>
+
           <div className="mt-5 flex flex-wrap gap-2">
             <a className="btn btn-ghost !min-h-10" href="mailto:Connect@systemmaster.in">
               <Mail size={16} />
@@ -66,11 +70,12 @@ export async function Footer({locale}: {locale: string}) {
         </div>
 
         <div>
-          <h4 className="mb-4 font-extrabold">{t('legal')}</h4>
+          <h4 className="mb-4 font-extrabold">{t('resources')}</h4>
           <div className="grid gap-3 text-sm text-[var(--muted)]">
+            <Link href={`/${locale}/resources`}>{t('guides')}</Link>
+            <Link href={`/${locale}/resources/case-studies`}>{t('caseStudies')}</Link>
             <Link href={`/${locale}/privacy`}>{t('privacy')}</Link>
             <Link href={`/${locale}/terms`}>{t('terms')}</Link>
-            <a href="https://systemmaster.in">systemmaster.in</a>
           </div>
         </div>
       </div>
