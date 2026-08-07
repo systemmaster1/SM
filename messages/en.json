@@ -149,12 +149,18 @@
     "industries": "Industries",
     "readyProducts": "Ready Products",
     "customDevelopment": "Custom Development",
-    "legal": "Legal",
+    "legal": "Legal & Policies",
     "privacy": "Privacy Policy",
     "terms": "Terms & Conditions",
     "rights": "All rights reserved.",
     "whatsapp": "WhatsApp",
-    "bookDemo": "Book a Demo"
+    "bookDemo": "Book a Demo",
+    "resources": "Resources",
+    "guides": "Guides & Insights",
+    "caseStudies": "Case Studies",
+    "pricing": "Pricing",
+    "email": "Email",
+    "call": "Call"
   },
   "aboutPage": {
     "eyebrow": "About SystemMaster",
@@ -467,60 +473,109 @@
     "ctaDesc": "Talk to SystemMaster about your workflow, current tools and automation opportunities.",
     "cta": "Book Free Consultation"
   },
-  "contactLead": {
-    "eyebrow": "Talk to SystemMaster",
-    "title": "Tell us what you want to improve, automate or build",
-    "desc": "Choose a ready product or describe your custom requirement. Your message can be sent directly on WhatsApp or email without creating an account.",
-    "quickTitle": "Start with the right conversation",
-    "readyTitle": "Ready-to-Use Product",
-    "readyDesc": "Interested in SM-Books, SM-HRMS + Task Management or SM-ERP + CRM?",
-    "customTitle": "Custom Software Project",
-    "customDesc": "Need ERP, CRM, mobile app, website, automation, dashboard or a unique business workflow?",
-    "supportTitle": "Existing Customer / Support",
-    "supportDesc": "Already using a SystemMaster product or solution and need help?",
-    "responseTitle": "What happens next",
-    "responseItems": {
-      "one": "We review your requirement and identify the right product or development route.",
-      "two": "If needed, we schedule a requirement discussion or product demo.",
-      "three": "For custom work, scope and next steps are clarified before development starts."
+  "legalPages": {
+    "common": {
+      "company": "SystemMaster Automations",
+      "lastUpdated": "Last updated: 7 August 2026",
+      "contactTitle": "Questions about this policy?",
+      "contactDesc": "Contact SystemMaster Automations for clarification about these terms, privacy practices or your data.",
+      "email": "Connect@systemmaster.in",
+      "back": "Back to Home",
+      "contact": "Contact Us"
     },
-    "formTitle": "Share your requirement",
-    "formDesc": "The form prepares a structured message for WhatsApp. You can review it before sending.",
-    "name": "Your Name",
-    "company": "Company / Business",
-    "phone": "Phone Number",
-    "email": "Email Address",
-    "interest": "What are you interested in?",
-    "budget": "Approximate Budget",
-    "requirement": "Describe your requirement",
-    "select": "Select an option",
-    "interests": {
-      "books": "SM-Books Accounting Software",
-      "hrms": "SM-HRMS + Task Management",
-      "erp": "SM-ERP + CRM",
-      "website": "Website Development",
-      "mobile": "Mobile App Development",
-      "customErp": "Custom ERP / CRM",
-      "automation": "AI / Workflow Automation",
-      "whatsapp": "WhatsApp Automation",
-      "other": "Other Custom Requirement"
+    "privacy": {
+      "eyebrow": "Privacy & Data Protection",
+      "title": "Privacy Policy",
+      "intro": "This Privacy Policy explains how SystemMaster Automations may collect, use and protect information when you visit our website, contact us, request a demo or enquire about our products and custom software services.",
+      "sections": {
+        "collect": {
+          "title": "1. Information we may collect",
+          "body": "We may collect information you voluntarily provide, such as your name, company name, phone number, email address, project requirement, product interest and messages sent through WhatsApp, email or enquiry forms."
+        },
+        "usage": {
+          "title": "2. How we use information",
+          "body": "Information may be used to respond to enquiries, provide product demos, discuss custom software requirements, deliver support, improve our services, prevent misuse and maintain business communication."
+        },
+        "technical": {
+          "title": "3. Technical and website data",
+          "body": "Our website or hosting providers may process basic technical data such as browser type, device information, IP address, pages visited and diagnostic logs for security, reliability and performance."
+        },
+        "thirdParty": {
+          "title": "4. Third-party services",
+          "body": "Some interactions may use third-party services such as Vercel, WhatsApp, email providers, cloud platforms, analytics, payment services or automation platforms. Their own privacy terms may apply when you use those services."
+        },
+        "sharing": {
+          "title": "5. Data sharing",
+          "body": "We do not sell personal information. Information may be shared with service providers only where reasonably necessary to operate, secure, support or deliver the requested service, or where required by law."
+        },
+        "retention": {
+          "title": "6. Data retention",
+          "body": "Enquiry and business communication data may be retained for a reasonable period for follow-up, support, contractual, accounting, security or legal purposes."
+        },
+        "security": {
+          "title": "7. Security",
+          "body": "We use reasonable technical and organizational measures to protect information. However, no internet transmission or storage system can be guaranteed to be completely secure."
+        },
+        "choices": {
+          "title": "8. Your choices",
+          "body": "You may contact us to request correction or deletion of information you previously provided, subject to legal, contractual, accounting and legitimate business retention requirements."
+        },
+        "children": {
+          "title": "9. Children's privacy",
+          "body": "Our business products and services are intended for organizations and business users, not for children."
+        },
+        "changes": {
+          "title": "10. Policy updates",
+          "body": "We may update this Privacy Policy as our website, products, services or legal requirements change. The latest version will be published on this page."
+        }
+      }
     },
-    "budgets": {
-      "discuss": "Need discussion first",
-      "under50": "Under ₹50,000",
-      "50to100": "₹50,000 – ₹1,00,000",
-      "100to300": "₹1,00,000 – ₹3,00,000",
-      "300plus": "₹3,00,000+"
-    },
-    "placeholder": "Example: We currently manage leads and follow-ups in Excel and WhatsApp. We need a CRM with user-wise lead assignment, reminders and management reports.",
-    "whatsappButton": "Continue on WhatsApp",
-    "emailButton": "Send by Email",
-    "required": "Please enter your name, phone number and requirement.",
-    "privacy": "By contacting us, you agree to share the information entered here for responding to your enquiry.",
-    "directTitle": "Prefer direct contact?",
-    "call": "Call",
-    "emailAction": "Email",
-    "whatsappAction": "WhatsApp",
-    "location": "India · Serving businesses remotely and on-site as applicable"
+    "terms": {
+      "eyebrow": "Terms of Website & Services",
+      "title": "Terms & Conditions",
+      "intro": "These Terms & Conditions govern the use of the SystemMaster Automations website and general enquiries relating to our ready-to-use software products, demos, development services and business automation solutions.",
+      "sections": {
+        "website": {
+          "title": "1. Website use",
+          "body": "You may use this website for lawful business information, product evaluation and service enquiries. You must not misuse the website, attempt unauthorized access, interfere with operation or use content for unlawful purposes."
+        },
+        "information": {
+          "title": "2. Website information",
+          "body": "We aim to keep website information accurate and current, but features, pricing, offers, availability and service details may change. Final commercial terms are those confirmed in an applicable quotation, order, subscription or agreement."
+        },
+        "products": {
+          "title": "3. Ready-to-use software products",
+          "body": "Published product pricing is subject to the applicable plan, offer conditions, taxes, user limits, billing cycle and product-specific terms. Product features may evolve as the software is improved."
+        },
+        "custom": {
+          "title": "4. Custom software development",
+          "body": "Custom development begins only after scope, deliverables, timelines, responsibilities, commercial terms and other relevant conditions are agreed. Website examples and demo systems do not automatically form part of a custom project scope."
+        },
+        "payment": {
+          "title": "5. Payments and taxes",
+          "body": "Fees, payment milestones, subscription charges, taxes and refund conditions are governed by the specific quotation, invoice, order or agreement applicable to the purchase."
+        },
+        "ip": {
+          "title": "6. Intellectual property",
+          "body": "SystemMaster branding, website content, designs and proprietary materials remain protected. Source-code ownership and handover for custom projects are determined by the specific project agreement."
+        },
+        "demo": {
+          "title": "7. Demos and sample data",
+          "body": "Demo systems are provided for evaluation and may use sample or fictional data. Demo availability, functions and data may change and should not be treated as a production environment."
+        },
+        "thirdParty": {
+          "title": "8. Third-party services",
+          "body": "Projects or products may integrate third-party APIs, cloud platforms, messaging services or payment providers. Their availability, charges, policies and technical limits are controlled by those providers."
+        },
+        "liability": {
+          "title": "9. Liability",
+          "body": "To the extent permitted by applicable law, SystemMaster Automations is not responsible for indirect losses arising from website use, third-party outages, unauthorized misuse or decisions made solely on demo or website information."
+        },
+        "changes": {
+          "title": "10. Changes to these terms",
+          "body": "We may update these Terms & Conditions when our services, website, products or legal requirements change. Continued website use after an update is subject to the latest published version."
+        }
+      }
+    }
   }
 }
