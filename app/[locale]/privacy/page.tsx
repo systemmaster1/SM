@@ -1,2 +1,69 @@
-import Link from 'next/link';
-export default async function Page({params}:{params:Promise<{locale:string}>}){const {locale}=await params;return <main className="section"><div className="container"><div className="card p-8 md:p-14"><div className="eyebrow">SystemMaster Automations</div><h1 className="display mt-4 text-5xl font-black">Privacy</h1><p className="muted mt-5 max-w-2xl text-lg">This page foundation is ready for the next implementation phase. The complete design system, bilingual routing and responsive structure are already active.</p><Link href={`/${locale}/contact`} className="btn btn-primary mt-8">Book a Free Demo</Link></div></div></main>}
+import type {Metadata} from 'next';
+import {getTranslations} from 'next-intl/server';
+import {LegalPage} from '@/components/pages/legal-page';
+
+const sectionKeys = [
+  'collect',
+  'usage',
+  'technical',
+  'thirdParty',
+  'sharing',
+  'retention',
+  'security',
+  'choices',
+  'children',
+  'changes'
+] as const;
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{locale: string}>;
+}): Promise<Metadata> {
+  const {locale} = await params;
+  const currentLocale = locale === 'hi' ? 'hi' : 'en';
+  const t = await getTranslations({locale: currentLocale, namespace: 'legalPages.privacy'});
+  const canonical = `https://systemmaster.in/${currentLocale}/privacy`;
+
+  return {
+    title: `${t('title')} | SystemMaster Automations`,
+    description: t('intro'),
+    alternates: {
+      canonical,
+      languages: {
+        en: 'https://systemmaster.in/en/privacy',
+        hi: 'https://systemmaster.in/hi/privacy'
+      }
+    }
+  };
+}
+
+export default async function Page({
+  params
+}: {
+  params: Promise<{locale: string}>;
+}) {
+  const {locale} = await params;
+  const currentLocale = locale === 'hi' ? 'hi' : 'en';
+  const common = await getTranslations({locale: currentLocale, namespace: 'legalPages.common'});
+  const t = await getTranslations({locale: currentLocale, namespace: 'legalPages.privacy'});
+
+  return (
+    <LegalPage
+      eyebrow={t('eyebrow')}
+      title={t('title')}
+      intro={t('intro')}
+      lastUpdated={common('lastUpdated')}
+      sections={sectionKeys.map((key) => ({
+        title: t(`sections.${key}.title`),
+        body: t(`sections.${key}.body`)
+      }))}
+      contactTitle={common('contactTitle')}
+      contactDesc={common('contactDesc')}
+      email={common('email')}
+      backLabel={common('back')}
+      contactLabel={common('contact')}
+      locale={currentLocale}
+    />
+  );
+}
