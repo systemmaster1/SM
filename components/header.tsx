@@ -7,6 +7,7 @@ import {usePathname, useRouter} from 'next/navigation';
 import {Languages, Menu, Moon, Sun, X} from 'lucide-react';
 import {useTheme} from 'next-themes';
 import {useEffect, useState} from 'react';
+import {DemoModal} from '@/components/demo-modal';
 
 export function Header() {
   const t = useTranslations('nav');
@@ -16,6 +17,7 @@ export function Header() {
   const {resolvedTheme, setTheme} = useTheme();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [demoOpen, setDemoOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -109,9 +111,13 @@ export function Header() {
             {resolvedTheme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
           </button>
 
-          <Link href={`/${locale}/contact`} className="btn btn-primary !min-h-11">
+          <button
+            type="button"
+            onClick={() => setDemoOpen(true)}
+            className="btn btn-primary !min-h-11"
+          >
             {t('demo')}
-          </Link>
+          </button>
         </div>
 
         <button
@@ -154,11 +160,20 @@ export function Header() {
             </button>
           </div>
 
-          <Link href={`/${locale}/contact`} className="btn btn-primary mt-3 w-full">
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              setDemoOpen(true);
+            }}
+            className="btn btn-primary mt-3 w-full"
+          >
             {t('demo')}
-          </Link>
+          </button>
         </div>
       )}
+
+      <DemoModal open={demoOpen} onClose={() => setDemoOpen(false)} />
     </header>
   );
 }
