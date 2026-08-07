@@ -433,5 +433,38 @@
         "a": "हाँ। Products और custom systems में multilingual interface plan किया जा सकता है। यह website भी English और Hindi support करती है।"
       }
     }
+  },
+  "resourcesPage": {
+    "eyebrow": "रिसोर्स और इनसाइट्स",
+    "title": "सॉफ्टवेयर, ऑटोमेशन और बिजनेस सिस्टम के लिए व्यावहारिक गाइड",
+    "desc": "SystemMaster के implementation guides, business automation ideas और practical decision-making resources देखें।",
+    "featured": "चुनिंदा गाइड",
+    "allArticles": "नवीनतम लेख",
+    "caseStudies": "केस स्टडी",
+    "caseStudiesDesc": "देखें कि बिजनेस समस्याओं को measurable software और automation outcomes में कैसे बदला जा सकता है।",
+    "readArticle": "लेख पढ़ें",
+    "viewCases": "केस स्टडी देखें",
+    "minutes": "मिनट पढ़ने का समय",
+    "ctaTitle": "अपने workflow के लिए सलाह चाहिए?",
+    "ctaDesc": "अपना current process, bottlenecks और tools बताइए। हम यह समझने में मदद करेंगे कि ready product बेहतर है या custom system।",
+    "cta": "अपनी requirement पर चर्चा करें"
+  },
+  "caseStudiesPage": {
+    "eyebrow": "केस स्टडी",
+    "title": "ऑपरेशनल समस्याओं से स्पष्ट डिजिटल workflow तक",
+    "desc": "ये उदाहरण दिखाते हैं कि सामान्य बिजनेस चुनौतियों को structured systems, dashboards और automation में कैसे बदला जा सकता है।",
+    "challenge": "चुनौती",
+    "solution": "समाधान",
+    "outcome": "परिणाम",
+    "cta": "ऐसा ही समाधान बनवाएँ"
+  },
+  "blogPage": {
+    "back": "रिसोर्स पर वापस जाएँ",
+    "published": "प्रकाशित",
+    "category": "श्रेणी",
+    "related": "संबंधित रिसोर्स",
+    "ctaTitle": "इसे अपने बिजनेस में लागू करना चाहते हैं?",
+    "ctaDesc": "अपने workflow, current tools और automation opportunities के बारे में SystemMaster से बात करें।",
+    "cta": "फ्री कंसल्टेशन बुक करें"
   }
 }
