@@ -415,22 +415,22 @@
     if (document.getElementById("sm-shyama-styles")) return;
     var css = ""
       + "#sm-shyama,#sm-shyama *{box-sizing:border-box;font-family:'Plus Jakarta Sans',system-ui,Arial,sans-serif}"
-      + "#sm-shyama{position:fixed;right:20px;bottom:166px;z-index:99998}"
+      + "#sm-shyama{position:fixed;right:20px;bottom:172px;z-index:99998;pointer-events:none}"
       + ".sm-bubble{position:fixed;right:20px;bottom:94px;width:62px;height:62px;border-radius:50%;"
         + "background:linear-gradient(135deg," + T.gold + "," + T.blue + ");"
         + "display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;"
-        + "box-shadow:0 8px 28px rgba(229,169,60,.45);z-index:99999;border:2px solid rgba(255,255,255,.18);"
-        + "transition:transform .2s ease}"
-      + ".sm-bubble:hover{transform:scale(1.07)}"
+        + "box-shadow:0 14px 38px rgba(0,0,0,.34),0 0 0 1px rgba(255,255,255,.14),0 0 30px rgba(229,169,60,.24);z-index:99999;border:1px solid rgba(255,255,255,.24);"
+        + "transition:transform .2s ease,box-shadow .2s ease;pointer-events:auto}"
+      + ".sm-bubble:hover{transform:translateY(-3px) scale(1.055);box-shadow:0 18px 44px rgba(0,0,0,.42),0 0 36px rgba(61,126,240,.30)}"
       + ".sm-bubble .dot{position:absolute;top:6px;right:6px;width:12px;height:12px;border-radius:50%;"
         + "background:" + T.green + ";border:2px solid #06101f;box-shadow:0 0 8px " + T.green + "}"
-      + ".sm-win{width:370px;max-width:calc(100vw - 32px);height:560px;max-height:calc(100vh - 130px);"
-        + "background:" + T.panel + ";backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);"
-        + "border:1px solid " + T.border + ";border-radius:18px;overflow:hidden;display:none;flex-direction:column;"
-        + "box-shadow:0 24px 60px rgba(0,0,0,.55)}"
-      + "#sm-shyama.open .sm-win{display:flex}"
+      + ".sm-win{width:390px;max-width:calc(100vw - 32px);height:min(600px,calc(100dvh - 214px));min-height:320px;"
+        + "background:linear-gradient(180deg,rgba(13,27,52,.985),rgba(7,18,37,.985));backdrop-filter:blur(22px) saturate(135%);-webkit-backdrop-filter:blur(22px) saturate(135%);"
+        + "border:1px solid rgba(255,255,255,.12);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;"
+        + "box-shadow:0 28px 90px rgba(0,0,0,.58),0 0 0 1px rgba(61,126,240,.08);opacity:0;visibility:hidden;transform:translateY(14px) scale(.985);transform-origin:bottom right;pointer-events:none;transition:opacity .18s ease,transform .22s cubic-bezier(.2,.8,.2,1),visibility .18s ease}"
+      + "#sm-shyama.open .sm-win{opacity:1;visibility:visible;transform:translateY(0) scale(1);pointer-events:auto}"
       + ".sm-head{padding:14px 16px;display:flex;align-items:center;gap:12px;"
-        + "background:linear-gradient(135deg,#0f2347,#0a1428);border-bottom:1px solid " + T.border + "}"
+        + "background:linear-gradient(135deg,rgba(18,43,82,.98),rgba(9,24,49,.98));border-bottom:1px solid rgba(255,255,255,.09)}"
       + ".sm-head .av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;"
         + "font-size:22px;background:linear-gradient(135deg," + T.gold + "," + T.blue + ")}"
       + ".sm-head .t1{color:#fff;font-weight:700;font-size:15px;line-height:1.1}"
@@ -469,8 +469,8 @@
       + ".sm-typing span{width:7px;height:7px;border-radius:50%;background:" + T.slate + ";animation:smb 1.2s infinite}"
       + ".sm-typing span:nth-child(2){animation-delay:.2s}.sm-typing span:nth-child(3){animation-delay:.4s}"
       + "@keyframes smb{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}"
-      + "@media(max-width:480px){.sm-win{width:calc(100vw - 24px);right:12px;height:calc(100vh - 110px)}"
-        + "#sm-shyama{right:12px;bottom:150px}.sm-bubble{right:12px;bottom:80px}}";
+      + "@media(max-height:760px) and (min-width:481px){.sm-win{height:calc(100dvh - 190px);min-height:300px}#sm-shyama{bottom:166px}}@media(max-width:480px){.sm-win{width:auto;max-width:none;height:calc(100dvh - 178px);min-height:280px}"
+        + "#sm-shyama{right:12px;left:12px;bottom:154px}.sm-bubble{right:12px;bottom:82px;width:58px;height:58px;font-size:26px}}";
     var s = document.createElement("style");
     s.id = "sm-shyama-styles";
     s.textContent = css;
@@ -508,6 +508,7 @@
       '</div>';
     document.body.appendChild(root);
     el.root  = root;
+    el.win   = root.querySelector(".sm-win");
     el.body  = root.querySelector("#sm-body");
     el.quick = root.querySelector("#sm-quick");
     el.badge = root.querySelector("#sm-badge");
@@ -536,6 +537,7 @@
     state.open = !state.open;
     el.root.classList.toggle("open", state.open);
     if (state.open) {
+      keepWindowInViewport();
       if (!state.greeted || !state.history.length) greet();
       renderMessages(lastQuick());
       updateBadge();
@@ -619,6 +621,26 @@
     });
   }
 
+
+  /* ---------------------------------------------------------------
+     VIEWPORT SAFETY
+     Keeps the full chat inside the visible browser viewport on
+     laptops, browser zoom, resized windows and mobile address bars.
+     --------------------------------------------------------------- */
+  function keepWindowInViewport() {
+    if (!el.win) return;
+
+    var vv = window.visualViewport;
+    var viewportHeight = vv ? vv.height : window.innerHeight;
+    var viewportWidth = vv ? vv.width : window.innerWidth;
+
+    if (viewportWidth > 480) {
+      el.win.style.height = Math.max(300, Math.min(600, viewportHeight - 214)) + "px";
+    } else {
+      el.win.style.height = Math.max(260, viewportHeight - 178) + "px";
+    }
+  }
+
   /* ---------------------------------------------------------------
      INIT
      --------------------------------------------------------------- */
@@ -626,6 +648,11 @@
     load();
     state.stage = computeStage();
     buildUI();
+    keepWindowInViewport();
+    window.addEventListener("resize", keepWindowInViewport, { passive: true });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", keepWindowInViewport, { passive: true });
+    }
     updateBadge();
   }
 
