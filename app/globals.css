@@ -24,3 +24,33 @@ a{color:inherit;text-decoration:none} button,input,textarea,select{font:inherit}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 @media(max-width:980px){.grid-3,.grid-4{grid-template-columns:repeat(2,1fr)}}@media(max-width:640px){.section{padding:68px 0}.grid-3,.grid-4{grid-template-columns:1fr}.container{width:min(100% - 22px,1180px)}}
 .form-field{width:100%;min-height:48px;border-radius:14px;border:1px solid var(--line);background:var(--surface-strong);color:var(--text);padding:12px 14px;outline:none;transition:.2s ease}.form-field:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(77,141,255,.12)}
+/* Phase 8A — Lead conversion form controls */
+.form-control {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface-strong) 70%, transparent);
+  color: var(--text);
+  padding: 0.85rem 1rem;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.form-control::placeholder {
+  color: var(--muted);
+  opacity: .75;
+}
+
+.form-control:focus {
+  border-color: color-mix(in srgb, var(--primary) 65%, var(--line));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+select.form-control {
+  appearance: auto;
+}
+
+textarea.form-control {
+  min-height: 160px;
+}
