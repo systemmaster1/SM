@@ -577,5 +577,53 @@
         }
       }
     }
+  },
+  "pricingPro": {
+    "eyebrow": "Simple, Clear Pricing",
+    "title": "Start with a ready product or request a custom solution",
+    "desc": "Choose one of our live SaaS products for faster onboarding, or discuss a custom system tailored to your workflow.",
+    "ready": "Ready-to-Use SaaS",
+    "custom": "Custom Development",
+    "popular": "Popular",
+    "offer": "Offer Price",
+    "starting": "Starting Price",
+    "perUser": "per user / month",
+    "visit": "Visit Product",
+    "demo": "Book Demo",
+    "contact": "Contact Sales",
+    "included": "What you get",
+    "customTitle": "Need something unique?",
+    "customDesc": "We build ERP, CRM, HRMS, mobile apps, dashboards, AI automation, WhatsApp automation and custom workflows according to your business requirement.",
+    "customCta": "Discuss Custom Project",
+    "note": "Final commercial terms, taxes, plan limits and implementation scope may vary by product or project.",
+    "faqTitle": "Pricing Questions",
+    "faq": {
+      "q1": "Can I start with a ready product and customize later?",
+      "a1": "Yes. Where technically suitable, a ready product can be the starting point and additional requirements can be discussed separately.",
+      "q2": "Is custom software priced per user?",
+      "a2": "Not necessarily. Custom software is scoped based on modules, workflows, integrations, users, complexity and delivery requirements.",
+      "q3": "Do prices include taxes?",
+      "a3": "Taxes and final billing terms are confirmed in the applicable quotation, invoice or subscription plan.",
+      "q4": "Can I request a demo before buying?",
+      "a4": "Yes. You can request a product demo or requirement discussion before making a decision."
+    }
+  },
+  "demoModal": {
+    "title": "Book a Free Demo",
+    "desc": "Tell us what you are interested in. We will prepare a structured WhatsApp message so you can start the conversation quickly.",
+    "name": "Your Name",
+    "company": "Company / Business",
+    "phone": "Phone Number",
+    "interest": "Interested In",
+    "select": "Select an option",
+    "products": {
+      "books": "SM-Books Accounting Software",
+      "hrms": "SM-HRMS + Task Management",
+      "erp": "SM-ERP + CRM",
+      "custom": "Custom Software / Automation"
+    },
+    "continue": "Continue on WhatsApp",
+    "close": "Close",
+    "required": "Please enter your name and phone number."
   }
 }
