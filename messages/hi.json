@@ -10,7 +10,9 @@
     "contact": "संपर्क",
     "login": "लॉगिन",
     "demo": "फ्री डेमो बुक करें",
-    "resources": "रिसोर्स"
+    "resources": "रिसोर्स",
+    "blog": "ब्लॉग",
+    "caseStudies": "केस स्टडी"
   },
   "hero": {
     "badge": "बिजनेस ऑटोमेशन में 8+ वर्ष",
@@ -154,7 +156,10 @@
     "terms": "नियम और शर्तें",
     "rights": "सर्वाधिकार सुरक्षित।",
     "whatsapp": "WhatsApp",
-    "bookDemo": "डेमो बुक करें"
+    "bookDemo": "डेमो बुक करें",
+    "resources": "रिसोर्स",
+    "guides": "गाइड और इनसाइट्स",
+    "caseStudies": "केस स्टडी"
   },
   "aboutPage": {
     "eyebrow": "SystemMaster के बारे में",
@@ -447,7 +452,13 @@
     "minutes": "मिनट पढ़ने का समय",
     "ctaTitle": "अपने workflow के लिए सलाह चाहिए?",
     "ctaDesc": "अपना current process, bottlenecks और tools बताइए। हम यह समझने में मदद करेंगे कि ready product बेहतर है या custom system।",
-    "cta": "अपनी requirement पर चर्चा करें"
+    "cta": "अपनी requirement पर चर्चा करें",
+    "seoTitle": "ERP, CRM, Automation और Business Software Resources",
+    "seoDescription": "ERP, CRM, HRMS, manufacturing systems, WhatsApp automation और custom software planning के लिए practical guides और insights।",
+    "browseByTopic": "विषय के अनुसार देखें",
+    "topicAll": "सभी",
+    "featuredLabel": "चुनिंदा",
+    "articleCount": "लेख"
   },
   "caseStudiesPage": {
     "eyebrow": "केस स्टडी",
