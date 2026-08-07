@@ -24,6 +24,7 @@ import {
   Workflow
 } from 'lucide-react';
 import {Reveal} from '@/components/reveal';
+import {FAQSection} from '@/components/sections/faq-section';
 import {technologyStack} from '@/data/company';
 
 const processSteps = [
@@ -218,6 +219,8 @@ export function EnterpriseHomeSections() {
           </Reveal>
         </div>
       </section>
+
+      <FAQSection />
 
       <section className="section">
         <div className="container">
