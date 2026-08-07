@@ -577,5 +577,53 @@
         }
       }
     }
+  },
+  "pricingPro": {
+    "eyebrow": "सरल और स्पष्ट प्राइसिंग",
+    "title": "Ready product से शुरू करें या custom solution की requirement बताइए",
+    "desc": "जल्दी onboarding के लिए live SaaS product चुनें, या अपने workflow के अनुसार custom system discuss करें।",
+    "ready": "रेडी-टू-यूज़ SaaS",
+    "custom": "कस्टम डेवलपमेंट",
+    "popular": "लोकप्रिय",
+    "offer": "ऑफर प्राइस",
+    "starting": "शुरुआती कीमत",
+    "perUser": "प्रति यूज़र / माह",
+    "visit": "प्रोडक्ट खोलें",
+    "demo": "डेमो बुक करें",
+    "contact": "सेल्स से संपर्क करें",
+    "included": "क्या मिलेगा",
+    "customTitle": "कुछ अलग चाहिए?",
+    "customDesc": "हम आपके बिजनेस की requirement के अनुसार ERP, CRM, HRMS, mobile apps, dashboards, AI automation, WhatsApp automation और custom workflows बनाते हैं।",
+    "customCta": "कस्टम प्रोजेक्ट पर चर्चा करें",
+    "note": "Final commercial terms, taxes, plan limits और implementation scope product या project के अनुसार बदल सकते हैं।",
+    "faqTitle": "प्राइसिंग से जुड़े सवाल",
+    "faq": {
+      "q1": "क्या ready product से शुरू करके बाद में customize कर सकते हैं?",
+      "a1": "हाँ। जहाँ technically suitable हो, ready product से शुरुआत करके additional requirements अलग से discuss की जा सकती हैं।",
+      "q2": "क्या custom software का price per user होता है?",
+      "a2": "ज़रूरी नहीं। Custom software की pricing modules, workflows, integrations, users, complexity और delivery requirements के अनुसार तय होती है।",
+      "q3": "क्या prices में taxes शामिल हैं?",
+      "a3": "Taxes और final billing terms applicable quotation, invoice या subscription plan में confirm किए जाते हैं।",
+      "q4": "खरीदने से पहले demo मिल सकता है?",
+      "a4": "हाँ। Decision लेने से पहले product demo या requirement discussion request कर सकते हैं।"
+    }
+  },
+  "demoModal": {
+    "title": "फ्री डेमो बुक करें",
+    "desc": "बताइए आपको किसमें interest है। हम structured WhatsApp message तैयार करेंगे ताकि आप जल्दी conversation शुरू कर सकें।",
+    "name": "आपका नाम",
+    "company": "कंपनी / बिजनेस",
+    "phone": "फोन नंबर",
+    "interest": "किसमें interest है",
+    "select": "एक विकल्प चुनें",
+    "products": {
+      "books": "SM-Books Accounting Software",
+      "hrms": "SM-HRMS + Task Management",
+      "erp": "SM-ERP + CRM",
+      "custom": "Custom Software / Automation"
+    },
+    "continue": "WhatsApp पर आगे बढ़ें",
+    "close": "बंद करें",
+    "required": "कृपया अपना नाम और फोन नंबर भरें।"
   }
 }
