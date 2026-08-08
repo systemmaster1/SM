@@ -10,7 +10,9 @@
     "contact": "Contact",
     "login": "Login",
     "demo": "Book a Free Demo",
-    "resources": "Resources"
+    "resources": "Resources",
+    "blog": "Blog",
+    "caseStudies": "Case Studies"
   },
   "hero": {
     "badge": "8+ years in business automation",
@@ -453,7 +455,13 @@
     "minutes": "min read",
     "ctaTitle": "Need advice for your own workflow?",
     "ctaDesc": "Share your current process, bottlenecks and tools. We can help identify whether a ready product or custom system is the better fit.",
-    "cta": "Discuss Your Requirement"
+    "cta": "Discuss Your Requirement",
+    "seoTitle": "ERP, CRM, Automation & Business Software Resources",
+    "seoDescription": "Practical guides and insights for ERP, CRM, HRMS, manufacturing systems, WhatsApp automation and custom software planning.",
+    "browseByTopic": "Browse by Topic",
+    "topicAll": "All",
+    "featuredLabel": "Featured",
+    "articleCount": "articles"
   },
   "caseStudiesPage": {
     "eyebrow": "Case Studies",
@@ -472,6 +480,62 @@
     "ctaTitle": "Want to apply this to your business?",
     "ctaDesc": "Talk to SystemMaster about your workflow, current tools and automation opportunities.",
     "cta": "Book Free Consultation"
+  },
+  "contactLead": {
+    "eyebrow": "Talk to SystemMaster",
+    "title": "Tell us what you want to improve, automate or build",
+    "desc": "Choose a ready product or describe your custom requirement. Your message can be sent directly on WhatsApp or email without creating an account.",
+    "quickTitle": "Start with the right conversation",
+    "readyTitle": "Ready-to-Use Product",
+    "readyDesc": "Interested in SM-Books, SM-HRMS + Task Management or SM-ERP + CRM?",
+    "customTitle": "Custom Software Project",
+    "customDesc": "Need ERP, CRM, mobile app, website, automation, dashboard or a unique business workflow?",
+    "supportTitle": "Existing Customer / Support",
+    "supportDesc": "Already using a SystemMaster product or solution and need help?",
+    "responseTitle": "What happens next",
+    "responseItems": {
+      "one": "We review your requirement and identify the right product or development route.",
+      "two": "If needed, we schedule a requirement discussion or product demo.",
+      "three": "For custom work, scope and next steps are clarified before development starts."
+    },
+    "formTitle": "Share your requirement",
+    "formDesc": "The form prepares a structured message for WhatsApp. You can review it before sending.",
+    "name": "Your Name",
+    "company": "Company / Business",
+    "phone": "Phone Number",
+    "email": "Email Address",
+    "interest": "What are you interested in?",
+    "budget": "Approximate Budget",
+    "requirement": "Describe your requirement",
+    "select": "Select an option",
+    "interests": {
+      "books": "SM-Books Accounting Software",
+      "hrms": "SM-HRMS + Task Management",
+      "erp": "SM-ERP + CRM",
+      "website": "Website Development",
+      "mobile": "Mobile App Development",
+      "customErp": "Custom ERP / CRM",
+      "automation": "AI / Workflow Automation",
+      "whatsapp": "WhatsApp Automation",
+      "other": "Other Custom Requirement"
+    },
+    "budgets": {
+      "discuss": "Need discussion first",
+      "under50": "Under ₹50,000",
+      "50to100": "₹50,000 – ₹1,00,000",
+      "100to300": "₹1,00,000 – ₹3,00,000",
+      "300plus": "₹3,00,000+"
+    },
+    "placeholder": "Example: We currently manage leads and follow-ups in Excel and WhatsApp. We need a CRM with user-wise lead assignment, reminders and management reports.",
+    "whatsappButton": "Continue on WhatsApp",
+    "emailButton": "Send by Email",
+    "required": "Please enter your name, phone number and requirement.",
+    "privacy": "By contacting us, you agree to share the information entered here for responding to your enquiry.",
+    "directTitle": "Prefer direct contact?",
+    "call": "Call",
+    "emailAction": "Email",
+    "whatsappAction": "WhatsApp",
+    "location": "India · Serving businesses remotely and on-site as applicable"
   },
   "legalPages": {
     "common": {
@@ -625,5 +689,18 @@
     "continue": "Continue on WhatsApp",
     "close": "Close",
     "required": "Please enter your name and phone number."
+  },
+  "portfolioPro": {
+    "eyebrow": "Portfolio & Live Demos",
+    "title": "Explore systems that look and behave like real business software",
+    "desc": "Each demo is matched to a specific business use case, so visitors can understand the workflow before discussing customization.",
+    "view": "View Details",
+    "demo": "Open Live Demo",
+    "customTitle": "Need the same workflow with your own rules?",
+    "customDesc": "We can tailor modules, roles, branches, approvals, reports, integrations and mobile access around your actual process.",
+    "customCta": "Discuss Your Requirement",
+    "back": "Back to Portfolio",
+    "live": "Interactive Live Demo",
+    "build": "Build a Similar System"
   }
 }
