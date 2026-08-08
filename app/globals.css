@@ -839,4 +839,137 @@ html[lang="hi"] .display {
   font-weight: 750 !important;
 }
 
+/* =====================================================================
+   SYSTEMMASTER PHASE 10D — HERO CARD + PORTFOLIO + DEMO POLISH
+   Append to END of app/globals.css
+   ===================================================================== */
 
+/* Fix the "Live Business Command Center" empty lower area caused by equal
+   grid/card stretching. The card should size to its content. */
+main > section:first-child .lg\:grid-cols-\[1\.05fr_\.95fr\] > .card,
+main > section:first-child .lg\:grid-cols-\[1\.05fr_\.95fr\] > div > .card {
+  height: auto !important;
+  align-self: center !important;
+}
+
+/* If the command center itself is the grid child, prevent stretch. */
+main > section:first-child .lg\:grid-cols-\[1\.05fr_\.95fr\] > :last-child.card {
+  align-self: center !important;
+  min-height: 0 !important;
+}
+
+/* Portfolio visual frame */
+.sm-demo-preview {
+  position: relative;
+  min-height: 220px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 22% 20%, color-mix(in srgb,var(--primary) 18%,transparent), transparent 34%),
+    radial-gradient(circle at 80% 80%, color-mix(in srgb,var(--gold) 14%,transparent), transparent 30%),
+    color-mix(in srgb,var(--surface-strong) 78%,transparent);
+}
+
+.sm-demo-preview::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .26;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size: 32px 32px;
+}
+
+.sm-demo-window {
+  position: absolute;
+  inset: 26px 24px 22px;
+  z-index: 1;
+  border: 1px solid color-mix(in srgb,var(--line) 88%,transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb,var(--surface) 94%,transparent);
+  box-shadow: 0 18px 50px rgba(0,0,0,.16);
+  overflow: hidden;
+  transform: perspective(900px) rotateX(2deg);
+}
+
+.sm-demo-window__top {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sm-demo-window__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--primary);
+  opacity: .65;
+}
+
+.sm-demo-window__body {
+  padding: 14px;
+}
+
+.sm-demo-kpis {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 8px;
+}
+
+.sm-demo-kpi {
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: color-mix(in srgb,var(--surface-strong) 72%,transparent);
+}
+
+.sm-demo-chart {
+  position: relative;
+  margin-top: 10px;
+  height: 74px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: color-mix(in srgb,var(--surface-strong) 58%,transparent);
+}
+
+.sm-demo-chart::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 6%;
+  bottom: 18%;
+  height: 3px;
+  border-radius: 99px;
+  background: linear-gradient(90deg,var(--primary),var(--gold));
+  transform: rotate(-7deg);
+  transform-origin: left center;
+  box-shadow:
+    38px -12px 0 -1px var(--primary),
+    78px 4px 0 -1px var(--gold),
+    118px -20px 0 -1px var(--primary);
+}
+
+.sm-demo-scan {
+  position: absolute;
+  inset: 0 auto 0 -30%;
+  width: 24%;
+  z-index: 2;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+  animation: smDemoScan 3.8s ease-in-out infinite;
+}
+
+@keyframes smDemoScan {
+  0%,12% { left:-30%; opacity:0; }
+  25% { opacity:1; }
+  70% { left:110%; opacity:.75; }
+  100% { left:110%; opacity:0; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .sm-demo-scan { display:none; }
+}
