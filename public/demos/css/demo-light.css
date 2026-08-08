@@ -1,0 +1,102 @@
+/* =====================================================================
+   SYSTEMMASTER DEMO LIGHT THEME
+   Loaded automatically by demo-shell.js.
+   Keeps legacy demo logic intact while matching the new light website.
+   ===================================================================== */
+
+html.sm-demo-light,
+body.sm-demo-light {
+  color-scheme: light !important;
+}
+
+body.sm-demo-light {
+  background:
+    radial-gradient(circle at 15% 15%,rgba(79,145,255,.12),transparent 30%),
+    radial-gradient(circle at 88% 14%,rgba(229,169,60,.10),transparent 28%),
+    #f7f9fc !important;
+  color:#10203a !important;
+}
+
+/* Remap the common legacy theme tokens used by the demos. */
+body.sm-demo-light {
+  --white:#10203a;
+  --silver:#53627a;
+  --slate:#718096;
+  --navy:#f7f9fc;
+  --navy-2:#eef3fb;
+  --navy-3:#e9eff9;
+  --line:rgba(28,54,88,.13);
+  --line-strong:rgba(28,54,88,.20);
+  --blue:#3478e5;
+  --blue-light:#4f91ff;
+  --gold:#d99a24;
+  --gold-2:#efb640;
+  --neon-green:#00a86b;
+}
+
+/* Common legacy surfaces */
+body.sm-demo-light .page-banner,
+body.sm-demo-light section,
+body.sm-demo-light .wrap {
+  color:#10203a;
+}
+
+body.sm-demo-light .panel,
+body.sm-demo-light .kpi,
+body.sm-demo-light .demo-bar,
+body.sm-demo-light .role-bar,
+body.sm-demo-light .filter-bar,
+body.sm-demo-light .erp-login-card,
+body.sm-demo-light .erp-side,
+body.sm-demo-light .erp-main,
+body.sm-demo-light .erp-topbar,
+body.sm-demo-light .sched-card {
+  background:rgba(255,255,255,.86) !important;
+  border-color:rgba(28,54,88,.14) !important;
+  box-shadow:0 12px 38px rgba(37,54,84,.08) !important;
+  color:#10203a !important;
+}
+
+body.sm-demo-light input,
+body.sm-demo-light select,
+body.sm-demo-light textarea {
+  background:#fff !important;
+  color:#10203a !important;
+  border-color:rgba(28,54,88,.18) !important;
+}
+
+body.sm-demo-light .demo-table th {
+  background:#edf3fb !important;
+  color:#33445e !important;
+}
+
+body.sm-demo-light .demo-table td {
+  color:#41516a !important;
+  border-color:rgba(28,54,88,.10) !important;
+}
+
+body.sm-demo-light .erp-side {
+  border-right-color:rgba(28,54,88,.13) !important;
+}
+
+body.sm-demo-light .es-nav a {
+  color:#55657c !important;
+}
+
+body.sm-demo-light .es-nav a:hover,
+body.sm-demo-light .es-nav a.active {
+  color:#10203a !important;
+  background:rgba(52,120,229,.08) !important;
+}
+
+body.sm-demo-light .cta-band {
+  background:linear-gradient(135deg,rgba(52,120,229,.08),rgba(229,169,60,.09)) !important;
+  border-color:rgba(28,54,88,.14) !important;
+  color:#10203a !important;
+}
+
+/* Hide all old website chrome. Demo gate and demo content remain active. */
+body.sm-demo-light .site-header,
+body.sm-demo-light .site-footer {
+  display:none !important;
+}
