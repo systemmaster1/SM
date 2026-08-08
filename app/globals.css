@@ -973,3 +973,248 @@ main > section:first-child .lg\:grid-cols-\[1\.05fr_\.95fr\] > :last-child.card 
 @media (prefers-reduced-motion:reduce) {
   .sm-demo-scan { display:none; }
 }
+
+
+/* =====================================================================
+   SYSTEMMASTER PHASE 10E — PREMIUM LIGHT THEME + CONTACT PAGE POLISH
+   APPEND TO END OF app/globals.css
+   ===================================================================== */
+
+:root {
+  --bg: #f7f9fd;
+  --surface: #ffffff;
+  --surface-strong: #f0f4fb;
+  --text: #0b1830;
+  --muted: #607089;
+  --line: rgba(35, 62, 99, .12);
+  --primary: #2f74e8;
+  --gold: #dca22d;
+}
+
+html.light body {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(78,145,255,.10), transparent 28%),
+    radial-gradient(circle at 92% 12%, rgba(229,169,60,.08), transparent 25%),
+    linear-gradient(180deg, #f9fbff 0%, #f5f8fd 100%);
+  color: var(--text);
+}
+
+/* More premium light cards: less washed-out, better contrast */
+html.light .card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.96), rgba(250,252,255,.94));
+  border-color: rgba(46,76,116,.12);
+  box-shadow:
+    0 18px 48px rgba(31,54,88,.08),
+    0 2px 8px rgba(31,54,88,.04);
+}
+
+html.light .card:hover {
+  border-color: rgba(47,116,232,.20);
+  box-shadow:
+    0 24px 64px rgba(31,54,88,.11),
+    0 4px 12px rgba(31,54,88,.04);
+}
+
+/* Hero grid is subtle, not overpowering */
+html.light main > section:first-child::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .38;
+  background-image:
+    linear-gradient(rgba(48,81,124,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(48,81,124,.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 92%);
+}
+
+/* Contact page: stronger hierarchy and less empty visual space */
+main form.card {
+  box-shadow:
+    0 22px 60px rgba(31,54,88,.10),
+    0 2px 8px rgba(31,54,88,.04);
+}
+
+main form.card h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  line-height: 1.12;
+}
+
+.form-control {
+  background: #fff !important;
+  border-color: rgba(40,69,106,.16) !important;
+  color: #0d1d35 !important;
+}
+
+.form-control:focus {
+  border-color: rgba(47,116,232,.48) !important;
+  box-shadow: 0 0 0 4px rgba(47,116,232,.10) !important;
+}
+
+/* Do not let raw i18n-like strings become giant headings if a future key is missing */
+main h1,
+main h2,
+main h3 {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* Portfolio card structure */
+.sm-portfolio-card {
+  overflow: hidden;
+}
+
+.sm-portfolio-card__visual {
+  min-height: 236px;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 16% 18%, rgba(47,116,232,.11), transparent 32%),
+    radial-gradient(circle at 88% 82%, rgba(220,162,45,.10), transparent 28%),
+    #f7f9fd;
+}
+
+.sm-preview-shell {
+  position: relative;
+  height: 100%;
+  min-height: 236px;
+  padding: 22px;
+}
+
+.sm-preview-window {
+  position: relative;
+  height: 192px;
+  overflow: hidden;
+  border: 1px solid rgba(44,72,108,.13);
+  border-radius: 18px;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 18px 44px rgba(31,54,88,.10);
+}
+
+.sm-preview-topbar {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-inline: 11px;
+  border-bottom: 1px solid rgba(44,72,108,.10);
+  background: #fbfcff;
+}
+
+.sm-preview-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: #c5d2e5;
+}
+.sm-preview-dot:first-child { background: #efb640; }
+.sm-preview-dot:nth-child(2) { background: #4f91ff; }
+.sm-preview-dot:nth-child(3) { background: #18c98f; }
+
+.sm-preview-body { height: calc(100% - 30px); padding: 12px; }
+
+/* common preview primitives */
+.sm-mini-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; }
+.sm-mini-kpi {
+  min-height: 38px;
+  border:1px solid rgba(44,72,108,.10);
+  border-radius:9px;
+  background:#f8faff;
+}
+.sm-mini-kpi::before {
+  content:"";
+  display:block;
+  width:35%;
+  height:5px;
+  margin:9px 0 0 8px;
+  border-radius:99px;
+  background:#4f91ff;
+  opacity:.75;
+}
+.sm-mini-kpi::after {
+  content:"";
+  display:block;
+  width:55%;
+  height:7px;
+  margin:6px 0 0 8px;
+  border-radius:99px;
+  background:#dce5f2;
+}
+
+.sm-mini-table { margin-top:8px; border:1px solid rgba(44,72,108,.10); border-radius:9px; overflow:hidden; }
+.sm-mini-row { display:grid; grid-template-columns:1.1fr .7fr .55fr; gap:7px; padding:7px 9px; border-top:1px solid rgba(44,72,108,.08); }
+.sm-mini-row:first-child { border-top:0; background:#f3f6fb; }
+.sm-mini-cell { height:6px; border-radius:99px; background:#d7e1ee; }
+.sm-mini-row:not(:first-child) .sm-mini-cell:first-child { background:#b9c9dd; }
+
+.sm-mini-chart {
+  position:relative;
+  margin-top:8px;
+  height:72px;
+  border:1px solid rgba(44,72,108,.10);
+  border-radius:10px;
+  background:
+    linear-gradient(rgba(44,72,108,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(44,72,108,.05) 1px,transparent 1px),
+    #fbfcff;
+  background-size:20px 20px;
+  overflow:hidden;
+}
+.sm-mini-chart svg { width:100%; height:100%; }
+
+.sm-mini-bars { height:100%; display:flex; align-items:flex-end; gap:8px; padding:10px 12px; }
+.sm-mini-bar { flex:1; border-radius:5px 5px 2px 2px; background:linear-gradient(#4f91ff,#2f74e8); opacity:.86; }
+
+.sm-pipeline { display:grid; grid-template-columns:repeat(4,1fr); gap:7px; height:100%; }
+.sm-pipeline-col {
+  padding:8px;
+  border:1px solid rgba(44,72,108,.10);
+  border-radius:10px;
+  background:#f8faff;
+}
+.sm-pipeline-title { height:6px; width:60%; border-radius:99px; background:#b8c9dd; margin-bottom:8px; }
+.sm-task { height:25px; border-radius:7px; background:#fff; border:1px solid rgba(44,72,108,.09); margin-top:6px; }
+
+.sm-stock-grid { display:grid; grid-template-columns:1fr 1.3fr; gap:8px; height:100%; }
+.sm-stock-side { border:1px solid rgba(44,72,108,.10); border-radius:10px; padding:9px; }
+.sm-stock-ring {
+  width:62px; height:62px; border-radius:50%; margin:9px auto;
+  background:conic-gradient(#2f74e8 0 67%,#e8eef7 67% 100%);
+  position:relative;
+}
+.sm-stock-ring::after {
+  content:""; position:absolute; inset:9px; border-radius:50%; background:white;
+}
+.sm-stock-list { display:grid; gap:7px; }
+.sm-stock-item { height:25px; border:1px solid rgba(44,72,108,.09); border-radius:7px; background:#fbfcff; }
+
+.sm-production { display:grid; gap:8px; }
+.sm-production-step { display:grid; grid-template-columns:18px 1fr 48px; gap:8px; align-items:center; }
+.sm-production-num { width:18px;height:18px;border-radius:6px;background:#e7eef9; }
+.sm-production-track { height:8px;border-radius:99px;background:#e7edf6; overflow:hidden; }
+.sm-production-fill { height:100%;border-radius:99px;background:linear-gradient(90deg,#2f74e8,#4f91ff); }
+.sm-production-val { height:7px;border-radius:99px;background:#ccd8e8; }
+
+.sm-score-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+.sm-score-card { padding:8px;border:1px solid rgba(44,72,108,.10);border-radius:10px;background:#fbfcff; }
+.sm-score-head { width:60%;height:7px;border-radius:99px;background:#c5d2e3; }
+.sm-score-meter { height:7px;margin-top:12px;border-radius:99px;background:#e7edf6;overflow:hidden; }
+.sm-score-meter span { display:block;height:100%;border-radius:99px;background:#18c98f; }
+
+.sm-doc {
+  width:118px; height:142px; margin:1px auto 0; padding:14px;
+  border:1px solid rgba(44,72,108,.13); border-radius:10px;
+  background:#fff; box-shadow:0 10px 24px rgba(31,54,88,.08);
+}
+.sm-doc-logo { width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#f1bd4e,#4f91ff);margin:0 auto 12px; }
+.sm-doc-line { height:6px;border-radius:99px;background:#d9e2ef;margin-top:8px; }
+.sm-doc-line.gold { background:#efc86c;width:65%;margin-inline:auto; }
+.sm-doc-seal { width:26px;height:26px;border-radius:50%;border:4px double #e1a92e;margin:14px auto 0; }
+
+@media(max-width:640px){
+  .sm-portfolio-card__visual { min-height:210px; }
+  .sm-preview-shell { min-height:210px;padding:16px; }
+  .sm-preview-window { height:178px; }
+}
+
