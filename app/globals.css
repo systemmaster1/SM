@@ -428,4 +428,338 @@ summary {
     transform: none !important;
   }
 }
+/* =====================================================================
+   SYSTEMMASTER PHASE 10B — TEXT ALIGNMENT + FORMAT NORMALIZATION
+   APPEND THIS FILE AT THE END OF app/globals.css
 
+   Goal:
+   - consistent text alignment
+   - readable line lengths
+   - equal card rhythm
+   - cleaner hero formatting
+   - professional grid alignment
+   - better mobile typography
+   - predictable CTA/button alignment
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. GLOBAL TEXT RHYTHM
+   --------------------------------------------------------------------- */
+
+:root {
+  --sm-copy-width: 720px;
+  --sm-copy-wide: 860px;
+  --sm-heading-width: 980px;
+  --sm-card-gap: 1.5rem;
+}
+
+main {
+  overflow-x: clip;
+}
+
+main section {
+  position: relative;
+}
+
+main h1,
+main h2,
+main h3,
+main h4,
+main p {
+  margin-block-start: 0;
+}
+
+main h1,
+main h2,
+main h3 {
+  overflow-wrap: anywhere;
+}
+
+main p {
+  max-width: var(--sm-copy-width);
+}
+
+.text-center p,
+.text-center .muted {
+  margin-inline: auto;
+}
+
+/* Keep very long hero headings readable instead of stretching across screen */
+main h1 {
+  max-width: var(--sm-heading-width);
+}
+
+main .text-center h1,
+main .text-center h2 {
+  margin-inline: auto;
+}
+
+/* ---------------------------------------------------------------------
+   2. HERO / PAGE INTRO ALIGNMENT
+   --------------------------------------------------------------------- */
+
+main > section:first-child .container > div:first-child,
+main > section:first-child .container > .grid > div:first-child {
+  align-self: center;
+}
+
+main > section:first-child h1 {
+  text-wrap: balance;
+}
+
+main > section:first-child p {
+  text-wrap: pretty;
+}
+
+/* Consistent gap after eyebrow */
+main > section:first-child .eyebrow + h1,
+main > section:first-child .eyebrow + h2 {
+  margin-top: 1.15rem !important;
+}
+
+/* ---------------------------------------------------------------------
+   3. GRID / CARD CONTENT ALIGNMENT
+   --------------------------------------------------------------------- */
+
+.grid > .card,
+.grid > article.card,
+.grid > div > .card {
+  height: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card > .btn:last-child,
+.card > a.btn:last-child,
+.card > div:last-child:has(.btn) {
+  margin-top: auto;
+}
+
+.card h2,
+.card h3 {
+  text-wrap: balance;
+}
+
+.card p {
+  text-wrap: pretty;
+}
+
+/* Equal content spacing inside cards */
+.card > h2 + p,
+.card > h3 + p {
+  margin-top: .85rem !important;
+}
+
+/* Avoid awkward single-word card titles */
+.card h3 {
+  min-height: auto;
+}
+
+/* ---------------------------------------------------------------------
+   4. SECTION HEADING FORMAT
+   --------------------------------------------------------------------- */
+
+.section .container > .text-center > h2,
+.section .container > div > .text-center > h2 {
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.section .container > .text-center > p,
+.section .container > div > .text-center > p {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.section .eyebrow {
+  margin-bottom: .15rem;
+}
+
+/* ---------------------------------------------------------------------
+   5. TWO-COLUMN CONTENT BALANCE
+   --------------------------------------------------------------------- */
+
+.lg\:grid-cols-\[1\.05fr_\.95fr\] > *,
+.lg\:grid-cols-\[\.95fr_1\.05fr\] > *,
+.lg\:grid-cols-\[1\.15fr_\.85fr\] > *,
+.lg\:grid-cols-\[\.85fr_1\.15fr\] > * {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-\[1\.05fr_\.95fr\],
+  .lg\:grid-cols-\[\.95fr_1\.05fr\],
+  .lg\:grid-cols-\[1\.15fr_\.85fr\],
+  .lg\:grid-cols-\[\.85fr_1\.15fr\] {
+    align-items: center;
+  }
+
+  /* Left-column copy should not feel too wide */
+  .lg\:grid-cols-\[1\.05fr_\.95fr\] > :first-child p,
+  .lg\:grid-cols-\[1\.15fr_\.85fr\] > :first-child p {
+    max-width: 680px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   6. BUTTON / CTA FORMAT
+   --------------------------------------------------------------------- */
+
+.btn {
+  white-space: nowrap;
+  text-align: center;
+}
+
+.flex.flex-wrap.gap-3 > .btn,
+.flex.flex-wrap.justify-center.gap-3 > .btn {
+  align-self: center;
+}
+
+@media (max-width: 520px) {
+  .flex.flex-wrap.gap-3 > .btn,
+  .flex.flex-wrap.justify-center.gap-3 > .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   7. FORM ALIGNMENT
+   --------------------------------------------------------------------- */
+
+form label {
+  text-align: left;
+}
+
+form .form-control {
+  width: 100%;
+}
+
+form .grid {
+  align-items: start;
+}
+
+form textarea {
+  vertical-align: top;
+}
+
+/* ---------------------------------------------------------------------
+   8. FAQ / DETAILS FORMAT
+   --------------------------------------------------------------------- */
+
+details summary {
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+details p {
+  max-width: none;
+}
+
+/* ---------------------------------------------------------------------
+   9. FOOTER TEXT FORMAT
+   --------------------------------------------------------------------- */
+
+footer p {
+  max-width: 440px;
+}
+
+footer a {
+  text-underline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------------
+   10. MOBILE ALIGNMENT
+   --------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  main > section:first-child {
+    text-align: left;
+  }
+
+  main > section:first-child .text-center {
+    text-align: center;
+  }
+
+  main h1,
+  main h2,
+  main h3 {
+    word-break: normal;
+    hyphens: auto;
+  }
+
+  main h1 {
+    line-height: 1.07 !important;
+  }
+
+  main h2 {
+    line-height: 1.12 !important;
+  }
+
+  .card {
+    text-align: left;
+  }
+
+  .card .text-center {
+    text-align: center;
+  }
+
+  .section .container > .text-center {
+    padding-inline: .25rem;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   11. WIDE DESKTOP POLISH
+   --------------------------------------------------------------------- */
+
+@media (min-width: 1440px) {
+  main > section:first-child .container {
+    padding-inline: .5rem;
+  }
+
+  .section .container {
+    padding-inline: .25rem;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   12. HINDI TYPOGRAPHY SUPPORT
+   --------------------------------------------------------------------- */
+
+html[lang="hi"] body,
+html[lang="hi"] .display,
+html[lang="hi"] h1,
+html[lang="hi"] h2,
+html[lang="hi"] h3,
+html[lang="hi"] h4,
+html[lang="hi"] h5,
+html[lang="hi"] h6 {
+  letter-spacing: 0 !important;
+}
+
+html[lang="hi"] h1,
+html[lang="hi"] h2,
+html[lang="hi"] h3 {
+  line-height: 1.18 !important;
+}
+
+html[lang="hi"] p,
+html[lang="hi"] .muted {
+  line-height: 1.8;
+}
+
+/* ---------------------------------------------------------------------
+   13. SAFETY FOR RAW TRANSLATION KEYS
+   This does NOT hide errors; it only prevents broken layout when one
+   slips through. Actual missing keys must still be fixed in messages.
+   --------------------------------------------------------------------- */
+
+[data-translation-key-error] {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .8em;
+  color: #ef4444;
+}
