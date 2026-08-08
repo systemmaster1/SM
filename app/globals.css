@@ -763,3 +763,80 @@ html[lang="hi"] .muted {
   font-size: .8em;
   color: #ef4444;
 }
+/* =====================================================================
+   SYSTEMMASTER PHASE 10C — REAL FONT LOADING + TYPOGRAPHY FINALIZATION
+   Append at the END of app/globals.css
+   ===================================================================== */
+
+:root {
+  --font-display: var(--font-jakarta), "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), "Inter", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  font-feature-settings: "liga" 1, "kern" 1, "calt" 1;
+  font-kerning: normal;
+}
+
+.display,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.btn,
+summary {
+  font-family: var(--font-display);
+}
+
+h1,
+h2,
+h3 {
+  font-optical-sizing: auto;
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+/* Avoid extra-bold "poster" look on business pages */
+h1,
+.display.text-5xl,
+.display.text-4xl {
+  font-weight: 800 !important;
+}
+
+h2 {
+  font-weight: 780;
+}
+
+h3 {
+  font-weight: 740;
+}
+
+/* Better numeric appearance for pricing / dashboards */
+.tabular-nums,
+[data-number],
+[data-price] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hindi should stay comfortably readable even when Latin font fallback occurs */
+html[lang="hi"] body {
+  font-family: var(--font-body);
+  font-weight: 450;
+}
+
+html[lang="hi"] h1,
+html[lang="hi"] h2,
+html[lang="hi"] h3,
+html[lang="hi"] .display {
+  font-weight: 750 !important;
+}
+
+
