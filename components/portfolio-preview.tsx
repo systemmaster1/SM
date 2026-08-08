@@ -1,281 +1,231 @@
 'use client';
 
-import {FormEvent, useMemo, useState} from 'react';
 import {motion} from 'framer-motion';
-import {useLocale, useTranslations} from 'next-intl';
-import {
-  ArrowRight,
-  CheckCircle2,
-  Headphones,
-  Mail,
-  MessageCircle,
-  PackageCheck,
-  Phone,
-  Send,
-  Settings2,
-  Sparkles
-} from 'lucide-react';
-import {Reveal} from '@/components/reveal';
 
-type FormState = {
-  name: string;
-  company: string;
-  phone: string;
-  email: string;
-  interest: string;
-  budget: string;
-  requirement: string;
-};
-
-const initialForm: FormState = {
-  name: '',
-  company: '',
-  phone: '',
-  email: '',
-  interest: '',
-  budget: 'discuss',
-  requirement: ''
-};
-
-const interestKeys = [
-  'books','hrms','erp','website','mobile','customErp','automation','whatsapp','other'
-] as const;
-
-const budgetKeys = ['discuss','under50','50to100','100to300','300plus'] as const;
-
-export function ContactConversionPage() {
-  const locale = useLocale();
-  const t = useTranslations('contactLead');
-  const [form, setForm] = useState<FormState>(initialForm);
-  const [error, setError] = useState('');
-
-  const interestLabel = useMemo(
-    () => (form.interest ? t(`interests.${form.interest}` as never) : '-'),
-    [form.interest, t]
-  );
-
-  const budgetLabel = useMemo(
-    () => t(`budgets.${form.budget}` as never),
-    [form.budget, t]
-  );
-
-  const message = useMemo(() => [
-    'Hello SystemMaster,',
-    '',
-    `Name: ${form.name || '-'}`,
-    `Company: ${form.company || '-'}`,
-    `Phone: ${form.phone || '-'}`,
-    `Email: ${form.email || '-'}`,
-    `Interest: ${interestLabel}`,
-    `Budget: ${budgetLabel}`,
-    '',
-    'Requirement:',
-    form.requirement || '-',
-    '',
-    `Website language: ${locale.toUpperCase()}`
-  ].join('\n'), [form, interestLabel, budgetLabel, locale]);
-
-  const validate = () => {
-    if (!form.name.trim() || !form.phone.trim() || !form.requirement.trim()) {
-      setError(t('required'));
-      return false;
-    }
-    setError('');
-    return true;
-  };
-
-  const submitWhatsApp = (event: FormEvent) => {
-    event.preventDefault();
-    if (!validate()) return;
-    window.open(
-      `https://wa.me/919027965956?text=${encodeURIComponent(message)}`,
-      '_blank',
-      'noopener,noreferrer'
-    );
-  };
-
-  const submitEmail = () => {
-    if (!validate()) return;
-    const subject = encodeURIComponent(
-      `New enquiry from ${form.name}${form.company ? ` - ${form.company}` : ''}`
-    );
-    window.location.href =
-      `mailto:Connect@systemmaster.in?subject=${subject}&body=${encodeURIComponent(message)}`;
-  };
-
-  const update = (key: keyof FormState, value: string) => {
-    setForm((current) => ({...current, [key]: value}));
-    if (error) setError('');
-  };
-
+function Shell({children}: {children: React.ReactNode}) {
   return (
-    <main>
-      <section className="relative overflow-hidden py-20 md:py-28">
-        <div className="container grid items-center gap-10 lg:grid-cols-[1.02fr_.98fr]">
-          <Reveal>
-            <div className="max-w-3xl">
-              <div className="eyebrow">
-                <Sparkles size={15} />
-                {t('eyebrow')}
-              </div>
-              <h1 className="display mt-5">
-                {t('title')}
-              </h1>
-              <p className="muted mt-6 max-w-2xl text-lg leading-8">
-                {t('desc')}
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.07}>
-            <div className="card p-7 md:p-8">
-              <h2 className="display text-2xl">{t('quickTitle')}</h2>
-              <div className="mt-6 grid gap-3">
-                {[
-                  ['readyTitle','readyDesc',PackageCheck,'emerald'],
-                  ['customTitle','customDesc',Settings2,'blue'],
-                  ['supportTitle','supportDesc',Headphones,'amber']
-                ].map(([titleKey, descKey, Icon, tone]: any) => (
-                  <div
-                    key={titleKey}
-                    className="rounded-2xl border border-[var(--line)] bg-[var(--surface-strong)]/45 p-5"
-                  >
-                    <div className="flex gap-4">
-                      <Icon
-                        className={`mt-1 shrink-0 ${
-                          tone === 'emerald'
-                            ? 'text-emerald-500'
-                            : tone === 'amber'
-                              ? 'text-[var(--gold)]'
-                              : 'text-[var(--primary)]'
-                        }`}
-                        size={21}
-                      />
-                      <div>
-                        <h3 className="text-base font-extrabold">{t(titleKey)}</h3>
-                        <p className="muted mt-1.5 text-sm leading-6">{t(descKey)}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section pt-2">
-        <div className="container grid items-start gap-7 lg:grid-cols-[.72fr_1.28fr]">
-          <div className="grid gap-5">
-            <Reveal>
-              <article className="card p-7">
-                <h2 className="display text-2xl">{t('responseTitle')}</h2>
-                <div className="mt-5 grid gap-4">
-                  {(['one','two','three'] as const).map((key) => (
-                    <div key={key} className="flex gap-3">
-                      <CheckCircle2 className="mt-1 shrink-0 text-emerald-500" size={18}/>
-                      <p className="muted text-sm leading-7">{t(`responseItems.${key}`)}</p>
-                    </div>
-                  ))}
-                </div>
-              </article>
-            </Reveal>
-
-            <Reveal delay={0.04}>
-              <article className="card p-7">
-                <h2 className="display text-2xl">{t('directTitle')}</h2>
-                <div className="mt-5 grid gap-3">
-                  <a href="tel:+919027965956" className="btn btn-ghost justify-start">
-                    <Phone size={17}/>{t('call')}: +91 90279 65956
-                  </a>
-                  <a href="mailto:Connect@systemmaster.in" className="btn btn-ghost justify-start">
-                    <Mail size={17}/>{t('emailAction')}: Connect@systemmaster.in
-                  </a>
-                  <a href="https://wa.me/919027965956" target="_blank" rel="noreferrer" className="btn btn-ghost justify-start">
-                    <MessageCircle size={17}/>{t('whatsappAction')}
-                  </a>
-                </div>
-                <p className="muted mt-5 text-sm leading-6">{t('location')}</p>
-              </article>
-            </Reveal>
+    <div className="sm-portfolio-card__visual">
+      <div className="sm-preview-shell">
+        <motion.div
+          className="sm-preview-window"
+          initial={{opacity: 0, y: 12, scale: .98}}
+          whileInView={{opacity: 1, y: 0, scale: 1}}
+          viewport={{once: true}}
+          whileHover={{y: -3}}
+          transition={{duration: .42}}
+        >
+          <div className="sm-preview-topbar">
+            <span className="sm-preview-dot" />
+            <span className="sm-preview-dot" />
+            <span className="sm-preview-dot" />
           </div>
-
-          <Reveal delay={0.06}>
-            <form onSubmit={submitWhatsApp} className="card p-7 md:p-9">
-              <h2 className="display text-3xl">{t('formTitle')}</h2>
-              <p className="muted mt-3 max-w-2xl leading-7">{t('formDesc')}</p>
-
-              <div className="mt-8 grid gap-5 md:grid-cols-2">
-                <Field label={t('name')}>
-                  <input value={form.name} onChange={(e)=>update('name',e.target.value)} className="form-control" autoComplete="name"/>
-                </Field>
-                <Field label={t('company')}>
-                  <input value={form.company} onChange={(e)=>update('company',e.target.value)} className="form-control" autoComplete="organization"/>
-                </Field>
-                <Field label={t('phone')}>
-                  <input value={form.phone} onChange={(e)=>update('phone',e.target.value)} className="form-control" inputMode="tel" autoComplete="tel"/>
-                </Field>
-                <Field label={t('email')}>
-                  <input value={form.email} onChange={(e)=>update('email',e.target.value)} className="form-control" type="email" autoComplete="email"/>
-                </Field>
-                <Field label={t('interest')}>
-                  <select value={form.interest} onChange={(e)=>update('interest',e.target.value)} className="form-control">
-                    <option value="">{t('select')}</option>
-                    {interestKeys.map((key)=><option key={key} value={key}>{t(`interests.${key}`)}</option>)}
-                  </select>
-                </Field>
-                <Field label={t('budget')}>
-                  <select value={form.budget} onChange={(e)=>update('budget',e.target.value)} className="form-control">
-                    {budgetKeys.map((key)=><option key={key} value={key}>{t(`budgets.${key}`)}</option>)}
-                  </select>
-                </Field>
-              </div>
-
-              <Field label={t('requirement')} className="mt-5">
-                <textarea
-                  rows={7}
-                  value={form.requirement}
-                  onChange={(e)=>update('requirement',e.target.value)}
-                  className="form-control resize-y"
-                  placeholder={t('placeholder')}
-                />
-              </Field>
-
-              {error ? (
-                <div className="mt-4 rounded-2xl border border-red-500/20 bg-red-500/5 px-4 py-3 text-sm font-bold text-red-500">
-                  {error}
-                </div>
-              ) : null}
-
-              <p className="muted mt-4 text-xs leading-5">{t('privacy')}</p>
-
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <motion.button type="submit" whileHover={{y:-2}} whileTap={{scale:.985}} className="btn btn-gold">
-                  <MessageCircle size={18}/>{t('whatsappButton')}<ArrowRight size={17}/>
-                </motion.button>
-                <button type="button" onClick={submitEmail} className="btn btn-ghost">
-                  <Send size={17}/>{t('emailButton')}
-                </button>
-              </div>
-            </form>
-          </Reveal>
-        </div>
-      </section>
-    </main>
+          <div className="sm-preview-body">{children}</div>
+        </motion.div>
+      </div>
+    </div>
   );
 }
 
-function Field({
-  label, children, className=''
-}: {
-  label:string;
-  children:React.ReactNode;
-  className?:string;
-}) {
+function ERPFull() {
   return (
-    <label className={`grid gap-2 text-sm font-extrabold ${className}`}>
-      <span>{label}</span>
-      {children}
-    </label>
+    <Shell>
+      <div className="sm-mini-kpis">
+        <div className="sm-mini-kpi" />
+        <div className="sm-mini-kpi" />
+        <div className="sm-mini-kpi" />
+      </div>
+      <div className="sm-mini-table">
+        {[0,1,2,3].map((r) => (
+          <div className="sm-mini-row" key={r}>
+            <div className="sm-mini-cell" />
+            <div className="sm-mini-cell" />
+            <div className="sm-mini-cell" />
+          </div>
+        ))}
+      </div>
+    </Shell>
   );
+}
+
+function ERPDashboard() {
+  return (
+    <Shell>
+      <div className="sm-mini-kpis">
+        <div className="sm-mini-kpi" />
+        <div className="sm-mini-kpi" />
+        <div className="sm-mini-kpi" />
+      </div>
+      <div className="sm-mini-chart">
+        <svg viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline
+            points="0,82 42,68 84,72 128,48 168,57 210,30 250,39 300,18"
+            fill="none"
+            stroke="#2f74e8"
+            strokeWidth="4"
+          />
+          <polyline
+            points="0,88 52,80 96,61 138,68 180,48 224,56 260,32 300,38"
+            fill="none"
+            stroke="#e0a12b"
+            strokeWidth="3"
+            opacity=".8"
+          />
+        </svg>
+      </div>
+    </Shell>
+  );
+}
+
+function FMS() {
+  return (
+    <Shell>
+      <div className="sm-pipeline">
+        {[0,1,2,3].map((col) => (
+          <div className="sm-pipeline-col" key={col}>
+            <div className="sm-pipeline-title" />
+            {Array.from({length: col === 1 ? 4 : 3}).map((_, i) => (
+              <div className="sm-task" key={i} />
+            ))}
+          </div>
+        ))}
+      </div>
+    </Shell>
+  );
+}
+
+function IMS() {
+  return (
+    <Shell>
+      <div className="sm-stock-grid">
+        <div className="sm-stock-side">
+          <div className="sm-stock-ring" />
+        </div>
+        <div className="sm-stock-list">
+          {[0,1,2,3,4].map((x) => <div key={x} className="sm-stock-item" />)}
+        </div>
+      </div>
+    </Shell>
+  );
+}
+
+function PMS() {
+  const widths = ['88%','72%','61%','46%','34%'];
+  return (
+    <Shell>
+      <div className="sm-production">
+        {widths.map((w, i) => (
+          <div className="sm-production-step" key={w}>
+            <div className="sm-production-num" />
+            <div className="sm-production-track">
+              <motion.div
+                className="sm-production-fill"
+                initial={{width: 0}}
+                whileInView={{width: w}}
+                viewport={{once: true}}
+                transition={{duration: .6, delay: i * .08}}
+              />
+            </div>
+            <div className="sm-production-val" />
+          </div>
+        ))}
+      </div>
+    </Shell>
+  );
+}
+
+function Analytics() {
+  return (
+    <Shell>
+      <div className="sm-mini-kpis">
+        <div className="sm-mini-kpi" />
+        <div className="sm-mini-kpi" />
+        <div className="sm-mini-kpi" />
+      </div>
+      <div className="sm-mini-chart">
+        <div className="sm-mini-bars">
+          {[48,72,58,84,66,92,77].map((h, i) => (
+            <motion.div
+              key={i}
+              className="sm-mini-bar"
+              initial={{height: 0}}
+              whileInView={{height: `${h}%`}}
+              viewport={{once: true}}
+              transition={{duration: .5, delay: i * .05}}
+            />
+          ))}
+        </div>
+      </div>
+    </Shell>
+  );
+}
+
+function Performance() {
+  const scores = ['78%','91%','66%','84%'];
+  return (
+    <Shell>
+      <div className="sm-score-grid">
+        {scores.map((score, i) => (
+          <div className="sm-score-card" key={score}>
+            <div className="sm-score-head" />
+            <div className="sm-score-meter">
+              <motion.span
+                initial={{width: 0}}
+                whileInView={{width: score}}
+                viewport={{once: true}}
+                transition={{duration: .55, delay: i * .08}}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="sm-mini-chart mt-2">
+        <svg viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline
+            points="0,80 50,70 90,62 135,52 180,55 225,34 300,24"
+            fill="none"
+            stroke="#18c98f"
+            strokeWidth="4"
+          />
+        </svg>
+      </div>
+    </Shell>
+  );
+}
+
+function Certificate() {
+  return (
+    <Shell>
+      <div className="sm-doc">
+        <div className="sm-doc-logo" />
+        <div className="sm-doc-line gold" />
+        <div className="sm-doc-line" />
+        <div className="sm-doc-line" />
+        <div className="sm-doc-line" style={{width:'78%'}} />
+        <div className="sm-doc-seal" />
+      </div>
+    </Shell>
+  );
+}
+
+export function PortfolioPreview({slug}: {slug: string}) {
+  switch (slug) {
+    case 'enterprise-erp':
+      return <ERPFull />;
+    case 'erp-dashboard':
+      return <ERPDashboard />;
+    case 'workflow-fms':
+      return <FMS />;
+    case 'inventory-ims':
+      return <IMS />;
+    case 'production-pms':
+      return <PMS />;
+    case 'business-analytics':
+      return <Analytics />;
+    case 'performance-dashboard':
+      return <Performance />;
+    case 'certificate-automation':
+      return <Certificate />;
+    default:
+      return <ERPDashboard />;
+  }
 }
