@@ -1,6 +1,19 @@
 import './globals.css';
 import type {Metadata, Viewport} from 'next';
+import {Inter, Plus_Jakarta_Sans} from 'next/font/google';
 import {ThemeProvider} from '@/components/theme-provider';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap'
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  display: 'swap'
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://systemmaster.in'),
@@ -92,7 +105,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${jakarta.variable}`}
+    >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
