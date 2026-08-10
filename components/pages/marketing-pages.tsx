@@ -1,28 +1,396 @@
 'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import {useLocale,useTranslations} from 'next-intl';
 import {motion} from 'framer-motion';
-import {ArrowRight,BarChart3,Building2,Check,Cloud,Code2,Factory,Globe2,HeartPulse,Laptop,MapPinned,MessageCircle,PackageCheck,Plane,Printer,Rocket,Smartphone,Sparkles,Users,Warehouse,Workflow,Wrench} from 'lucide-react';
-import {products,services,industries,pick} from '@/data/site';
+import {useLocale, useTranslations} from 'next-intl';
+import {
+  ArrowRight,
+  BarChart3,
+  Building2,
+  Check,
+  Cloud,
+  Code2,
+  Factory,
+  Globe2,
+  HeartPulse,
+  Laptop,
+  MapPinned,
+  MessageCircle,
+  PackageCheck,
+  Plane,
+  Printer,
+  Rocket,
+  Smartphone,
+  Sparkles,
+  Users,
+  Warehouse,
+  Workflow,
+  Wrench
+} from 'lucide-react';
+import {industries, pick, products, services} from '@/data/site';
 import {portfolioProjects} from '@/data/portfolio';
 import {Reveal} from '@/components/reveal';
 
-function Hero({ns}:{ns:'productsPage'|'servicesPage'|'industriesPage'|'portfolioPage'|'pricingPage'|'contactPage'}){
- const t=useTranslations(ns);
- return <section className="relative overflow-hidden py-20 md:py-28"><div className="container text-center"><motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} className="eyebrow"><Sparkles size={15}/>{t('eyebrow')}</motion.div><motion.h1 initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{delay:.08}} className="display mx-auto mt-5 max-w-5xl text-5xl font-black md:text-7xl">{t('title')}</motion.h1><motion.p initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:.16}} className="muted mx-auto mt-6 max-w-3xl text-lg leading-8">{t('desc')}</motion.p></div></section>
+type HeroNamespace =
+  | 'productsPage'
+  | 'servicesPage'
+  | 'industriesPage'
+  | 'portfolioPage'
+  | 'pricingPage'
+  | 'contactPage';
+
+function Hero({ns}: {ns: HeroNamespace}) {
+  const t = useTranslations(ns);
+
+  return (
+    <section className="sm-page-hero relative overflow-hidden">
+      <div className="container">
+        <div className="sm-page-hero__inner">
+          <motion.div
+            initial={{opacity: 0, y: 10}}
+            animate={{opacity: 1, y: 0}}
+            className="eyebrow"
+          >
+            <Sparkles size={15} />
+            {t('eyebrow')}
+          </motion.div>
+
+          <motion.h1
+            initial={{opacity: 0, y: 16}}
+            animate={{opacity: 1, y: 0}}
+            transition={{delay: .07}}
+            className="display sm-page-hero__title"
+          >
+            {t('title')}
+          </motion.h1>
+
+          <motion.p
+            initial={{opacity: 0, y: 14}}
+            animate={{opacity: 1, y: 0}}
+            transition={{delay: .14}}
+            className="sm-page-hero__desc"
+          >
+            {t('desc')}
+          </motion.p>
+        </div>
+      </div>
+    </section>
+  );
 }
 
-export function ProductsPage(){const locale=useLocale();const t=useTranslations('productsPage');return <main><Hero ns="productsPage"/><section className="section pt-4"><div className="container"><div className="grid-3">{products.map((x,i)=><Reveal key={x.key} delay={i*.08}><article className="card flex h-full flex-col p-7"><div className="flex items-start justify-between gap-4"><Image src={x.logo} alt={x.name} width={130} height={90} className="h-24 w-32 object-contain"/><span className="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-extrabold text-emerald-500">{t('ready')}</span></div><h2 className="display mt-6 text-3xl font-black"><Link href={`/${locale}/products/${x.key}`} className="transition hover:text-[var(--primary)]">{x.name}</Link></h2><div className="mt-3 text-xl font-black text-[var(--gold)]">{pick(x.price,locale)}</div><ul className="muted mt-6 grid gap-3">{x.features.map(f=><li key={f.en} className="flex gap-3"><Check size={18} className="mt-1 shrink-0 text-emerald-500"/>{pick(f,locale)}</li>)}</ul><div className="mt-auto flex flex-wrap gap-3 pt-8"><Link href={`/${locale}/products/${x.key}`} className="btn btn-primary flex-1">{t('explore')}<ArrowRight size={17}/></Link><a href={x.href} target="_blank" rel="noreferrer" className="btn btn-ghost">{t('visit')}</a></div></article></Reveal>)}</div><Reveal><div className="card mt-12 grid gap-8 p-8 md:grid-cols-[1fr_auto] md:items-center md:p-12"><div><div className="eyebrow"><Wrench size={15}/>{t('customEyebrow')}</div><h2 className="display mt-4 text-3xl font-black md:text-5xl">{t('customTitle')}</h2><p className="muted mt-4 max-w-3xl text-lg">{t('customDesc')}</p></div><Link href={`/${locale}/contact`} className="btn btn-gold">{t('talk')}<ArrowRight size={18}/></Link></div></Reveal></div></section></main>}
+export function ProductsPage() {
+  const locale = useLocale();
+  const t = useTranslations('productsPage');
 
-const serviceIcons=[Globe2,Laptop,Smartphone,Warehouse,Users,Workflow,MessageCircle,Cloud,BarChart3,Code2,Cloud,Rocket];
-export function ServicesPage(){const locale=useLocale();const t=useTranslations('servicesPage');return <main><Hero ns="servicesPage"/><section className="section pt-4"><div className="container"><div className="grid-3">{services.map((s,i)=>{const Icon=serviceIcons[i%serviceIcons.length];return <Reveal key={s.slug} delay={i*.04}><article className="card h-full p-7"><div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/15 text-[var(--primary)]"><Icon/></div><h2 className="display mt-6 text-2xl font-black"><Link href={`/${locale}/services/${s.slug}`} className="transition hover:text-[var(--primary)]">{pick(s.label,locale)}</Link></h2><p className="muted mt-4">{t('cardDesc')}</p><Link href={`/${locale}/services/${s.slug}`} className="mt-6 inline-flex items-center gap-2 font-extrabold text-[var(--primary)]">{t('explore')}<ArrowRight size={16}/></Link></article></Reveal>})}</div></div></section></main>}
+  return (
+    <main>
+      <Hero ns="productsPage" />
 
-const industryIcons=[Factory,PackageCheck,Printer,Warehouse,HeartPulse,Building2,Plane,MapPinned,Users,Warehouse,Workflow,BarChart3];
-export function IndustriesPage(){const locale=useLocale();const t=useTranslations('industriesPage');return <main><Hero ns="industriesPage"/><section className="section pt-4"><div className="container"><div className="grid-4">{industries.map((s,i)=>{const Icon=industryIcons[i%industryIcons.length];return <Reveal key={s.slug} delay={i*.035}><article className="card h-full p-6"><Icon className="text-[var(--gold)]"/><h2 className="display mt-5 text-xl font-black">{pick(s.label,locale)}</h2><p className="muted mt-3 text-sm">{t('cardDesc')}</p><Link href={`/${locale}/industries/${s.slug}`} className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-[var(--primary)]">{t('explore')}<ArrowRight size={15}/></Link></article></Reveal>})}</div></div></section></main>}
+      <section className="section pt-3">
+        <div className="container">
+          <div className="grid-3">
+            {products.map((product, index) => (
+              <Reveal key={product.key} delay={index * .06}>
+                <article className="card sm-product-card">
+                  <div className="sm-product-logo-area">
+                    <Image
+                      src={product.logo}
+                      alt={product.name}
+                      width={130}
+                      height={90}
+                      className="h-24 w-32 object-contain"
+                    />
+                    <span className="rounded-full bg-emerald-500/12 px-3 py-1 text-[11px] font-extrabold text-emerald-600">
+                      {t('ready')}
+                    </span>
+                  </div>
 
-export function PortfolioPage(){const locale=useLocale();const t=useTranslations('portfolioPage');return <main><Hero ns="portfolioPage"/><section className="section pt-4"><div className="container"><div className="grid-3">{portfolioProjects.map((project,i)=><Reveal key={project.slug} delay={i*.05}><article className="card flex h-full flex-col overflow-hidden"><div className="relative flex min-h-48 items-center justify-center overflow-hidden bg-gradient-to-br from-blue-500/20 to-amber-400/10"><div className="absolute inset-0 opacity-25 [background-image:linear-gradient(var(--line)_1px,transparent_1px),linear-gradient(90deg,var(--line)_1px,transparent_1px)] [background-size:34px_34px]"/><BarChart3 size={64} className="relative text-[var(--primary)]"/></div><div className="flex flex-1 flex-col p-6"><span className="eyebrow">{pick(project.category,locale)}</span><h2 className="display mt-3 text-2xl font-black"><Link href={`/${locale}/portfolio/${project.slug}`} className="transition hover:text-[var(--primary)]">{pick(project.name,locale)}</Link></h2><p className="muted mt-3 leading-7">{pick(project.shortDescription,locale)}</p><div className="mt-5 flex flex-wrap gap-2">{project.technologies.slice(0,3).map(x=><span key={x} className="rounded-full border border-[var(--line)] px-3 py-1 text-xs font-bold">{x}</span>)}</div><div className="mt-auto flex flex-wrap gap-3 pt-7"><Link href={`/${locale}/portfolio/${project.slug}`} className="btn btn-primary flex-1">{t('viewProject')}<ArrowRight size={16}/></Link><a href={project.demoUrl} target="_blank" rel="noreferrer" className="btn btn-ghost">{t('openDemo')}</a></div></div></article></Reveal>)}</div></div></section></main>}
+                  <h2 className="display mt-6 text-3xl">
+                    <Link
+                      href={`/${locale}/products/${product.key}`}
+                      className="transition hover:text-[var(--primary)]"
+                    >
+                      {product.name}
+                    </Link>
+                  </h2>
 
-export function PricingPage(){const locale=useLocale();const t=useTranslations('pricingPage');return <main><Hero ns="pricingPage"/><section className="section pt-4"><div className="container"><div className="grid-3">{products.map((x,i)=><Reveal key={x.key} delay={i*.08}><article className="card p-7"><h2 className="display text-2xl font-black">{x.name}</h2><div className="mt-4 text-3xl font-black text-[var(--gold)]">{pick(x.price,locale)}</div><div className="muted mt-2 text-sm">{t('monthlyNote')}</div><Link href={`/${locale}/products/${x.key}`} className="btn btn-primary mt-7 w-full">{t('viewProduct')}<ArrowRight size={17}/></Link></article></Reveal>)}</div><Reveal><div className="card mt-12 p-8 md:p-12"><div className="eyebrow">{t('customEyebrow')}</div><h2 className="display mt-4 text-3xl font-black md:text-5xl">{t('customTitle')}</h2><p className="muted mt-4 max-w-3xl text-lg">{t('customDesc')}</p><Link href={`/${locale}/contact`} className="btn btn-gold mt-7">{t('requestQuote')}<ArrowRight size={18}/></Link></div></Reveal></div></section></main>}
+                  <div className="mt-3 text-xl font-extrabold text-[var(--gold-strong)]">
+                    {pick(product.price, locale)}
+                  </div>
 
-export function ContactPage(){const t=useTranslations('contactPage');return <main><Hero ns="contactPage"/><section className="section pt-4"><div className="container grid gap-8 lg:grid-cols-[.8fr_1.2fr]"><Reveal><div className="card h-full p-8"><h2 className="display text-3xl font-black">{t('contactTitle')}</h2><div className="muted mt-6 grid gap-4"><a href="mailto:Connect@systemmaster.in">Connect@systemmaster.in</a><a href="tel:+919027965956">+91 90279 65956</a><a href="https://wa.me/919027965956" target="_blank" rel="noreferrer">{t('whatsapp')}</a></div></div></Reveal><Reveal delay={.08}><form className="card grid gap-5 p-8"><div className="grid gap-5 md:grid-cols-2"><label className="grid gap-2 text-sm font-bold">{t('name')}<input className="rounded-2xl border border-[var(--line)] bg-transparent px-4 py-3 outline-none"/></label><label className="grid gap-2 text-sm font-bold">{t('company')}<input className="rounded-2xl border border-[var(--line)] bg-transparent px-4 py-3 outline-none"/></label><label className="grid gap-2 text-sm font-bold">{t('phone')}<input className="rounded-2xl border border-[var(--line)] bg-transparent px-4 py-3 outline-none"/></label><label className="grid gap-2 text-sm font-bold">{t('email')}<input className="rounded-2xl border border-[var(--line)] bg-transparent px-4 py-3 outline-none"/></label></div><label className="grid gap-2 text-sm font-bold">{t('requirement')}<textarea rows={6} className="rounded-2xl border border-[var(--line)] bg-transparent px-4 py-3 outline-none"/></label><button type="button" className="btn btn-gold">{t('submit')}<ArrowRight size={18}/></button></form></Reveal></div></section></main>}
+                  <ul className="sm-product-features text-base">
+                    {product.features.map((feature) => (
+                      <li key={feature.en} className="flex gap-3">
+                        <Check
+                          size={18}
+                          className="mt-1 shrink-0 text-emerald-500"
+                        />
+                        {pick(feature, locale)}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-auto grid gap-2 pt-8 sm:grid-cols-[1fr_auto]">
+                    <Link
+                      href={`/${locale}/products/${product.key}`}
+                      className="btn btn-primary"
+                    >
+                      {t('explore')}
+                      <ArrowRight size={17} />
+                    </Link>
+                    <a
+                      href={product.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn btn-ghost"
+                    >
+                      {t('visit')}
+                    </a>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal>
+            <div className="card mt-12 grid items-center gap-8 p-8 md:grid-cols-[1fr_auto] md:p-11">
+              <div className="max-w-3xl">
+                <div className="eyebrow">
+                  <Wrench size={15} />
+                  {t('customEyebrow')}
+                </div>
+                <h2 className="display mt-4 text-3xl md:text-5xl">
+                  {t('customTitle')}
+                </h2>
+                <p className="muted mt-4 text-lg leading-8">{t('customDesc')}</p>
+              </div>
+              <Link href={`/${locale}/contact`} className="btn btn-gold">
+                {t('talk')}
+                <ArrowRight size={18} />
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+const serviceIcons = [
+  Globe2,
+  Laptop,
+  Smartphone,
+  Warehouse,
+  Users,
+  Workflow,
+  MessageCircle,
+  Cloud,
+  BarChart3,
+  Code2,
+  Cloud,
+  Rocket
+];
+
+export function ServicesPage() {
+  const locale = useLocale();
+  const t = useTranslations('servicesPage');
+
+  return (
+    <main>
+      <Hero ns="servicesPage" />
+
+      <section className="section pt-3">
+        <div className="container">
+          <div className="grid-3">
+            {services.map((service, index) => {
+              const Icon = serviceIcons[index % serviceIcons.length];
+
+              return (
+                <Reveal key={service.slug} delay={index * .035}>
+                  <article className="card sm-marketing-card">
+                    <div className="sm-marketing-card__icon">
+                      <Icon size={22} />
+                    </div>
+
+                    <h2 className="sm-marketing-card__title">
+                      <Link
+                        href={`/${locale}/services/${service.slug}`}
+                        className="transition hover:text-[var(--primary)]"
+                      >
+                        {pick(service.label, locale)}
+                      </Link>
+                    </h2>
+
+                    <p className="sm-marketing-card__desc">{t('cardDesc')}</p>
+
+                    <div className="sm-marketing-card__footer">
+                      <Link
+                        href={`/${locale}/services/${service.slug}`}
+                        className="inline-flex items-center gap-2 text-sm font-extrabold text-[var(--primary)]"
+                      >
+                        {t('explore')}
+                        <ArrowRight size={16} />
+                      </Link>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+const industryIcons = [
+  Factory,
+  PackageCheck,
+  Printer,
+  Warehouse,
+  HeartPulse,
+  Building2,
+  Plane,
+  MapPinned,
+  Users,
+  Warehouse,
+  Workflow,
+  BarChart3
+];
+
+export function IndustriesPage() {
+  const locale = useLocale();
+  const t = useTranslations('industriesPage');
+
+  return (
+    <main>
+      <Hero ns="industriesPage" />
+
+      <section className="section pt-3">
+        <div className="container">
+          <div className="grid-4">
+            {industries.map((industry, index) => {
+              const Icon = industryIcons[index % industryIcons.length];
+
+              return (
+                <Reveal key={industry.slug} delay={index * .03}>
+                  <article className="card sm-marketing-card">
+                    <Icon className="text-[var(--gold)]" size={25} />
+
+                    <h2 className="sm-marketing-card__title text-xl">
+                      {pick(industry.label, locale)}
+                    </h2>
+
+                    <p className="sm-marketing-card__desc text-sm">
+                      {t('cardDesc')}
+                    </p>
+
+                    <div className="sm-marketing-card__footer">
+                      <Link
+                        href={`/${locale}/industries/${industry.slug}`}
+                        className="inline-flex items-center gap-2 text-sm font-extrabold text-[var(--primary)]"
+                      >
+                        {t('explore')}
+                        <ArrowRight size={15} />
+                      </Link>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+/* Legacy exports retained for compatibility, although current live routes use
+   ProfessionalPortfolioPage and ProfessionalPricingPage. */
+export function PortfolioPage() {
+  const locale = useLocale();
+  const t = useTranslations('portfolioPage');
+
+  return (
+    <main>
+      <Hero ns="portfolioPage" />
+      <section className="section pt-3">
+        <div className="container">
+          <div className="grid-3">
+            {portfolioProjects.map((project) => (
+              <article key={project.slug} className="card sm-marketing-card">
+                <BarChart3 className="text-[var(--primary)]" />
+                <h2 className="sm-marketing-card__title">
+                  {pick(project.name, locale)}
+                </h2>
+                <p className="sm-marketing-card__desc">
+                  {pick(project.shortDescription, locale)}
+                </p>
+                <div className="sm-marketing-card__footer">
+                  <Link
+                    href={`/${locale}/portfolio/${project.slug}`}
+                    className="btn btn-primary"
+                  >
+                    {t('viewProject')}
+                    <ArrowRight size={16} />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+export function PricingPage() {
+  const locale = useLocale();
+  const t = useTranslations('pricingPage');
+
+  return (
+    <main>
+      <Hero ns="pricingPage" />
+      <section className="section pt-3">
+        <div className="container">
+          <div className="grid-3">
+            {products.map((product) => (
+              <article key={product.key} className="card sm-price-card">
+                <h2 className="display text-2xl">{product.name}</h2>
+                <div className="sm-price mt-5 text-[var(--gold-strong)]">
+                  {pick(product.price, locale)}
+                </div>
+                <div className="muted mt-2 text-sm">{t('monthlyNote')}</div>
+                <Link
+                  href={`/${locale}/products/${product.key}`}
+                  className="btn btn-primary mt-auto w-full pt-0"
+                >
+                  {t('viewProduct')}
+                  <ArrowRight size={17} />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+export function ContactPage() {
+  const t = useTranslations('contactPage');
+
+  return (
+    <main>
+      <Hero ns="contactPage" />
+      <section className="section pt-3">
+        <div className="container">
+          <div className="card p-8">
+            <h2 className="display text-3xl">{t('contactTitle')}</h2>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
