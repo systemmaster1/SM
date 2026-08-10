@@ -1,65 +1,101 @@
 /* ============================================================
-   SystemMaster — DEMO ACCESS GATE
-   Collects Name / Phone / Email before opening any demo,
-   Google Sheet (Apps Script webhook) me "demo_access" type se
-   saves it to Google Sheets, then grants direct access.
-   Usage: demo page par body ke end me —
-   <script src="js/demo-gate.js" data-demo="IMS — Inventory Demo"></script>
+   SystemMaster — DEMO ACCESS GATE / Phase 13
+   Lead capture remains connected to the existing Apps Script webhook.
    ============================================================ */
 (function () {
+  "use strict";
+
   var WEBHOOK = "https://script.google.com/macros/s/AKfycbwNuVmFIsigEJRrLy8sGKJeQYoa3wVRY9EpmixKeNtXa7rYeg_TDiLjF2fkz6EejZTrCg/exec";
   var KEY = "sm_demo_user_v1";
   var script = document.currentScript;
   var demoName = (script && script.getAttribute("data-demo")) || document.title;
+
+  function locale() {
+    try {
+      if ((document.referrer || "").indexOf("/hi/") !== -1) return "hi";
+      if (localStorage.getItem("sm_locale") === "hi") return "hi";
+    } catch (e) {}
+    return "en";
+  }
 
   function getUser() {
     try {
       var raw = localStorage.getItem(KEY);
       if (!raw) return null;
       var u = JSON.parse(raw);
-      // access valid for 30 days, fir dobara details lega
       if (!u || !u.ts || (Date.now() - u.ts) > 30 * 24 * 60 * 60 * 1000) return null;
       return u;
-    } catch (e) { return null; }
+    } catch (e) {
+      return null;
+    }
   }
 
   function logVisit(u) {
     try {
       fetch(WEBHOOK, {
-        method: "POST", mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        mode: "no-cors",
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           formType: "demo_access",
           timestamp: new Date().toLocaleString("en-IN"),
           demo: demoName,
-          name: u.name, phone: u.phone, email: u.email,
+          name: u.name,
+          phone: u.phone,
+          email: u.email,
           repeat: u.repeat ? "Yes" : "No"
         })
       });
-    } catch (e) { /* silent */ }
+    } catch (e) {}
+  }
+
+  function input(id, type, placeholder) {
+    return '<input id="' + id + '" type="' + type + '" placeholder="' + placeholder + '" ' +
+      'style="width:100%;padding:13px 14px;border-radius:12px;border:1px solid rgba(28,54,88,.16);background:#f8fbff;color:#10203a;font-size:.92rem;outline:none;font-family:inherit;">';
   }
 
   function showGate() {
+    var hi = locale() === "hi";
     var ov = document.createElement("div");
     ov.id = "smDemoGate";
-    ov.style.cssText = "position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(6,16,31,0.92);backdrop-filter:blur(8px);";
+    ov.style.cssText =
+      "position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;" +
+      "padding:18px;background:rgba(235,242,251,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);";
+
     ov.innerHTML =
-      '<div style="max-width:430px;width:100%;background:linear-gradient(160deg,#0f2347,#0a1428);border:1px solid rgba(255,255,255,0.14);border-radius:20px;padding:30px 26px;box-shadow:0 28px 70px rgba(0,0,0,0.55);">' +
-        '<div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">' +
-          '<div style="width:44px;height:44px;border-radius:12px;background:rgba(229,169,60,0.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem;">🔓</div>' +
-          '<div><div style="color:#fff;font-weight:800;font-family:Sora,sans-serif;font-size:1.05rem;">Unlock Free Demo</div>' +
-          '<div style="color:#8896b3;font-size:0.8rem;">' + demoName.replace(/</g, "&lt;") + '</div></div>' +
+      '<div style="max-width:450px;width:100%;border:1px solid rgba(28,54,88,.13);border-radius:24px;' +
+        'background:rgba(255,255,255,.98);box-shadow:0 30px 90px rgba(30,58,95,.18);padding:28px;color:#10203a;' +
+        'font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;">' +
+        '<div style="display:flex;align-items:center;gap:12px;margin-bottom:22px;">' +
+          '<img src="/logo/systemmaster.png" alt="SystemMaster" style="width:52px;height:52px;object-fit:contain;">' +
+          '<div><div style="font-weight:900;font-size:17px;letter-spacing:-.02em;">SystemMaster</div>' +
+          '<div style="margin-top:3px;color:#d99a24;font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;">Automations</div></div>' +
         '</div>' +
-        '<p style="color:#d0d8ea;font-size:0.86rem;margin:10px 0 18px;line-height:1.55;">Enter your details below to get instant full access — no password required.</p>' +
-        '<div style="display:flex;flex-direction:column;gap:10px;">' +
-          gateInput("gName", "text", "Your Name *") +
-          gateInput("gPhone", "tel", "Mobile Number *") +
-          gateInput("gEmail", "email", "Email *") +
-          '<div id="gErr" style="display:none;color:#ff6b6b;font-size:0.8rem;"></div>' +
-          '<button id="gGo" style="margin-top:4px;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#E5A93C,#c98e1f);color:#0a1428;font-weight:800;font-size:0.95rem;cursor:pointer;font-family:Sora,sans-serif;">Start Demo →</button>' +
+        '<div style="display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:999px;background:#eef5ff;color:#3478e5;font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;">' +
+          '● ' + (hi ? 'लाइव डेमो एक्सेस' : 'Live Demo Access') +
         '</div>' +
-        '<div style="margin-top:14px;text-align:center;font-size:0.75rem;color:#6b7896;">🔒 Your details are kept private and used only for demo assistance. <a href="privacy.html" style="color:#8896b3;">Privacy</a></div>' +
+        '<h2 style="margin:15px 0 8px;font-size:26px;line-height:1.15;letter-spacing:-.035em;">' +
+          (hi ? 'डेमो शुरू करने के लिए अपनी जानकारी दें' : 'Enter your details to start the demo') +
+        '</h2>' +
+        '<p style="margin:0 0 20px;color:#66758b;font-size:13px;line-height:1.65;">' +
+          (hi ? 'हम आपकी जानकारी केवल डेमो सहायता और आपकी आवश्यकता समझने के लिए उपयोग करेंगे।' :
+          'We use these details only to assist with the demo and understand your software requirement.') +
+        '</p>' +
+        '<div style="display:flex;flex-direction:column;gap:11px;">' +
+          input("gName","text",hi ? "आपका नाम *" : "Your Name *") +
+          input("gPhone","tel",hi ? "मोबाइल नंबर *" : "Mobile Number *") +
+          input("gEmail","email",hi ? "ईमेल *" : "Email *") +
+          '<div id="gErr" style="display:none;border-radius:10px;background:#fff1f2;padding:9px 11px;color:#c43b4d;font-size:.8rem;font-weight:700;"></div>' +
+          '<button id="gGo" style="margin-top:3px;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#4388ef,#2868d2);color:#fff;font-weight:850;font-size:.94rem;cursor:pointer;font-family:inherit;box-shadow:0 10px 24px rgba(52,120,229,.20);">' +
+            (hi ? 'डेमो शुरू करें →' : 'Start Demo →') +
+          '</button>' +
+        '</div>' +
+        '<div style="margin-top:15px;text-align:center;font-size:.73rem;line-height:1.55;color:#718096;">🔒 ' +
+          (hi ? 'आपकी जानकारी निजी रखी जाती है।' : 'Your details are kept private.') +
+          ' <a href="/' + locale() + '/privacy" style="color:#3478e5;font-weight:750;text-decoration:none;">' +
+          (hi ? 'Privacy Policy' : 'Privacy Policy') + '</a></div>' +
       '</div>';
+
     document.body.appendChild(ov);
     document.body.style.overflow = "hidden";
 
@@ -68,30 +104,33 @@
       var phone = document.getElementById("gPhone").value.replace(/\D/g, "");
       var email = document.getElementById("gEmail").value.trim();
       var err = document.getElementById("gErr");
-      function fail(m) { err.textContent = m; err.style.display = "block"; }
-      if (name.length < 3) return fail("Please enter your full name.");
-      if (!/^[6-9]\d{9}$/.test(phone)) return fail("Please enter a valid 10-digit mobile number.");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return fail("Please enter a valid email address.");
-      var u = { name: name, phone: phone, email: email, ts: Date.now() };
+
+      function fail(message) {
+        err.textContent = message;
+        err.style.display = "block";
+      }
+
+      if (name.length < 3) return fail(hi ? "कृपया पूरा नाम दर्ज करें।" : "Please enter your full name.");
+      if (!/^[6-9]\d{9}$/.test(phone)) return fail(hi ? "सही 10-अंकों का मोबाइल नंबर दर्ज करें।" : "Please enter a valid 10-digit mobile number.");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return fail(hi ? "सही ईमेल दर्ज करें।" : "Please enter a valid email address.");
+
+      var u = {name:name, phone:phone, email:email, ts:Date.now()};
       try { localStorage.setItem(KEY, JSON.stringify(u)); } catch (e) {}
       logVisit(u);
-      var btn = this; btn.textContent = "Opening demo..."; btn.disabled = true;
+
+      this.textContent = hi ? "डेमो खुल रहा है..." : "Opening demo...";
+      this.disabled = true;
+
       setTimeout(function () {
         ov.remove();
         document.body.style.overflow = "";
-      }, 500);
+      }, 450);
     });
-  }
-
-  function gateInput(id, type, ph) {
-    return '<input id="' + id + '" type="' + type + '" placeholder="' + ph + '" ' +
-      'style="padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);color:#fff;font-size:0.92rem;outline:none;font-family:inherit;">';
   }
 
   function init() {
     var u = getUser();
     if (u) {
-      // already registered — silently log repeat visit
       u.repeat = true;
       logVisit(u);
     } else {
