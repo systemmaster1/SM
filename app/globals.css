@@ -3288,6 +3288,7 @@ html.dark .sm-map-hub small {
 }
 
 
+
 /* PHASE 17B — CODE-BASED ANIMATED INDIA + WORLD MAPS
    Append this block to your current app/globals.css.
    The map is SVG/GeoJSON code; no JPG/PNG map background is used. */
@@ -3500,3 +3501,136 @@ html.dark .sm-map-hub small {
 
 
 
+/* =====================================================================
+   PHASE 17D — PREMIUM MAP VISUAL POLISH
+   ===================================================================== */
+
+.sm-location-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.sm-code-map--india{min-height:560px;border-left:1px solid var(--line)}
+.sm-map-svg{width:100%;min-height:560px}
+
+.sm-map-caption,.sm-world-map-caption{
+  position:absolute;z-index:8;display:inline-flex;align-items:center;gap:8px;
+  border-radius:999px;font-size:.68rem;font-weight:850;backdrop-filter:blur(12px)
+}
+.sm-map-caption{
+  top:18px;right:18px;border:1px solid var(--line);
+  background:color-mix(in srgb,var(--surface) 88%,transparent);
+  padding:8px 11px;color:var(--text);box-shadow:var(--shadow-sm)
+}
+
+.sm-map-label-bg{
+  fill:color-mix(in srgb,var(--surface) 94%,transparent);
+  stroke:color-mix(in srgb,var(--primary) 22%,var(--line));stroke-width:.7
+}
+.sm-map-marker text{fill:var(--text-soft);font-size:9.5px;font-weight:850}
+.sm-map-marker.is-active .sm-map-label-bg{
+  fill:color-mix(in srgb,var(--gold) 12%,var(--surface));
+  stroke:color-mix(in srgb,var(--gold) 62%,var(--line))
+}
+.sm-map-marker.is-active text{fill:var(--text)}
+.sm-route-particle--india{fill:#ffd26d;filter:drop-shadow(0 0 7px rgba(255,210,109,.95))}
+
+/* World content is fully separated from the map so text never overlaps routes. */
+.sm-presence-card--world{
+  display:grid;min-height:570px;overflow:hidden;background:#04162f;
+  border-color:rgba(78,143,238,.24)
+}
+@media(min-width:1024px){
+  .sm-presence-card--world{
+    grid-template-columns:minmax(310px,.68fr) minmax(0,1.32fr)
+  }
+}
+
+.sm-world-info-panel{
+  position:relative;z-index:10;display:flex;min-width:0;flex-direction:column;
+  justify-content:space-between;gap:28px;padding:clamp(30px,4vw,48px);
+  background:
+    radial-gradient(circle at 20% 10%,rgba(70,137,237,.19),transparent 34%),
+    linear-gradient(145deg,#071c39 0%,#04152d 75%);
+  border-right:1px solid rgba(105,164,238,.14)
+}
+.sm-world-title{
+  max-width:12ch;color:#fff;font-size:clamp(2rem,3vw,3.3rem);
+  line-height:1.04;letter-spacing:-.045em;font-weight:900
+}
+.sm-world-description{
+  max-width:36ch;color:rgba(232,241,255,.72);font-size:.9rem;line-height:1.75
+}
+
+.sm-world-country-list{display:grid;gap:8px}
+.sm-world-country{
+  width:100%;justify-content:flex-start;min-height:45px;padding:8px 10px;text-align:left
+}
+.sm-country-arrow{
+  margin-left:auto;color:rgba(255,255,255,.4);
+  transition:transform .18s ease,color .18s ease
+}
+.sm-world-country:hover .sm-country-arrow,.sm-world-country.is-active .sm-country-arrow{
+  color:#ffd26d;transform:translateX(3px)
+}
+
+.sm-world-active-card{
+  display:flex;align-items:center;gap:11px;border:1px solid rgba(255,255,255,.13);
+  border-radius:16px;background:rgba(255,255,255,.055);padding:13px 14px;color:#fff
+}
+.sm-world-active-card small,.sm-world-active-card strong{display:block}
+.sm-world-active-card small{color:rgba(255,255,255,.56);font-size:.62rem;font-weight:750}
+.sm-world-active-card strong{margin-top:3px;font-size:.9rem;font-weight:900}
+
+.sm-world-code-map{position:relative;min-width:0;min-height:570px;overflow:hidden;background:#03142d}
+.sm-map-svg--world{min-height:570px}
+.sm-world-map-caption{
+  right:18px;bottom:18px;border:1px solid rgba(255,255,255,.13);
+  background:rgba(5,25,55,.76);padding:8px 11px;color:rgba(255,255,255,.82)
+}
+
+.sm-world-label-bg{
+  fill:rgba(4,22,48,.84);stroke:rgba(142,190,255,.26);stroke-width:.8
+}
+.sm-world-marker text{fill:rgba(236,245,255,.76);font-size:9.7px;font-weight:850}
+.sm-world-marker.is-active .sm-world-label-bg{
+  fill:rgba(67,104,154,.92);stroke:rgba(255,210,109,.74)
+}
+.sm-world-marker.is-active text{fill:#fff}
+
+.sm-world-route{
+  stroke:rgba(247,191,76,.42);stroke-width:1.45;stroke-dasharray:5 7;opacity:.72
+}
+.sm-world-route.is-active{
+  stroke:#ffd26d;stroke-width:2.7;opacity:1;
+  filter:drop-shadow(0 0 8px rgba(255,210,109,.66))
+}
+.sm-route-particle{
+  fill:rgba(255,210,109,.78);filter:drop-shadow(0 0 6px rgba(255,210,109,.72))
+}
+.sm-route-particle.is-active{
+  fill:#fff2ba;filter:drop-shadow(0 0 10px rgba(255,210,109,1))
+}
+
+.sm-logo-hub--world .sm-logo-hub-ring{
+  fill:rgba(5,25,54,.96);stroke:rgba(255,210,109,.82);stroke-width:2;
+  filter:drop-shadow(0 0 13px rgba(255,210,109,.38)) drop-shadow(0 14px 22px rgba(0,0,0,.25))
+}
+.sm-world-land path{color:#75b0f7}
+.sm-world-grid line{stroke:rgba(110,166,237,.055)}
+
+@media(max-width:1023px){
+  .sm-code-map--india{border-top:1px solid var(--line);border-left:0}
+  .sm-presence-card--world{grid-template-columns:1fr}
+  .sm-world-info-panel{border-right:0;border-bottom:1px solid rgba(105,164,238,.14)}
+  .sm-world-country-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .sm-world-code-map,.sm-map-svg--world{min-height:520px}
+}
+
+@media(max-width:640px){
+  .sm-location-grid{grid-template-columns:1fr}
+  .sm-code-map--india,.sm-map-svg{min-height:430px}
+  .sm-map-caption{top:12px;right:12px}
+  .sm-world-info-panel{padding:25px 20px}
+  .sm-world-title{max-width:15ch;font-size:2.15rem}
+  .sm-world-country-list{grid-template-columns:1fr 1fr}
+  .sm-world-code-map,.sm-map-svg--world{min-height:430px}
+  .sm-world-map-caption{right:12px;bottom:12px}
+}
+@media(max-width:420px){.sm-world-country-list{grid-template-columns:1fr}}
