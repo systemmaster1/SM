@@ -210,12 +210,12 @@
     },
     "timeline": {
       "eyebrow": "2016 → 2026 ग्रोथ जर्नी",
-      "title": "डेटा टूल से AI-पावर्ड बिजनेस सिस्टम तक",
-      "desc": "हर चरण में एक नई layer जुड़ी — बेहतर data, मजबूत workflows, connected operations, automation, integrations और अब AI-assisted systems.",
+      "title": "डेटा टूल से कनेक्टेड और AI-पावर्ड बिजनेस सिस्टम तक",
+      "desc": "हर चरण में एक नई क्षमता जुड़ी — बेहतर data, मजबूत workflows, connected operations, automation, integrations और अब AI-assisted systems.",
       "items": {
         "start": {
           "phase": "डेटा और रिपोर्टिंग",
-          "title": "शुरुआत एक लक्ष्य से हुई — काम को आसान बनाना",
+          "title": "शुरुआत हुई काम को आसान बनाने के लक्ष्य से",
           "desc": "यात्रा Data Entry Forms, structured Excel reporting, BI dashboards, college projects और professional presentations से शुरू हुई। शुरुआती focus था repetitive work कम करना और raw information को useful visibility में बदलना।",
           "tags": [
             "Excel",
@@ -227,7 +227,7 @@
         },
         "digital": {
           "phase": "डिजिटल सिस्टम",
-          "title": "Individual tools working systems में बदलने लगे",
+          "title": "छोटे tools धीरे-धीरे complete systems बनने लगे",
           "desc": "काम university और education-focused projects तक बढ़ा — student registration workflows, structured data systems, email automation और customized applications के साथ freelancing projects भी लगातार चलते रहे।",
           "tags": [
             "Student Systems",
@@ -238,7 +238,7 @@
         },
         "business": {
           "phase": "बिजनेस ऑपरेशंस",
-          "title": "ऑटोमेशन कंपनी के operations तक पहुँचा",
+          "title": "ऑटोमेशन कंपनी के daily operations तक पहुँचा",
           "desc": "Sales trackers, employee performance systems, management reporting और BI dashboards बनाए गए, जिससे managers activity, responsibility, pending work और performance को बेहतर समझ सकें।",
           "tags": [
             "Sales Tracker",
@@ -249,7 +249,7 @@
         },
         "automation": {
           "phase": "ऑटोमेशन इकोसिस्टम",
-          "title": "एक सिस्टम अब पर्याप्त नहीं था",
+          "title": "एक system से आगे बढ़कर पूरा automation ecosystem",
           "desc": "Requirements आपस में जुड़ने लगीं। FMS, IMS, HRMS, PMS, WhatsApp automation, HR systems और automated reporting पर काम बढ़ा और focus isolated software से connected processes की ओर गया।",
           "tags": [
             "FMS",
@@ -262,7 +262,7 @@
         },
         "rnd": {
           "phase": "R&D + बिजनेस सिस्टम",
-          "title": "Technology जितनी महत्वपूर्ण, business understanding भी उतनी ही",
+          "title": "Technology के साथ business understanding पर focus",
           "desc": "2022 से 2025 के बीच founder ने software development के साथ business systems और implementation thinking पर structured learning जारी रखी, जिसमें Business India Coaching programs और Rahul Jain व Sanjeev Jain से जुड़े business-system approaches का learning exposure भी शामिल रहा।",
           "tags": [
             "Business Systems",
@@ -273,7 +273,7 @@
         },
         "growth": {
           "phase": "ग्रोथ सिस्टम",
-          "title": "Technology सीधे business growth के लिए काम करने लगी",
+          "title": "Systems सीधे business growth में मदद करने लगे",
           "desc": "Advanced sales systems, CRM और ERP solutions, support sections, customer portals, Zoho integrations और connected operational workflows पर काम बढ़ा — response, control और management visibility बेहतर करने के लिए।",
           "tags": [
             "CRM",
@@ -285,7 +285,7 @@
         },
         "connected": {
           "phase": "कनेक्टेड ऑटोमेशन",
-          "title": "Multiple channels एक connected system में आने लगे",
+          "title": "Multiple channels एक connected system में आए",
           "desc": "Website और app development, AI chat automation, inquiry capture, lead-management automation, multi-source lead integration और n8n workflows ने scattered activity को connected ERP/CRM environment में लाना शुरू किया।",
           "tags": [
             "Web & Apps",
@@ -297,7 +297,7 @@
         },
         "ai": {
           "phase": "AI-पावर्ड सिस्टम",
-          "title": "अब सिस्टम सिर्फ data store नहीं करते",
+          "title": "अब systems data के साथ action में भी मदद करते हैं",
           "desc": "SystemMaster अब ERP, CRM, HRMS, FMS, PMS, IMS, workflow automation, WhatsApp automation और reporting के experience को AI agents, intelligent lead capture, automated follow-ups और AI-assisted workflows के साथ जोड़ रहा है।",
           "tags": [
             "AI Agents",
@@ -394,22 +394,22 @@
     },
     "cta": {
       "eyebrow": "10 Years of Evolution",
-      "title": "और हम अभी भी अगला बेहतर सिस्टम बना रहे हैं",
-      "desc": "एक reporting workflow से connected enterprise automation तक, हर चरण ने SystemMaster की capability बढ़ाई है। अगली generation में software, automation, data और AI एक साथ काम करेंगे।",
+      "title": "दस साल की evolution — और अगला बेहतर system बनाना अभी जारी है",
+      "desc": "एक reporting workflow से connected enterprise automation तक, हर चरण ने SystemMaster की capabilities बढ़ाई हैं। अगली generation में software, automation, data और AI एक साथ काम करेंगे।",
       "button": "मेरा बिजनेस सिस्टम बनाइए",
       "portfolio": "हमारा काम देखें"
     },
     "learning": {
-      "eyebrow": "Business-System Learning",
-      "title": "सिर्फ technology एक महान system नहीं बनाती। Business समझना जरूरी है।",
-      "desc": "2022 से 2025 के बीच founder ने software development के साथ business processes, growth systems और implementation approaches की learning को भी बढ़ाया। इसमें Business India Coaching programs और Rahul Jain व Sanjeev Jain से जुड़े business-system thinking का exposure शामिल रहा।",
-      "noteTitle": "यह learning context है, endorsement claim नहीं",
-      "note": "इन references का उद्देश्य उस learning और exposure को बताना है जिसने SystemMaster की system-thinking approach को प्रभावित किया। यह किसी official partnership, certification endorsement या commercial association का दावा नहीं है, जब तक अलग से स्पष्ट न किया जाए।"
+      "eyebrow": "बिजनेस सिस्टम सीख और अनुभव",
+      "title": "बेहतरीन सिस्टम के लिए टेक्नोलॉजी के साथ बिजनेस की समझ भी जरूरी है",
+      "desc": "2022 से 2025 के बीच founder ने software development के साथ business process, growth systems और implementation approaches की समझ को लगातार बढ़ाया। इसमें Business India Coaching programs और Rahul Jain व Sanjeev Jain से जुड़े business-system approaches का learning exposure भी शामिल रहा।",
+      "noteTitle": "यह सीख और अनुभव का संदर्भ है",
+      "note": "इन references का उद्देश्य केवल उस learning और exposure को बताना है जिसने SystemMaster की system-thinking approach को प्रभावित किया। यह किसी official partnership, endorsement या commercial association का दावा नहीं है।"
     },
     "rnd": {
-      "eyebrow": "Continuous R&D",
-      "title": "हम आने वाली technology पर पहले research करते हैं",
-      "desc": "SystemMaster emerging technologies को explore करता है, practical use cases test करता है और working approaches develop करता है, फिर client के लिए suitable होने पर implement करता है। नई technology सिर्फ trend होने की वजह से adopt नहीं की जाती।",
+      "eyebrow": "लगातार रिसर्च और डेवलपमेंट",
+      "title": "हम नई टेक्नोलॉजी को पहले समझते, परखते और फिर लागू करते हैं",
+      "desc": "SystemMaster नई technologies को explore करता है, practical use cases test करता है और client को recommend करने से पहले working approach तैयार करता है। हमारा focus trend पर नहीं, बल्कि real business value पर रहता है।",
       "steps": {
         "research": "Research",
         "test": "Test",
@@ -418,12 +418,12 @@
         "measure": "Measure",
         "improve": "Improve"
       },
-      "principle": "हम technology सिर्फ इसलिए adopt नहीं करते क्योंकि वह नई है। हम देखते हैं कि वह वास्तविक business problem कैसे solve कर सकती है।"
+      "principle": "हम नई technology केवल इसलिए नहीं अपनाते क्योंकि वह नई है। हम पहले देखते हैं कि वह वास्तविक business problem को कितना बेहतर solve कर सकती है।"
     },
     "continuity": {
-      "eyebrow": "Long-Term Client Relationships",
-      "title": "हमारे लिए project delivery पर खत्म नहीं होता",
-      "desc": "जिन कई businesses के साथ हमने काम किया है, वे requirements बदलने और बढ़ने के साथ SystemMaster से जुड़े रहते हैं। एक project एक workflow से शुरू होकर reporting, integrations, sales, inventory, HR, customer management या AI automation तक बढ़ सकता है।",
+      "eyebrow": "लंबे समय तक जुड़े रहने वाले ग्राहक",
+      "title": "हमारे लिए project delivery के साथ रिश्ता खत्म नहीं होता",
+      "desc": "जिन कई businesses के साथ हमने काम किया है, वे अपनी बदलती requirements के साथ SystemMaster से जुड़े रहते हैं। एक workflow से शुरू हुआ काम आगे reporting, integrations, sales, inventory, HR, customer management या AI automation तक बढ़ सकता है।",
       "steps": {
         "requirement": "Client Requirement",
         "system": "Custom System",
