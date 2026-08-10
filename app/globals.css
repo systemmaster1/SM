@@ -1327,3 +1327,210 @@ html.dark {
     padding: 22px;
   }
 }
+
+
+/* =====================================================================
+   PHASE 12B — DETAIL PAGES / RESOURCES / TRUST UI
+   ===================================================================== */
+
+.sm-detail-hero {
+  padding-block: clamp(68px, 8vw, 104px);
+}
+
+.sm-detail-hero__grid {
+  display: grid;
+  align-items: center;
+  gap: 44px;
+}
+
+@media (min-width: 1024px) {
+  .sm-detail-hero__grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(360px, .95fr);
+  }
+}
+
+.sm-detail-title {
+  margin-top: 18px;
+  max-width: 820px;
+  font-size: clamp(2.75rem, 5.4vw, 5rem);
+  line-height: 1.035;
+  letter-spacing: -0.048em;
+  font-weight: 830;
+}
+
+.sm-detail-lead {
+  max-width: 720px;
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 1.075rem;
+  line-height: 1.78;
+}
+
+.sm-detail-panel {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, transparent), color-mix(in srgb, var(--surface-strong) 92%, transparent));
+  box-shadow: var(--shadow);
+}
+
+.sm-detail-list {
+  display: grid;
+  gap: 12px;
+}
+
+.sm-detail-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface-strong) 52%, transparent);
+  padding: 15px 16px;
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.sm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong) 60%, transparent);
+  padding: 8px 12px;
+  font-size: .8rem;
+  font-weight: 800;
+}
+
+.sm-resource-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 26px;
+}
+
+.sm-resource-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold-strong);
+  font-size: .72rem;
+  font-weight: 850;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.sm-resource-card__title {
+  margin-top: 15px;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  font-weight: 810;
+  letter-spacing: -0.025em;
+}
+
+.sm-resource-card__desc {
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.sm-resource-card__footer {
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+.sm-case-grid {
+  display: grid;
+  gap: 14px;
+}
+
+@media (min-width: 900px) {
+  .sm-case-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.sm-case-block {
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--surface-strong) 50%, transparent);
+  padding: 20px;
+}
+
+.sm-contact-choice {
+  display: flex;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--surface-strong) 48%, transparent);
+  padding: 18px;
+}
+
+.sm-contact-choice__icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.sm-about-stat {
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: color-mix(in srgb, var(--surface-strong) 58%, transparent);
+  padding: 18px;
+}
+
+.sm-about-stat strong {
+  display: block;
+  font-size: 1.7rem;
+  line-height: 1;
+  letter-spacing: -.04em;
+}
+
+.sm-about-stat span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.45;
+}
+
+.sm-timeline-item {
+  display: grid;
+  gap: 16px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  padding: 22px;
+}
+
+@media (min-width: 768px) {
+  .sm-timeline-item {
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+  }
+}
+
+.sm-process-grid {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .sm-process-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .sm-process-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
