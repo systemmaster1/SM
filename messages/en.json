@@ -836,5 +836,29 @@
     "back": "Back to Portfolio",
     "live": "Interactive Live Demo",
     "build": "Build a Similar System"
+  },
+  "presence": {
+    "eyebrow": "India & Worldwide Presence",
+    "title": "Built in India. Supporting businesses across borders.",
+    "desc": "SystemMaster's work has expanded across multiple Indian states and international markets through software development, automation, integrations and ongoing technology support.",
+    "india": {
+      "eyebrow": "India Presence",
+      "title": "Growing across key Indian states",
+      "desc": "From business systems and workflow automation to ERP, CRM, HRMS and custom development, SystemMaster supports requirements across multiple Indian business markets.",
+      "hub": "SystemMaster Hub"
+    },
+    "world": {
+      "eyebrow": "Worldwide Presence",
+      "title": "From India to businesses worldwide",
+      "desc": "Our project and delivery footprint extends beyond India, with work and technology engagement across the USA, Italy, Bangladesh, Russia and Indonesia."
+    },
+    "stats": {
+      "states": "Indian States",
+      "presence": "Project Presence",
+      "countries": "Countries / Markets",
+      "years": "Years of Journey",
+      "innovation": "Continuous Innovation"
+    },
+    "note": "Presence shown here represents SystemMaster's stated working or project footprint. It is not intended to imply offices, subsidiaries or permanent establishments in every listed location."
   }
 }
