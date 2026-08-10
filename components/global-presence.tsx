@@ -18,6 +18,9 @@ import {
 } from '@/data/presence';
 import {Reveal} from '@/components/reveal';
 
+type IndiaPresenceItem = (typeof indiaPresence)[number];
+type WorldwidePresenceItem = (typeof worldwidePresence)[number];
+
 type Position = readonly [number, number];
 
 type Geometry = {
@@ -105,8 +108,8 @@ export function GlobalPresence() {
   const t = useTranslations('presence');
   const [indiaGeo, setIndiaGeo] = useState<FeatureCollection | null>(null);
   const [worldGeo, setWorldGeo] = useState<FeatureCollection | null>(null);
-  const [activeState, setActiveState] = useState(indiaPresence[0]);
-  const [activeCountry, setActiveCountry] = useState(worldwidePresence[1]);
+  const [activeState, setActiveState] = useState<IndiaPresenceItem>(indiaPresence[0]);
+  const [activeCountry, setActiveCountry] = useState<WorldwidePresenceItem>(worldwidePresence[1]);
 
   useEffect(() => {
     let mounted = true;
