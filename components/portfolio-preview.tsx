@@ -2,22 +2,29 @@
 
 import {motion} from 'framer-motion';
 
-function Shell({children}: {children: React.ReactNode}) {
+function Shell({
+  label,
+  children
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="sm-portfolio-card__visual">
       <div className="sm-preview-shell">
         <motion.div
           className="sm-preview-window"
-          initial={{opacity: 0, y: 12, scale: .98}}
+          initial={{opacity: 0, y: 12, scale: .985}}
           whileInView={{opacity: 1, y: 0, scale: 1}}
-          viewport={{once: true}}
-          whileHover={{y: -3}}
+          viewport={{once: true, amount: .25}}
+          whileHover={{y: -4}}
           transition={{duration: .42}}
         >
           <div className="sm-preview-topbar">
             <span className="sm-preview-dot" />
             <span className="sm-preview-dot" />
             <span className="sm-preview-dot" />
+            <span className="sm-preview-label">{label}</span>
           </div>
           <div className="sm-preview-body">{children}</div>
         </motion.div>
@@ -26,18 +33,27 @@ function Shell({children}: {children: React.ReactNode}) {
   );
 }
 
+function Kpis({labels}: {labels: string[]}) {
+  return (
+    <div className="sm-mini-kpis">
+      {labels.map((label, i) => (
+        <div className="sm-mini-kpi sm-mini-kpi--content" key={label}>
+          <span>{label}</span>
+          <strong>{['₹8.4L','128','94%'][i] || '24'}</strong>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ERPFull() {
   return (
-    <Shell>
-      <div className="sm-mini-kpis">
-        <div className="sm-mini-kpi" />
-        <div className="sm-mini-kpi" />
-        <div className="sm-mini-kpi" />
-      </div>
+    <Shell label="ERP + CRM">
+      <Kpis labels={['Revenue','Orders','Stock']} />
       <div className="sm-mini-table">
-        {[0,1,2,3].map((r) => (
-          <div className="sm-mini-row" key={r}>
-            <div className="sm-mini-cell" />
+        {['Lead → Order','Purchase','Inventory','Reports'].map((name, r) => (
+          <div className="sm-mini-row sm-mini-row--content" key={name}>
+            <span>{name}</span>
             <div className="sm-mini-cell" />
             <div className="sm-mini-cell" />
           </div>
@@ -49,27 +65,12 @@ function ERPFull() {
 
 function ERPDashboard() {
   return (
-    <Shell>
-      <div className="sm-mini-kpis">
-        <div className="sm-mini-kpi" />
-        <div className="sm-mini-kpi" />
-        <div className="sm-mini-kpi" />
-      </div>
+    <Shell label="Executive Dashboard">
+      <Kpis labels={['Sales','Orders','Target']} />
       <div className="sm-mini-chart">
         <svg viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">
-          <polyline
-            points="0,82 42,68 84,72 128,48 168,57 210,30 250,39 300,18"
-            fill="none"
-            stroke="#2f74e8"
-            strokeWidth="4"
-          />
-          <polyline
-            points="0,88 52,80 96,61 138,68 180,48 224,56 260,32 300,38"
-            fill="none"
-            stroke="#e0a12b"
-            strokeWidth="3"
-            opacity=".8"
-          />
+          <polyline points="0,82 42,68 84,72 128,48 168,57 210,30 250,39 300,18" fill="none" stroke="currentColor" strokeWidth="4" />
+          <polyline points="0,88 52,80 96,61 138,68 180,48 224,56 260,32 300,38" fill="none" stroke="currentColor" strokeWidth="2" opacity=".35" />
         </svg>
       </div>
     </Shell>
@@ -78,13 +79,19 @@ function ERPDashboard() {
 
 function FMS() {
   return (
-    <Shell>
+    <Shell label="FMS Workflow">
       <div className="sm-pipeline">
-        {[0,1,2,3].map((col) => (
-          <div className="sm-pipeline-col" key={col}>
-            <div className="sm-pipeline-title" />
+        {['New','Working','Review','Done'].map((name, col) => (
+          <div className="sm-pipeline-col" key={name}>
+            <div className="sm-pipeline-title sm-pipeline-title--text">{name}</div>
             {Array.from({length: col === 1 ? 4 : 3}).map((_, i) => (
-              <div className="sm-task" key={i} />
+              <motion.div
+                className="sm-task"
+                key={i}
+                initial={{opacity:.35, y:4}}
+                whileInView={{opacity:1, y:0}}
+                transition={{delay:(col+i)*.04}}
+              />
             ))}
           </div>
         ))}
@@ -95,13 +102,16 @@ function FMS() {
 
 function IMS() {
   return (
-    <Shell>
+    <Shell label="Inventory / IMS">
       <div className="sm-stock-grid">
         <div className="sm-stock-side">
-          <div className="sm-stock-ring" />
+          <div className="sm-stock-ring"><span>72%</span></div>
+          <small>Stock health</small>
         </div>
         <div className="sm-stock-list">
-          {[0,1,2,3,4].map((x) => <div key={x} className="sm-stock-item" />)}
+          {['Raw Material','Finished Goods','Inward','Outward','Low Stock'].map((x) => (
+            <div key={x} className="sm-stock-item sm-stock-item--text"><span>{x}</span></div>
+          ))}
         </div>
       </div>
     </Shell>
@@ -109,23 +119,29 @@ function IMS() {
 }
 
 function PMS() {
-  const widths = ['88%','72%','61%','46%','34%'];
+  const steps = [
+    ['Mixing','88%'],
+    ['Processing','72%'],
+    ['Quality','61%'],
+    ['Packing','46%'],
+    ['Dispatch','34%']
+  ];
   return (
-    <Shell>
+    <Shell label="Production / PMS">
       <div className="sm-production">
-        {widths.map((w, i) => (
-          <div className="sm-production-step" key={w}>
-            <div className="sm-production-num" />
+        {steps.map(([name, width], i) => (
+          <div className="sm-production-step sm-production-step--content" key={name}>
+            <span>{name}</span>
             <div className="sm-production-track">
               <motion.div
                 className="sm-production-fill"
-                initial={{width: 0}}
-                whileInView={{width: w}}
-                viewport={{once: true}}
-                transition={{duration: .6, delay: i * .08}}
+                initial={{width:0}}
+                whileInView={{width}}
+                viewport={{once:true}}
+                transition={{duration:.6, delay:i*.08}}
               />
             </div>
-            <div className="sm-production-val" />
+            <b>{width}</b>
           </div>
         ))}
       </div>
@@ -135,22 +151,18 @@ function PMS() {
 
 function Analytics() {
   return (
-    <Shell>
-      <div className="sm-mini-kpis">
-        <div className="sm-mini-kpi" />
-        <div className="sm-mini-kpi" />
-        <div className="sm-mini-kpi" />
-      </div>
+    <Shell label="Business Analytics">
+      <Kpis labels={['Growth','Margin','Conversion']} />
       <div className="sm-mini-chart">
         <div className="sm-mini-bars">
-          {[48,72,58,84,66,92,77].map((h, i) => (
+          {[48,72,58,84,66,92,77].map((h,i) => (
             <motion.div
               key={i}
               className="sm-mini-bar"
-              initial={{height: 0}}
-              whileInView={{height: `${h}%`}}
-              viewport={{once: true}}
-              transition={{duration: .5, delay: i * .05}}
+              initial={{height:0}}
+              whileInView={{height:`${h}%`}}
+              viewport={{once:true}}
+              transition={{duration:.5,delay:i*.05}}
             />
           ))}
         </div>
@@ -160,33 +172,29 @@ function Analytics() {
 }
 
 function Performance() {
-  const scores = ['78%','91%','66%','84%'];
+  const scores = [
+    ['Sales Team','78%'],
+    ['Operations','91%'],
+    ['Support','66%'],
+    ['Projects','84%']
+  ];
   return (
-    <Shell>
+    <Shell label="Performance KPI">
       <div className="sm-score-grid">
-        {scores.map((score, i) => (
-          <div className="sm-score-card" key={score}>
-            <div className="sm-score-head" />
+        {scores.map(([name,score],i) => (
+          <div className="sm-score-card sm-score-card--content" key={name}>
+            <span>{name}</span>
+            <b>{score}</b>
             <div className="sm-score-meter">
               <motion.span
-                initial={{width: 0}}
-                whileInView={{width: score}}
-                viewport={{once: true}}
-                transition={{duration: .55, delay: i * .08}}
+                initial={{width:0}}
+                whileInView={{width:score}}
+                viewport={{once:true}}
+                transition={{duration:.55,delay:i*.08}}
               />
             </div>
           </div>
         ))}
-      </div>
-      <div className="sm-mini-chart mt-2">
-        <svg viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">
-          <polyline
-            points="0,80 50,70 90,62 135,52 180,55 225,34 300,24"
-            fill="none"
-            stroke="#18c98f"
-            strokeWidth="4"
-          />
-        </svg>
       </div>
     </Shell>
   );
@@ -194,38 +202,30 @@ function Performance() {
 
 function Certificate() {
   return (
-    <Shell>
-      <div className="sm-doc">
-        <div className="sm-doc-logo" />
+    <Shell label="Document Automation">
+      <div className="sm-doc sm-doc--content">
+        <div className="sm-doc-logo">SM</div>
+        <strong>Certificate</strong>
+        <span>Automated Document</span>
         <div className="sm-doc-line gold" />
         <div className="sm-doc-line" />
-        <div className="sm-doc-line" />
         <div className="sm-doc-line" style={{width:'78%'}} />
-        <div className="sm-doc-seal" />
+        <div className="sm-doc-seal">✓</div>
       </div>
     </Shell>
   );
 }
 
-export function PortfolioPreview({slug}: {slug: string}) {
+export function PortfolioPreview({slug}: {slug:string}) {
   switch (slug) {
-    case 'enterprise-erp':
-      return <ERPFull />;
-    case 'erp-dashboard':
-      return <ERPDashboard />;
-    case 'workflow-fms':
-      return <FMS />;
-    case 'inventory-ims':
-      return <IMS />;
-    case 'production-pms':
-      return <PMS />;
-    case 'business-analytics':
-      return <Analytics />;
-    case 'performance-dashboard':
-      return <Performance />;
-    case 'certificate-automation':
-      return <Certificate />;
-    default:
-      return <ERPDashboard />;
+    case 'enterprise-erp': return <ERPFull />;
+    case 'erp-dashboard': return <ERPDashboard />;
+    case 'workflow-fms': return <FMS />;
+    case 'inventory-ims': return <IMS />;
+    case 'production-pms': return <PMS />;
+    case 'business-analytics': return <Analytics />;
+    case 'performance-dashboard': return <Performance />;
+    case 'certificate-automation': return <Certificate />;
+    default: return <ERPDashboard />;
   }
 }
