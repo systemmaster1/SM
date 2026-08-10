@@ -56,7 +56,7 @@ export function CompanyPage() {
 
   return (
     <main>
-      <section className="relative overflow-hidden py-20 md:py-28">
+      <section className="sm-detail-hero relative overflow-hidden">
         <div className="container grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
           <div>
             <motion.div
@@ -72,7 +72,7 @@ export function CompanyPage() {
               initial={{opacity: 0, y: 22}}
               animate={{opacity: 1, y: 0}}
               transition={{delay: .08}}
-              className="display mt-5 text-[clamp(2.8rem,6vw,5.4rem)] font-black"
+              className="display sm-detail-title"
             >
               {t('title')}
             </motion.h1>
@@ -81,7 +81,7 @@ export function CompanyPage() {
               initial={{opacity: 0, y: 18}}
               animate={{opacity: 1, y: 0}}
               transition={{delay: .16}}
-              className="muted mt-7 max-w-3xl text-lg leading-8"
+              className="sm-detail-lead"
             >
               {t('desc')}
             </motion.p>
@@ -118,7 +118,7 @@ export function CompanyPage() {
                 {companyStats.map((item) => (
                   <div
                     key={item.key}
-                    className="rounded-2xl border border-[var(--line)] bg-[var(--surface-strong)]/60 p-5"
+                    className="sm-about-stat"
                   >
                     <div className="display text-3xl font-black">{item.value}</div>
                     <div className="muted mt-2 text-sm">{t(`stats.${item.key}`)}</div>
@@ -153,7 +153,7 @@ export function CompanyPage() {
       <section className="section">
         <div className="container">
           <Reveal>
-            <div className="text-center">
+            <div className="sm-section-heading center">
               <div className="eyebrow">{t('why.eyebrow')}</div>
               <h2 className="display mx-auto mt-4 max-w-4xl text-4xl font-black md:text-5xl">
                 {t('why.title')}
@@ -190,7 +190,7 @@ export function CompanyPage() {
           <div className="mt-10 grid gap-4">
             {companyTimeline.map((item, index) => (
               <Reveal key={item.key} delay={index * .04}>
-                <article className="card grid gap-4 p-6 md:grid-cols-[130px_1fr] md:items-center">
+                <article className="sm-timeline-item">
                   <div className="display text-2xl font-black text-[var(--gold)]">{item.year}</div>
                   <div>
                     <h3 className="display text-xl font-black">{t(`timeline.items.${item.key}.title`)}</h3>
@@ -206,7 +206,7 @@ export function CompanyPage() {
       <section className="section">
         <div className="container">
           <Reveal>
-            <div className="text-center">
+            <div className="sm-section-heading center">
               <div className="eyebrow">{t('process.eyebrow')}</div>
               <h2 className="display mx-auto mt-4 max-w-4xl text-4xl font-black md:text-5xl">
                 {t('process.title')}
@@ -214,7 +214,7 @@ export function CompanyPage() {
             </div>
           </Reveal>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="sm-process-grid mt-10">
             {companyProcess.map((key, index) => (
               <Reveal key={key} delay={index * .04}>
                 <article className="card h-full p-6">
