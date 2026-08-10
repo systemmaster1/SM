@@ -30,23 +30,16 @@ export const metadata: Metadata = {
   category: 'Business Software',
   keywords: [
     'ERP software India',
-    'CRM software',
-    'HRMS software',
-    'accounting software',
+    'CRM software India',
+    'HRMS software India',
+    'accounting software India',
     'business automation',
-    'custom software development',
+    'custom software development India',
     'mobile app development',
     'AI automation',
     'WhatsApp automation',
     'manufacturing ERP'
   ],
-  alternates: {
-    canonical: 'https://systemmaster.in/en',
-    languages: {
-      en: 'https://systemmaster.in/en',
-      hi: 'https://systemmaster.in/hi'
-    }
-  },
   openGraph: {
     title: 'SystemMaster Automations',
     description:
@@ -93,6 +86,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
+  colorScheme: 'light dark',
   themeColor: [
     {media: '(prefers-color-scheme: light)', color: '#f7f9fc'},
     {media: '(prefers-color-scheme: dark)', color: '#071326'}
