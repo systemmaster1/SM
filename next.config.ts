@@ -1,8 +1,38 @@
 import type {NextConfig} from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
+
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
+
+const securityHeaders = [
+  {key: 'X-Content-Type-Options', value: 'nosniff'},
+  {key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin'},
+  {key: 'X-Frame-Options', value: 'SAMEORIGIN'},
+  {key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()'}
+];
+
 const nextConfig: NextConfig = {
-  images: {formats: ['image/avif', 'image/webp']},
+  poweredByHeader: false,
+  compress: true,
+  images: {
+    formats: ['image/avif', 'image/webp']
+  },
+
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: securityHeaders
+      },
+      {
+        source: '/demos/:path*',
+        headers: [
+          ...securityHeaders,
+          {key: 'Cache-Control', value: 'public, max-age=0, must-revalidate'}
+        ]
+      }
+    ];
+  },
+
   async redirects() {
     return [
       {source: '/index.html', destination: '/en', permanent: true},
@@ -17,4 +47,5 @@ const nextConfig: NextConfig = {
     ];
   }
 };
+
 export default withNextIntl(nextConfig);
