@@ -43,6 +43,7 @@ import {
   whyKeys
 } from '@/data/company';
 import {Reveal} from '@/components/reveal';
+import {GlobalPresence} from '@/components/global-presence';
 
 const whyIcons = {
   architecture: Blocks,
@@ -454,6 +455,9 @@ export function CompanyPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* INDIA + WORLDWIDE PRESENCE */}
+      <GlobalPresence />
 
       {/* PROCESS */}
       <section className="section">
