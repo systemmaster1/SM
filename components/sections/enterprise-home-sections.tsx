@@ -209,12 +209,48 @@ export function EnterpriseHomeSections() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <article className="card flex h-full flex-col justify-center p-7 md:p-10">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/15 text-[var(--primary)]">
-                <Users size={25} />
+            <article className="card relative h-full overflow-hidden p-7 md:p-10">
+              <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-blue-500/10 blur-3xl" />
+              <div className="absolute -bottom-16 -left-16 h-40 w-40 rounded-full bg-amber-400/10 blur-3xl" />
+
+              <div className="relative">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/15 text-[var(--primary)]">
+                  <Rocket size={25} />
+                </div>
+
+                <div className="eyebrow mt-6">
+                  <Sparkles size={14} />
+                  {locale === 'hi' ? 'बिज़नेस ग्रोथ सिस्टम' : 'Built for Business Growth'}
+                </div>
+
+                <h3 className="display mt-4 text-3xl font-black leading-tight">
+                  {locale === 'hi'
+                    ? 'Automation जो आपके business के साथ आगे बढ़े'
+                    : 'Automation that grows with your business'}
+                </h3>
+
+                <p className="muted mt-4 text-base leading-7">
+                  {locale === 'hi'
+                    ? 'एक छोटे workflow से शुरू करें और जरूरत के अनुसार ERP, CRM, reporting, integrations और AI automation तक scale करें।'
+                    : 'Start with one workflow and scale into ERP, CRM, reporting, integrations and AI automation as your operations grow.'}
+                </p>
+
+                <div className="mt-7 grid grid-cols-3 gap-3">
+                  {[
+                    [locale === 'hi' ? 'मॉड्यूलर' : 'Modular', Layers3],
+                    [locale === 'hi' ? 'स्केलेबल' : 'Scalable', Gauge],
+                    [locale === 'hi' ? 'कनेक्टेड' : 'Connected', Network]
+                  ].map(([label, Icon]) => {
+                    const FeatureIcon = Icon as typeof Layers3;
+                    return (
+                      <div key={String(label)} className="rounded-2xl border border-[var(--line)] bg-[var(--surface)]/75 p-3 text-center shadow-sm">
+                        <FeatureIcon className="mx-auto text-[var(--primary)]" size={19} />
+                        <div className="mt-2 text-xs font-extrabold">{String(label)}</div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <h3 className="display mt-6 text-3xl font-black">{t('founder.name')}</h3>
-              <div className="mt-2 font-extrabold text-[var(--gold)]">{t('founder.role')}</div>
             </article>
           </Reveal>
         </div>
