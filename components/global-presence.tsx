@@ -20,7 +20,6 @@ import {Reveal} from '@/components/reveal';
 
 type IndiaPresenceItem = (typeof indiaPresence)[number];
 type WorldwidePresenceItem = (typeof worldwidePresence)[number];
-
 type Position = readonly [number, number];
 
 type Geometry = {
@@ -46,12 +45,8 @@ const WORLD_GEOJSON =
   'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson';
 
 function projectIndia([lon, lat]: Position) {
-  const minLon = 67;
-  const maxLon = 98;
-  const minLat = 6;
-  const maxLat = 37;
-  const x = ((lon - minLon) / (maxLon - minLon)) * 760 + 20;
-  const y = 520 - ((lat - minLat) / (maxLat - minLat)) * 500;
+  const x = ((lon - 67) / (98 - 67)) * 720 + 40;
+  const y = 510 - ((lat - 6) / (37 - 6)) * 475;
   return [x, y] as const;
 }
 
@@ -59,74 +54,79 @@ function projectWorld([lon, lat]: Position) {
   const x = ((lon + 180) / 360) * 1000;
   const latRad = (lat * Math.PI) / 180;
   const mercN = Math.log(Math.tan(Math.PI / 4 + latRad / 2));
-  const y = 270 - (mercN / Math.PI) * 220;
+  const y = 275 - (mercN / Math.PI) * 220;
   return [x, y] as const;
 }
 
-function ringToPath(ring: number[][], projector: (p: Position) => readonly [number, number]) {
+function ringToPath(
+  ring: number[][],
+  projector: (p: Position) => readonly [number, number]
+) {
   if (!ring?.length) return '';
-  return ring
-    .map((point, index) => {
-      const [x, y] = projector([point[0], point[1]]);
-      return `${index === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
-    })
-    .join(' ') + ' Z';
+  return (
+    ring
+      .map((point, index) => {
+        const [x, y] = projector([point[0], point[1]]);
+        return `${index === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
+      })
+      .join(' ') + ' Z'
+  );
 }
 
 function geometryToPath(
   geometry: Geometry,
   projector: (p: Position) => readonly [number, number]
 ) {
-  if (!geometry) return '';
-
   if (geometry.type === 'Polygon') {
     return (geometry.coordinates as number[][][])
       .map((ring) => ringToPath(ring, projector))
       .join(' ');
   }
 
-  if (geometry.type === 'MultiPolygon') {
-    return (geometry.coordinates as number[][][][])
-      .flatMap((polygon) => polygon.map((ring) => ringToPath(ring, projector)))
-      .join(' ');
-  }
-
-  return '';
+  return (geometry.coordinates as number[][][][])
+    .flatMap((polygon) => polygon.map((ring) => ringToPath(ring, projector)))
+    .join(' ');
 }
 
 function curvePath(
   from: readonly [number, number],
   to: readonly [number, number],
-  lift = 55
+  lift = 58
 ) {
   const midX = (from[0] + to[0]) / 2;
-  const midY = Math.min(from[1], to[1]) - lift;
-  return `M ${from[0]} ${from[1]} Q ${midX} ${midY} ${to[0]} ${to[1]}`;
+  const direction = to[0] < from[0] ? -1 : 1;
+  const midY =
+    Math.min(from[1], to[1]) -
+    lift -
+    Math.abs(to[0] - from[0]) * 0.035;
+  return `M ${from[0]} ${from[1]} Q ${midX + direction * 12} ${midY} ${to[0]} ${to[1]}`;
 }
 
 export function GlobalPresence() {
   const t = useTranslations('presence');
   const [indiaGeo, setIndiaGeo] = useState<FeatureCollection | null>(null);
   const [worldGeo, setWorldGeo] = useState<FeatureCollection | null>(null);
-  const [activeState, setActiveState] = useState<IndiaPresenceItem>(indiaPresence[0]);
-  const [activeCountry, setActiveCountry] = useState<WorldwidePresenceItem>(worldwidePresence[1]);
+  const [activeState, setActiveState] =
+    useState<IndiaPresenceItem>(indiaPresence[0]);
+  const [activeCountry, setActiveCountry] =
+    useState<WorldwidePresenceItem>(worldwidePresence[1]);
 
   useEffect(() => {
     let mounted = true;
 
     Promise.allSettled([
-      fetch(INDIA_GEOJSON).then((r) => {
-        if (!r.ok) throw new Error('India map failed');
-        return r.json();
+      fetch(INDIA_GEOJSON).then((response) => {
+        if (!response.ok) throw new Error('India map failed');
+        return response.json();
       }),
-      fetch(WORLD_GEOJSON).then((r) => {
-        if (!r.ok) throw new Error('World map failed');
-        return r.json();
+      fetch(WORLD_GEOJSON).then((response) => {
+        if (!response.ok) throw new Error('World map failed');
+        return response.json();
       })
-    ]).then(([india, world]) => {
+    ]).then(([indiaResult, worldResult]) => {
       if (!mounted) return;
-      if (india.status === 'fulfilled') setIndiaGeo(india.value);
-      if (world.status === 'fulfilled') setWorldGeo(world.value);
+      if (indiaResult.status === 'fulfilled') setIndiaGeo(indiaResult.value);
+      if (worldResult.status === 'fulfilled') setWorldGeo(worldResult.value);
     });
 
     return () => {
@@ -135,20 +135,25 @@ export function GlobalPresence() {
   }, []);
 
   const indiaPaths = useMemo(
-    () => indiaGeo?.features.map((f) => geometryToPath(f.geometry, projectIndia)) ?? [],
+    () =>
+      indiaGeo?.features.map((feature) =>
+        geometryToPath(feature.geometry, projectIndia)
+      ) ?? [],
     [indiaGeo]
   );
 
   const worldPaths = useMemo(
-    () => worldGeo?.features.map((f) => geometryToPath(f.geometry, projectWorld)) ?? [],
+    () =>
+      worldGeo?.features.map((feature) =>
+        geometryToPath(feature.geometry, projectWorld)
+      ) ?? [],
     [worldGeo]
   );
 
   const indiaHub = projectIndia([78.9629, 20.5937]);
   const indiaTarget = projectIndia(activeState.coordinates);
-
+  const indiaRoute = curvePath(indiaHub, indiaTarget, 62);
   const worldHub = projectWorld([78.9629, 20.5937]);
-  const worldTarget = projectWorld(activeCountry.coordinates);
 
   return (
     <section className="section sm-presence-section">
@@ -168,8 +173,7 @@ export function GlobalPresence() {
           </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-6">
-          {/* INDIA - FULL CODE SVG */}
+        <div className="mt-10 grid gap-7">
           <Reveal>
             <article className="sm-presence-card sm-presence-card--india">
               <div className="sm-presence-copy">
@@ -177,11 +181,9 @@ export function GlobalPresence() {
                   <MapPin size={15} />
                   {t('india.eyebrow')}
                 </div>
-
                 <h3 className="display mt-4 sm-presence-title">
                   {t('india.title')}
                 </h3>
-
                 <p className="muted mt-4 max-w-xl leading-7">
                   {t('india.desc')}
                 </p>
@@ -194,7 +196,6 @@ export function GlobalPresence() {
                       <span>{t('stats.states')}</span>
                     </div>
                   </div>
-
                   <div className="sm-presence-metric">
                     <Radio size={20} />
                     <div>
@@ -204,7 +205,7 @@ export function GlobalPresence() {
                   </div>
                 </div>
 
-                <div className="mt-7 grid gap-2 sm:grid-cols-2">
+                <div className="sm-location-grid mt-7">
                   {indiaPresence.map((state) => (
                     <button
                       key={state.key}
@@ -223,74 +224,74 @@ export function GlobalPresence() {
               </div>
 
               <div className="sm-code-map sm-code-map--india">
+                <div className="sm-map-caption">
+                  <span className="sm-live-dot" />
+                  <span>{t('india.hub')}</span>
+                </div>
+
                 <svg
                   viewBox="0 0 800 540"
                   role="img"
-                  aria-label="Animated SystemMaster India project presence map"
+                  aria-label="Interactive SystemMaster India project presence map"
                   className="sm-map-svg"
                 >
                   <defs>
-                    <linearGradient id="indiaFill" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="currentColor" stopOpacity=".08" />
+                    <linearGradient id="indiaFill17D" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="currentColor" stopOpacity=".07" />
                       <stop offset="100%" stopColor="currentColor" stopOpacity=".18" />
                     </linearGradient>
-                    <filter id="indiaGlow" x="-60%" y="-60%" width="220%" height="220%">
-                      <feGaussianBlur stdDeviation="5" result="blur" />
-                      <feMerge>
-                        <feMergeNode in="blur" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
                   </defs>
 
                   <g className="sm-map-land">
-                    {indiaPaths.length ? (
-                      indiaPaths.map((d, index) => (
-                        <motion.path
-                          key={index}
-                          d={d}
-                          fill="url(#indiaFill)"
-                          stroke="currentColor"
-                          strokeWidth=".9"
-                          initial={{opacity: 0}}
-                          whileInView={{opacity: 1}}
-                          viewport={{once: true}}
-                          transition={{delay: Math.min(index * .008, .28)}}
-                        />
-                      ))
-                    ) : (
-                      <text x="400" y="270" textAnchor="middle" className="sm-map-loading">
-                        {t('loading')}
-                      </text>
-                    )}
+                    {indiaPaths.map((d, index) => (
+                      <motion.path
+                        key={index}
+                        d={d}
+                        fill="url(#indiaFill17D)"
+                        stroke="currentColor"
+                        strokeWidth=".82"
+                        initial={{opacity: 0}}
+                        whileInView={{opacity: 1}}
+                        viewport={{once: true}}
+                        transition={{delay: Math.min(index * .006, .2)}}
+                      />
+                    ))}
                   </g>
 
                   <motion.path
                     key={activeState.key}
-                    d={curvePath(indiaHub, indiaTarget, 70)}
+                    d={indiaRoute}
                     className="sm-route-line"
                     fill="none"
-                    pathLength={1}
                     initial={{pathLength: 0, opacity: 0}}
                     animate={{pathLength: 1, opacity: 1}}
-                    transition={{duration: .9, ease: 'easeInOut'}}
+                    transition={{duration: .85, ease: 'easeInOut'}}
                   />
 
+                  <circle className="sm-route-particle sm-route-particle--india" r="4.6">
+                    <animateMotion
+                      key={activeState.key}
+                      dur="2.25s"
+                      repeatCount="indefinite"
+                      path={indiaRoute}
+                    />
+                  </circle>
+
                   <motion.circle
-                    key={`pulse-${activeState.key}`}
+                    key={`target-${activeState.key}`}
                     cx={indiaTarget[0]}
                     cy={indiaTarget[1]}
                     r="7"
                     className="sm-map-target"
-                    filter="url(#indiaGlow)"
-                    initial={{scale: .4, opacity: 0}}
-                    animate={{scale: [1, 1.7, 1], opacity: [1, .55, 1]}}
-                    transition={{duration: 2, repeat: Infinity}}
+                    animate={{r: [6, 10, 6], opacity: [1, .55, 1]}}
+                    transition={{duration: 1.9, repeat: Infinity}}
                   />
 
                   {indiaPresence.map((state) => {
                     const [x, y] = projectIndia(state.coordinates);
                     const active = activeState.key === state.key;
+                    const labelWidth = Math.max(62, state.name.length * 6.4);
+
                     return (
                       <g
                         key={state.key}
@@ -298,184 +299,65 @@ export function GlobalPresence() {
                         onClick={() => setActiveState(state)}
                       >
                         <circle cx={x} cy={y} r={active ? 7 : 5} />
-                        <text x={x + 9} y={y - 8}>{state.name}</text>
-                      </g>
-                    );
-                  })}
-
-                  <g className="sm-logo-hub" transform={`translate(${indiaHub[0] - 33} ${indiaHub[1] - 33})`}>
-                    <motion.circle
-                      cx="33"
-                      cy="33"
-                      r="31"
-                      className="sm-logo-hub-ring"
-                      animate={{scale: [1, 1.08, 1]}}
-                      transition={{duration: 2.4, repeat: Infinity}}
-                    />
-                    <image
-                      href="/logo/systemmaster.png"
-                      width="66"
-                      height="66"
-                      preserveAspectRatio="xMidYMid meet"
-                    />
-                  </g>
-                </svg>
-
-                <div className="sm-map-live-card">
-                  <span className="sm-live-dot" />
-                  <div>
-                    <strong>{activeState.name}</strong>
-                    <small>{t('india.connected')}</small>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </Reveal>
-
-          {/* WORLD - FULL CODE SVG */}
-          <Reveal delay={.07}>
-            <article className="sm-presence-card sm-presence-card--world">
-              <div className="sm-world-code-map">
-                <svg
-                  viewBox="0 0 1000 540"
-                  role="img"
-                  aria-label="Animated SystemMaster worldwide project presence map"
-                  className="sm-map-svg sm-map-svg--world"
-                >
-                  <defs>
-                    <radialGradient id="worldBg" cx="63%" cy="52%" r="70%">
-                      <stop offset="0%" stopColor="#0c3a73" stopOpacity=".7" />
-                      <stop offset="100%" stopColor="#03142d" stopOpacity="1" />
-                    </radialGradient>
-                    <filter id="worldGlow" x="-100%" y="-100%" width="300%" height="300%">
-                      <feGaussianBlur stdDeviation="6" result="blur" />
-                      <feMerge>
-                        <feMergeNode in="blur" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
-                  </defs>
-
-                  <rect width="1000" height="540" rx="28" fill="url(#worldBg)" />
-
-                  <g className="sm-world-grid">
-                    {[80,160,240,320,400,480].map((y) => (
-                      <line key={`h-${y}`} x1="0" y1={y} x2="1000" y2={y} />
-                    ))}
-                    {[100,200,300,400,500,600,700,800,900].map((x) => (
-                      <line key={`v-${x}`} x1={x} y1="0" x2={x} y2="540" />
-                    ))}
-                  </g>
-
-                  <g className="sm-world-land">
-                    {worldPaths.length ? (
-                      worldPaths.map((d, index) => (
-                        <motion.path
-                          key={index}
-                          d={d}
-                          fill="currentColor"
-                          stroke="currentColor"
-                          strokeWidth=".45"
-                          initial={{opacity: 0}}
-                          whileInView={{opacity: .28}}
-                          viewport={{once: true}}
-                          transition={{delay: Math.min(index * .002, .25)}}
-                        />
-                      ))
-                    ) : (
-                      <text x="500" y="270" textAnchor="middle" className="sm-map-loading sm-map-loading--world">
-                        {t('loading')}
-                      </text>
-                    )}
-                  </g>
-
-                  {worldwidePresence
-                    .filter((country) => country.key !== 'india')
-                    .map((country, index) => {
-                      const target = projectWorld(country.coordinates);
-                      const isActive = activeCountry.key === country.key;
-
-                      return (
-                        <g key={country.key}>
-                          <motion.path
-                            d={curvePath(worldHub, target, 88 + index * 4)}
-                            className={`sm-world-route ${isActive ? 'is-active' : ''}`}
-                            fill="none"
-                            pathLength={1}
-                            initial={{pathLength: 0}}
-                            whileInView={{pathLength: 1}}
-                            viewport={{once: true}}
-                            transition={{duration: 1.1, delay: index * .16}}
+                        <g transform={`translate(${x + 10} ${y - 21})`}>
+                          <rect
+                            className="sm-map-label-bg"
+                            x="0"
+                            y="0"
+                            rx="8"
+                            width={labelWidth}
+                            height="20"
                           />
-
-                          <motion.circle
-                            r="4"
-                            className="sm-route-particle"
-                            initial={{opacity: 0}}
-                            animate={
-                              isActive
-                                ? {
-                                    offsetDistance: ['0%', '100%'],
-                                    opacity: [0, 1, 1, 0]
-                                  }
-                                : {opacity: .3}
-                            }
-                            style={{
-                              offsetPath: `path("${curvePath(worldHub, target, 88 + index * 4)}")`
-                            }}
-                            transition={{
-                              duration: 2.7,
-                              repeat: Infinity,
-                              ease: 'linear'
-                            }}
-                          />
+                          <text x="7" y="13.5">{state.name}</text>
                         </g>
-                      );
-                    })}
-
-                  {worldwidePresence.map((country) => {
-                    const [x, y] = projectWorld(country.coordinates);
-                    const active = activeCountry.key === country.key;
-                    const isIndia = country.key === 'india';
-
-                    return (
-                      <g
-                        key={country.key}
-                        className={`sm-world-marker ${active ? 'is-active' : ''} ${
-                          isIndia ? 'is-hub' : ''
-                        }`}
-                        onClick={() => !isIndia && setActiveCountry(country)}
-                      >
-                        <circle cx={x} cy={y} r={isIndia ? 9 : active ? 7 : 5} />
-                        {!isIndia && (
-                          <text x={x + 10} y={y - 8}>{country.name}</text>
-                        )}
                       </g>
                     );
                   })}
 
                   <g
-                    className="sm-logo-hub sm-logo-hub--world"
-                    transform={`translate(${worldHub[0] - 36} ${worldHub[1] - 36})`}
+                    className="sm-logo-hub"
+                    transform={`translate(${indiaHub[0] - 38} ${indiaHub[1] - 38})`}
                   >
                     <motion.circle
-                      cx="36"
-                      cy="36"
-                      r="35"
+                      cx="38"
+                      cy="38"
+                      r="36"
                       className="sm-logo-hub-ring"
-                      animate={{scale: [1, 1.13, 1], opacity: [1, .72, 1]}}
-                      transition={{duration: 2.2, repeat: Infinity}}
+                      animate={{scale: [1, 1.08, 1]}}
+                      transition={{duration: 2.35, repeat: Infinity}}
                     />
                     <image
                       href="/logo/systemmaster.png"
-                      width="72"
-                      height="72"
+                      width="76"
+                      height="76"
                       preserveAspectRatio="xMidYMid meet"
                     />
                   </g>
                 </svg>
 
-                <div className="sm-world-copy">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeState.key}
+                    className="sm-map-live-card"
+                    initial={{opacity: 0, y: 8}}
+                    animate={{opacity: 1, y: 0}}
+                    exit={{opacity: 0, y: -6}}
+                  >
+                    <span className="sm-live-dot" />
+                    <div>
+                      <strong>{activeState.name}</strong>
+                      <small>{t('india.connected')}</small>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </article>
+          </Reveal>
+
+          <Reveal delay={.06}>
+            <article className="sm-presence-card sm-presence-card--world">
+              <div className="sm-world-info-panel">
+                <div>
                   <div className="eyebrow sm-world-eyebrow">
                     <Globe2 size={15} />
                     {t('world.eyebrow')}
@@ -483,12 +365,12 @@ export function GlobalPresence() {
                   <h3 className="display mt-4 sm-world-title">
                     {t('world.title')}
                   </h3>
-                  <p className="mt-4 max-w-lg text-sm leading-7 text-white/72">
+                  <p className="sm-world-description mt-4">
                     {t('world.desc')}
                   </p>
                 </div>
 
-                <div className="sm-world-country-strip">
+                <div className="sm-world-country-list">
                   {worldwidePresence
                     .filter((country) => country.key !== 'india')
                     .map((country) => (
@@ -503,6 +385,7 @@ export function GlobalPresence() {
                       >
                         <span className="sm-country-code">{country.code}</span>
                         <span>{country.name}</span>
+                        <span className="sm-country-arrow">→</span>
                       </button>
                     ))}
                 </div>
@@ -510,18 +393,154 @@ export function GlobalPresence() {
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeCountry.key}
-                    className="sm-world-live-card"
-                    initial={{opacity: 0, y: 8}}
+                    className="sm-world-active-card"
+                    initial={{opacity: 0, y: 6}}
                     animate={{opacity: 1, y: 0}}
-                    exit={{opacity: 0, y: -8}}
+                    exit={{opacity: 0, y: -6}}
                   >
                     <span className="sm-live-dot" />
                     <div>
-                      <strong>{activeCountry.name}</strong>
                       <small>{t('world.routeActive')}</small>
+                      <strong>{activeCountry.name}</strong>
                     </div>
                   </motion.div>
                 </AnimatePresence>
+              </div>
+
+              <div className="sm-world-code-map">
+                <svg
+                  viewBox="0 0 1000 540"
+                  role="img"
+                  aria-label="Interactive SystemMaster worldwide project presence map"
+                  className="sm-map-svg sm-map-svg--world"
+                >
+                  <defs>
+                    <radialGradient id="worldBg17D" cx="67%" cy="51%" r="72%">
+                      <stop offset="0%" stopColor="#0d417f" stopOpacity=".82" />
+                      <stop offset="100%" stopColor="#03142d" stopOpacity="1" />
+                    </radialGradient>
+                  </defs>
+
+                  <rect width="1000" height="540" rx="28" fill="url(#worldBg17D)" />
+
+                  <g className="sm-world-grid">
+                    {[80,160,240,320,400,480].map((y) => (
+                      <line key={`h-${y}`} x1="0" y1={y} x2="1000" y2={y} />
+                    ))}
+                    {[100,200,300,400,500,600,700,800,900].map((x) => (
+                      <line key={`v-${x}`} x1={x} y1="0" x2={x} y2="540" />
+                    ))}
+                  </g>
+
+                  <g className="sm-world-land">
+                    {worldPaths.map((d, index) => (
+                      <motion.path
+                        key={index}
+                        d={d}
+                        fill="currentColor"
+                        stroke="currentColor"
+                        strokeWidth=".42"
+                        initial={{opacity: 0}}
+                        whileInView={{opacity: .27}}
+                        viewport={{once: true}}
+                        transition={{delay: Math.min(index * .002, .18)}}
+                      />
+                    ))}
+                  </g>
+
+                  {worldwidePresence
+                    .filter((country) => country.key !== 'india')
+                    .map((country, index) => {
+                      const target = projectWorld(country.coordinates);
+                      const route = curvePath(worldHub, target, 72 + index * 8);
+                      const active = activeCountry.key === country.key;
+
+                      return (
+                        <g key={country.key}>
+                          <motion.path
+                            d={route}
+                            className={`sm-world-route ${active ? 'is-active' : ''}`}
+                            fill="none"
+                            initial={{pathLength: 0, opacity: 0}}
+                            whileInView={{pathLength: 1, opacity: 1}}
+                            viewport={{once: true}}
+                            transition={{duration: 1, delay: index * .1}}
+                          />
+                          <circle
+                            r={active ? 4.5 : 3.2}
+                            className={`sm-route-particle ${
+                              active ? 'is-active' : ''
+                            }`}
+                          >
+                            <animateMotion
+                              dur={active ? '2.6s' : '4.2s'}
+                              begin={`${index * 0.55}s`}
+                              repeatCount="indefinite"
+                              path={route}
+                            />
+                          </circle>
+                        </g>
+                      );
+                    })}
+
+                  {worldwidePresence.map((country) => {
+                    const [x, y] = projectWorld(country.coordinates);
+                    const active = activeCountry.key === country.key;
+                    const isIndia = country.key === 'india';
+                    const labelWidth = Math.max(52, country.name.length * 7.2);
+
+                    return (
+                      <g
+                        key={country.key}
+                        className={`sm-world-marker ${active ? 'is-active' : ''} ${
+                          isIndia ? 'is-hub' : ''
+                        }`}
+                        onClick={() => !isIndia && setActiveCountry(country)}
+                      >
+                        <circle cx={x} cy={y} r={isIndia ? 9 : active ? 7 : 5} />
+
+                        {!isIndia && (
+                          <g transform={`translate(${x + 10} ${y - 22})`}>
+                            <rect
+                              className="sm-world-label-bg"
+                              x="0"
+                              y="0"
+                              rx="8"
+                              width={labelWidth}
+                              height="22"
+                            />
+                            <text x="7" y="14.5">{country.name}</text>
+                          </g>
+                        )}
+                      </g>
+                    );
+                  })}
+
+                  <g
+                    className="sm-logo-hub sm-logo-hub--world"
+                    transform={`translate(${worldHub[0] - 41} ${worldHub[1] - 41})`}
+                  >
+                    <motion.circle
+                      cx="41"
+                      cy="41"
+                      r="40"
+                      className="sm-logo-hub-ring"
+                      animate={{scale: [1, 1.12, 1], opacity: [1, .76, 1]}}
+                      transition={{duration: 2.1, repeat: Infinity}}
+                    />
+                    <image
+                      href="/logo/systemmaster.png"
+                      width="82"
+                      height="82"
+                      preserveAspectRatio="xMidYMid meet"
+                    />
+                  </g>
+                </svg>
+
+                <div className="sm-world-map-caption">
+                  <span className="sm-live-dot" />
+                  <span>SystemMaster India Hub</span>
+                </div>
               </div>
             </article>
           </Reveal>
