@@ -5,6 +5,7 @@ import {Header} from '@/components/header';
 import {Footer} from '@/components/footer';
 import {FloatingAssist} from '@/components/floating-assist';
 import {OrganizationSchema} from '@/components/seo/organization-schema';
+import {LocaleDocumentLanguage} from '@/components/locale-document-language';
 
 const locales = ['en', 'hi'] as const;
 type Locale = (typeof locales)[number];
@@ -31,13 +32,14 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
+      <LocaleDocumentLanguage locale={locale} />
       <OrganizationSchema locale={locale} />
 
       <a
         href="#main-content"
         className="sr-only fixed left-4 top-4 z-[100000] rounded-lg bg-[var(--text)] px-4 py-2 text-[var(--bg)] focus:not-sr-only"
       >
-        Skip to content
+        {locale === 'hi' ? 'मुख्य सामग्री पर जाएँ' : 'Skip to content'}
       </a>
 
       <Header />
@@ -46,11 +48,6 @@ export default async function LocaleLayout({
 
       <Footer locale={locale} />
 
-      {/*
-        Global assistance controls:
-        1. Original Shyama AI Agent from the live website
-        2. Direct WhatsApp floating button
-      */}
       <FloatingAssist />
     </NextIntlClientProvider>
   );
