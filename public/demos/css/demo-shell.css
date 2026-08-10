@@ -1,32 +1,27 @@
 /* ===============================================================
-   SystemMaster Demo Shell
-   Professional wrapper for legacy standalone HTML demos.
-   Keeps the interactive demo logic intact while removing the old
-   marketing-site header/footer from the demo experience.
+   SystemMaster Live Demo Shell — Phase 13
+   Premium light shell for all standalone demo pages.
    =============================================================== */
 
 :root{
   --demo-shell-h:74px;
-  --demo-shell-bg:rgba(5,16,34,.92);
-  --demo-shell-line:rgba(148,163,184,.18);
-  --demo-shell-text:#eef5ff;
-  --demo-shell-muted:#9fb0c9;
-  --demo-shell-blue:#4f91ff;
-  --demo-shell-gold:#efb640;
+  --demo-shell-bg:rgba(255,255,255,.94);
+  --demo-shell-line:rgba(28,54,88,.13);
+  --demo-shell-text:#10203a;
+  --demo-shell-muted:#66758b;
+  --demo-shell-blue:#3478e5;
+  --demo-shell-gold:#d99a24;
 }
 
-/* Hide old website chrome inside static demos */
 .site-header,
 .site-footer{
   display:none !important;
 }
 
-/* The old floating controls can stay available in direct demo URLs */
 body{
   padding-top:var(--demo-shell-h) !important;
 }
 
-/* If legacy page used sticky offsets based on the old header, reset them */
 main,
 .hero,
 .hero-small,
@@ -34,7 +29,6 @@ section:first-of-type{
   scroll-margin-top:calc(var(--demo-shell-h) + 18px);
 }
 
-/* Old breadcrumb points to legacy .html pages; the shell replaces navigation */
 .crumb{
   display:none !important;
 }
@@ -46,9 +40,11 @@ section:first-of-type{
   height:var(--demo-shell-h);
   display:flex;
   align-items:center;
-  background:linear-gradient(180deg,rgba(7,20,43,.97),rgba(5,16,34,.93));
+  color:var(--demo-shell-text);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.985),rgba(248,251,255,.955));
   border-bottom:1px solid var(--demo-shell-line);
-  box-shadow:0 14px 45px rgba(0,0,0,.24);
+  box-shadow:0 12px 34px rgba(34,62,98,.09);
   backdrop-filter:blur(20px) saturate(135%);
   -webkit-backdrop-filter:blur(20px) saturate(135%);
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -59,28 +55,26 @@ section:first-of-type{
   margin:0 auto;
   display:flex;
   align-items:center;
-  gap:18px;
+  gap:16px;
 }
 
 .sm-demo-shell__brand{
   display:flex;
   align-items:center;
-  gap:11px;
+  gap:10px;
   min-width:0;
   color:var(--demo-shell-text);
   text-decoration:none;
 }
 
 .sm-demo-shell__logo{
-  width:42px;
-  height:42px;
+  width:43px;
+  height:43px;
   object-fit:contain;
   flex:0 0 auto;
 }
 
-.sm-demo-shell__brand-copy{
-  min-width:0;
-}
+.sm-demo-shell__brand-copy{min-width:0}
 
 .sm-demo-shell__name{
   display:block;
@@ -118,7 +112,7 @@ section:first-of-type{
   display:flex;
   align-items:center;
   gap:7px;
-  color:#75a9ff;
+  color:var(--demo-shell-blue);
   font-size:10px;
   font-weight:900;
   letter-spacing:.13em;
@@ -129,15 +123,15 @@ section:first-of-type{
   width:7px;
   height:7px;
   border-radius:50%;
-  background:#10e7a1;
-  box-shadow:0 0 14px rgba(16,231,161,.75);
+  background:#16b978;
+  box-shadow:0 0 0 4px rgba(22,185,120,.10);
 }
 
 .sm-demo-shell__title{
   margin-top:3px;
   color:var(--demo-shell-text);
   font-size:14px;
-  font-weight:800;
+  font-weight:850;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -146,7 +140,7 @@ section:first-of-type{
 .sm-demo-shell__actions{
   display:flex;
   align-items:center;
-  gap:9px;
+  gap:8px;
   flex:0 0 auto;
 }
 
@@ -156,39 +150,47 @@ section:first-of-type{
   align-items:center;
   justify-content:center;
   gap:7px;
+  border:1px solid var(--demo-shell-line);
   border-radius:999px;
   padding:0 15px;
-  border:1px solid var(--demo-shell-line);
   color:var(--demo-shell-text);
-  background:rgba(255,255,255,.035);
+  background:#fff;
   text-decoration:none;
   font-size:12px;
   font-weight:850;
+  cursor:pointer;
+  box-shadow:0 5px 14px rgba(34,62,98,.04);
   transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease;
 }
 
 .sm-demo-shell__btn:hover{
   transform:translateY(-2px);
-  border-color:rgba(79,145,255,.42);
-  background:rgba(79,145,255,.09);
+  border-color:rgba(52,120,229,.34);
+  background:#f8fbff;
+  box-shadow:0 9px 22px rgba(34,62,98,.08);
 }
 
 .sm-demo-shell__btn--primary{
-  color:#091525;
-  border-color:rgba(239,182,64,.65);
-  background:linear-gradient(135deg,#f5c75c,#e6a429);
-  box-shadow:0 9px 24px rgba(239,182,64,.19);
+  color:#fff;
+  border-color:#3478e5;
+  background:linear-gradient(135deg,#4388ef,#2868d2);
+  box-shadow:0 9px 22px rgba(52,120,229,.20);
 }
 
 .sm-demo-shell__btn--primary:hover{
-  background:linear-gradient(135deg,#ffd675,#efb13b);
-  border-color:#ffd675;
-  box-shadow:0 12px 30px rgba(239,182,64,.25);
+  color:#fff;
+  background:linear-gradient(135deg,#4d91f6,#2f72dd);
+  border-color:#3478e5;
+  box-shadow:0 12px 28px rgba(52,120,229,.26);
 }
 
-/* Legacy demo page starts closer to the professional demo shell */
 .hero-small{
   padding-top:36px !important;
+}
+
+/* Prevent legacy floating UI from competing with the controlled demo shell. */
+body.sm-demo-light > .wa-float{
+  display:none !important;
 }
 
 @media(max-width:760px){
@@ -196,7 +198,7 @@ section:first-of-type{
   .sm-demo-shell__inner{width:calc(100% - 20px);gap:10px}
   .sm-demo-shell__separator,
   .sm-demo-shell__brand-copy,
-  .sm-demo-shell__btn--secondary{
+  .sm-demo-shell__actions .sm-demo-shell__btn--secondary{
     display:none;
   }
   .sm-demo-shell__logo{width:38px;height:38px}
