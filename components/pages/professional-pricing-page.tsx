@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import {useLocale, useTranslations} from 'next-intl';
 import {ArrowRight, Check, ExternalLink, Sparkles} from 'lucide-react';
-import {Reveal} from '@/components/reveal';
 import {pricingProducts} from '@/data/pricing';
+import {Reveal} from '@/components/reveal';
 
 const faqKeys = ['1', '2', '3', '4'] as const;
 
@@ -14,67 +14,76 @@ export function ProfessionalPricingPage() {
 
   return (
     <main>
-      <section className="relative overflow-hidden py-20 md:py-28">
-        <div className="container text-center">
+      <section className="sm-page-hero relative overflow-hidden">
+        <div className="container">
           <Reveal>
-            <div className="eyebrow">
-              <Sparkles size={15} />
-              {t('eyebrow')}
+            <div className="sm-page-hero__inner">
+              <div className="eyebrow">
+                <Sparkles size={15} />
+                {t('eyebrow')}
+              </div>
+              <h1 className="display sm-page-hero__title">{t('title')}</h1>
+              <p className="sm-page-hero__desc">{t('desc')}</p>
             </div>
-            <h1 className="display mx-auto mt-5 max-w-5xl text-[clamp(2.8rem,6vw,5.3rem)] font-black">
-              {t('title')}
-            </h1>
-            <p className="muted mx-auto mt-6 max-w-3xl text-lg leading-8">{t('desc')}</p>
           </Reveal>
         </div>
       </section>
 
-      <section className="section pt-0">
+      <section className="section pt-3">
         <div className="container">
           <Reveal>
-            <h2 className="display text-center text-3xl font-black md:text-4xl">{t('ready')}</h2>
+            <div className="sm-section-heading center">
+              <h2 className="display">{t('ready')}</h2>
+            </div>
           </Reveal>
 
-          <div className="mt-9 grid gap-5 lg:grid-cols-3">
+          <div className="grid-3 mt-10">
             {pricingProducts.map((product, index) => (
-              <Reveal key={product.slug} delay={index * 0.05}>
+              <Reveal key={product.slug} delay={index * .05}>
                 <article
-                  className={`card relative h-full p-7 ${
-                    product.popular ? 'ring-1 ring-[var(--primary)]/40' : ''
+                  className={`card sm-price-card ${
+                    product.popular ? 'ring-1 ring-[var(--primary)]/30' : ''
                   }`}
                 >
-                  {product.popular ? (
-                    <div className="absolute right-5 top-5 rounded-full bg-[var(--primary)]/15 px-3 py-1 text-xs font-black text-[var(--primary)]">
-                      {t('popular')}
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="text-xs font-extrabold uppercase tracking-[.12em] text-[var(--gold-strong)]">
+                      {product.priceType === 'starting'
+                        ? t('starting')
+                        : t('offer')}
                     </div>
-                  ) : null}
 
-                  <div className="text-xs font-black uppercase tracking-[.13em] text-[var(--gold)]">
-                    {product.priceType === 'starting' ? t('starting') : t('offer')}
+                    {product.popular ? (
+                      <div className="rounded-full bg-[var(--primary-soft)] px-3 py-1 text-[11px] font-extrabold text-[var(--primary)]">
+                        {t('popular')}
+                      </div>
+                    ) : null}
                   </div>
 
-                  <h3 className="display mt-4 pr-20 text-2xl font-black">{product.name}</h3>
+                  <h3 className="display mt-5 text-2xl">{product.name}</h3>
 
-                  <div className="mt-6 flex items-end gap-2">
-                    <div className="display text-5xl font-black">{product.price}</div>
+                  <div className="mt-6 flex flex-wrap items-end gap-x-2 gap-y-1">
+                    <div className="sm-price">{product.price}</div>
                     {product.priceType === 'perUser' ? (
                       <div className="muted pb-1 text-sm">{t('perUser')}</div>
                     ) : null}
                   </div>
 
                   <div className="mt-7 border-t border-[var(--line)] pt-6">
-                    <div className="text-sm font-black">{t('included')}</div>
+                    <div className="text-sm font-extrabold">{t('included')}</div>
                     <div className="mt-4 grid gap-3">
                       {product.features.map((feature) => (
                         <div key={feature} className="flex gap-3 text-sm">
-                          <Check className="mt-0.5 shrink-0 text-emerald-500" size={17} />
-                          <span className="muted">{feature}</span>
+                          <Check
+                            className="mt-0.5 shrink-0 text-emerald-500"
+                            size={17}
+                          />
+                          <span className="muted leading-6">{feature}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="mt-7 grid gap-2">
+                  <div className="mt-auto grid gap-2 pt-7">
                     <a
                       href={product.url}
                       target="_blank"
@@ -96,22 +105,25 @@ export function ProfessionalPricingPage() {
             ))}
           </div>
 
-          <p className="muted mx-auto mt-6 max-w-4xl text-center text-xs leading-6">{t('note')}</p>
+          <p className="muted mx-auto mt-6 max-w-4xl text-center text-xs leading-6">
+            {t('note')}
+          </p>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
           <Reveal>
-            <div className="card relative overflow-hidden p-8 md:p-12">
-              <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl" />
-              <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl" />
-              <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-                <div>
+            <div className="card overflow-hidden p-8 md:p-11">
+              <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+                <div className="max-w-3xl">
                   <div className="eyebrow">{t('custom')}</div>
-                  <h2 className="display mt-4 text-4xl font-black md:text-5xl">{t('customTitle')}</h2>
-                  <p className="muted mt-5 max-w-3xl text-lg leading-8">{t('customDesc')}</p>
+                  <h2 className="display mt-4 text-4xl md:text-5xl">
+                    {t('customTitle')}
+                  </h2>
+                  <p className="muted mt-5 text-lg leading-8">{t('customDesc')}</p>
                 </div>
+
                 <Link href={`/${locale}/contact`} className="btn btn-gold">
                   {t('customCta')}
                   <ArrowRight size={18} />
@@ -125,12 +137,15 @@ export function ProfessionalPricingPage() {
       <section className="section">
         <div className="container max-w-4xl">
           <Reveal>
-            <h2 className="display text-center text-4xl font-black">{t('faqTitle')}</h2>
+            <div className="sm-section-heading center">
+              <h2 className="display">{t('faqTitle')}</h2>
+            </div>
           </Reveal>
+
           <div className="mt-8 grid gap-3">
             {faqKeys.map((key) => (
-              <details key={key} className="card p-0">
-                <summary className="cursor-pointer list-none p-5 font-black md:p-6">
+              <details key={key} className="card overflow-hidden">
+                <summary className="cursor-pointer list-none p-5 font-extrabold md:p-6">
                   {t(`faq.q${key}`)}
                 </summary>
                 <div className="border-t border-[var(--line)] px-5 pb-6 pt-5 md:px-6">
