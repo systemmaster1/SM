@@ -836,5 +836,29 @@
     "back": "पोर्टफोलियो पर वापस जाएँ",
     "live": "इंटरैक्टिव लाइव डेमो",
     "build": "ऐसा सिस्टम बनवाएँ"
+  },
+  "presence": {
+    "eyebrow": "भारत और विश्व स्तर पर उपस्थिति",
+    "title": "भारत में निर्मित। सीमाओं के पार व्यवसायों को समर्थन।",
+    "desc": "Software development, automation, integrations और ongoing technology support के माध्यम से SystemMaster का काम भारत के कई राज्यों और international markets तक बढ़ा है।",
+    "india": {
+      "eyebrow": "भारत में उपस्थिति",
+      "title": "भारत के प्रमुख राज्यों में लगातार बढ़ती पहुँच",
+      "desc": "Business systems, workflow automation, ERP, CRM, HRMS और custom development जैसी requirements के साथ SystemMaster कई भारतीय business markets में काम कर रहा है।",
+      "hub": "SystemMaster Hub"
+    },
+    "world": {
+      "eyebrow": "विश्व स्तर पर उपस्थिति",
+      "title": "भारत से दुनिया भर के businesses तक",
+      "desc": "भारत के बाहर भी project और technology engagement का footprint USA, Italy, Bangladesh, Russia और Indonesia तक फैला हुआ है।"
+    },
+    "stats": {
+      "states": "भारतीय राज्य",
+      "presence": "Project Presence",
+      "countries": "देश / Markets",
+      "years": "वर्षों की Journey",
+      "innovation": "Continuous Innovation"
+    },
+    "note": "यह presence SystemMaster के बताए गए working या project footprint को दर्शाती है। इसका अर्थ यह नहीं है कि हर listed location में SystemMaster का office, subsidiary या permanent establishment है।"
   }
 }
