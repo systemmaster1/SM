@@ -161,7 +161,7 @@ export function CompanyPage() {
           <Reveal>
             <article className="card h-full p-7 md:p-10">
               <div className="eyebrow">{t('mission.eyebrow')}</div>
-              <h2 className="display mt-4 text-3xl font-black md:text-4xl">
+              <h2 className="display mt-4 sm-card-heading">
                 {t('mission.title')}
               </h2>
               <p className="muted mt-5 text-lg leading-8">{t('mission.desc')}</p>
@@ -171,7 +171,7 @@ export function CompanyPage() {
           <Reveal delay={.08}>
             <article className="card h-full p-7 md:p-10">
               <div className="eyebrow">{t('vision.eyebrow')}</div>
-              <h2 className="display mt-4 text-3xl font-black md:text-4xl">
+              <h2 className="display mt-4 sm-card-heading">
                 {t('vision.title')}
               </h2>
               <p className="muted mt-5 text-lg leading-8">{t('vision.desc')}</p>
@@ -238,14 +238,14 @@ export function CompanyPage() {
 
               <div className="sm-founder-content">
                 <div className="eyebrow">{t('founder.eyebrow')}</div>
-                <h2 className="display mt-5 text-4xl font-black md:text-5xl">
+                <h2 className="display mt-5 sm-founder-name">
                   {companyContact.founder}
                 </h2>
                 <div className="mt-2 font-extrabold text-[var(--gold)]">
                   {t('founder.role')}
                 </div>
 
-                <h3 className="display mt-7 text-2xl md:text-3xl">
+                <h3 className="display mt-7 sm-founder-headline">
                   {t('founder.headline')}
                 </h3>
                 <p className="muted mt-4 text-lg leading-8">
@@ -293,7 +293,7 @@ export function CompanyPage() {
       </section>
 
       {/* JOURNEY */}
-      <section className="section sm-journey-section">
+      <section className="section sm-journey-section sm-section-tight">
         <motion.div
           className="sm-journey-scroll-progress"
           style={{scaleX: journeyProgress}}
@@ -302,7 +302,7 @@ export function CompanyPage() {
           <Reveal>
             <div className="sm-section-heading">
               <div className="eyebrow">{t('timeline.eyebrow')}</div>
-              <h2 className="display mt-4 max-w-5xl text-4xl font-black md:text-6xl">
+              <h2 className="display mt-4 sm-journey-title max-w-5xl">
                 {t('timeline.title')}
               </h2>
               <p className="muted mt-5 max-w-3xl text-lg leading-8">
@@ -324,7 +324,7 @@ export function CompanyPage() {
                     <div className="sm-growth-phase">
                       {t(`timeline.items.${item.key}.phase`)}
                     </div>
-                    <h3 className="display mt-3 text-2xl font-black md:text-3xl">
+                    <h3 className="display mt-3 sm-timeline-card-title">
                       {t(`timeline.items.${item.key}.title`)}
                     </h3>
                     <p className="muted mt-3 leading-7">
@@ -344,7 +344,7 @@ export function CompanyPage() {
       </section>
 
       {/* BUSINESS LEARNING + R&D */}
-      <section className="section">
+      <section className="section sm-section-tight">
         <div className="container grid gap-6 lg:grid-cols-[.95fr_1.05fr]">
           <Reveal>
             <article className="card h-full p-7 md:p-10">
@@ -352,7 +352,7 @@ export function CompanyPage() {
                 <Lightbulb size={15} />
                 {t('learning.eyebrow')}
               </div>
-              <h2 className="display mt-4 text-3xl font-black md:text-4xl">
+              <h2 className="display mt-4 sm-card-heading">
                 {t('learning.title')}
               </h2>
               <p className="muted mt-5 text-lg leading-8">
@@ -376,7 +376,7 @@ export function CompanyPage() {
                 <Search size={15} />
                 {t('rnd.eyebrow')}
               </div>
-              <h2 className="display mt-4 text-3xl font-black md:text-4xl">
+              <h2 className="display mt-4 sm-card-heading">
                 {t('rnd.title')}
               </h2>
               <p className="muted mt-5 text-lg leading-8">
@@ -421,7 +421,7 @@ export function CompanyPage() {
                     <Users size={15} />
                     {t('continuity.eyebrow')}
                   </div>
-                  <h2 className="display mt-4 text-4xl font-black md:text-5xl">
+                  <h2 className="display mt-4 sm-section-title">
                     {t('continuity.title')}
                   </h2>
                   <p className="muted mt-5 text-lg leading-8">
@@ -523,7 +523,7 @@ export function CompanyPage() {
           <Reveal>
             <article className="card p-7 md:p-10">
               <div className="eyebrow">{t('trust.eyebrow')}</div>
-              <h2 className="display mt-4 text-4xl font-black">
+              <h2 className="display mt-4 sm-section-title">
                 {t('trust.title')}
               </h2>
               <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -556,7 +556,7 @@ export function CompanyPage() {
               <div className="relative">
                 <Rocket className="mx-auto text-[var(--gold)]" size={34} />
                 <div className="eyebrow mt-5">{t('cta.eyebrow')}</div>
-                <h2 className="display mx-auto mt-5 max-w-5xl text-4xl font-black md:text-6xl">
+                <h2 className="display mx-auto mt-5 max-w-5xl sm-cta-title">
                   {t('cta.title')}
                 </h2>
                 <p className="muted mx-auto mt-5 max-w-3xl text-lg leading-8">
