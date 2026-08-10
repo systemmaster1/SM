@@ -1095,3 +1095,235 @@ html[lang="hi"] .eyebrow {
     padding: 5px;
   }
 }
+
+
+/* =====================================================================
+   PHASE 12A — PAGE-BY-PAGE UI AUDIT FIXES
+   Added after full repository review.
+   ===================================================================== */
+
+/* Missing utility classes used throughout current source code.
+   These were referenced in Home / Products / Services / Industries
+   but were not defined anywhere in the uploaded repository. */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* Home currently references --gold-2 in the hero gradient. */
+:root {
+  --gold-2: #f3c75d;
+}
+
+html.dark {
+  --gold-2: #ffd06a;
+}
+
+/* Standard page hero rhythm */
+.sm-page-hero {
+  padding-block: clamp(72px, 8vw, 112px);
+}
+
+.sm-page-hero__inner {
+  max-width: 980px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.sm-page-hero__title {
+  margin-top: 18px;
+  font-size: clamp(2.8rem, 5.6vw, 5.25rem);
+  line-height: 1.03;
+  letter-spacing: -0.048em;
+  font-weight: 830;
+}
+
+.sm-page-hero__desc {
+  max-width: 760px;
+  margin: 22px auto 0;
+  color: var(--muted);
+  font-size: 1.075rem;
+  line-height: 1.75;
+}
+
+/* Stronger consistency on marketing cards */
+.sm-marketing-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 28px;
+}
+
+.sm-marketing-card__icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.sm-marketing-card__title {
+  margin-top: 20px;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.sm-marketing-card__desc {
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.sm-marketing-card__footer {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* Home hero command center should hug its content instead of stretching */
+.sm-command-center {
+  align-self: center;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* Product cards maintain equal internal alignment */
+.sm-product-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 28px;
+}
+
+.sm-product-logo-area {
+  display: flex;
+  min-height: 96px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sm-product-features {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+/* Section heading standard */
+.sm-section-heading {
+  max-width: 820px;
+}
+
+.sm-section-heading.center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.sm-section-heading h2 {
+  margin-top: 16px;
+  font-size: clamp(2rem, 4vw, 3.45rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.sm-section-heading p {
+  max-width: 700px;
+  margin-top: 16px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.sm-section-heading.center p {
+  margin-inline: auto;
+}
+
+/* Better statistic cards */
+.sm-stat-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  padding: 15px 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sm-stat-card strong {
+  display: block;
+  color: var(--text);
+  font-size: 1.45rem;
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+}
+
+.sm-stat-card span {
+  display: block;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Pricing cards */
+.sm-price-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.sm-price {
+  font-size: clamp(2.6rem, 4vw, 3.7rem);
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: -0.045em;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .sm-page-hero {
+    padding-block: 64px;
+  }
+
+  .sm-page-hero__title {
+    font-size: clamp(2.45rem, 12vw, 3.55rem);
+  }
+
+  .sm-marketing-card,
+  .sm-product-card,
+  .sm-price-card {
+    padding: 22px;
+  }
+}
