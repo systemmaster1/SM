@@ -72,7 +72,7 @@
     "premiumDesc": "Professional UI, motion और conversion-focused customer journey।",
     "supportTitle": "लॉन्ग-टर्म सपोर्ट",
     "supportDesc": "Training, maintenance और लगातार improvement।",
-    "automationTitle": "Automation first",
+    "automationTitle": "ऑटोमेशन-फर्स्ट",
     "automationDesc": "Repetitive काम कम करें और तेज़ निर्णय लें।"
   },
   "cta": {
@@ -280,14 +280,14 @@
         "source": "कस्टम प्रोजेक्ट के लिए source-code handover",
         "security": "Role-based access और सुरक्षित development practices",
         "responsive": "Responsive web और mobile-ready experiences",
-        "cloud": "Cloud-ready deployment architecture",
+        "cloud": "क्लाउड-रेडी डिप्लॉयमेंट आर्किटेक्चर",
         "integration": "API और third-party integration support",
         "documentation": "Structured handover और implementation guidance"
       }
     },
     "founder": {
       "eyebrow": "फाउंडर",
-      "role": "Founder, SystemMaster Automations",
+      "role": "संस्थापक, SystemMaster Automations",
       "desc": "व्यावहारिक सॉफ्टवेयर, ऑटोमेशन और जुड़े हुए बिजनेस सिस्टम बनाने पर केंद्रित, ताकि मैनुअल काम कम हो और ऑपरेशंस की visibility बेहतर हो।",
       "email": "ईमेल",
       "call": "कॉल",
@@ -363,7 +363,7 @@
           "desc": "Desktop, tablet और mobile usage को ध्यान में रखकर interfaces design किए जाते हैं।"
         },
         "integration": {
-          "title": "Integration-friendly",
+          "title": "इंटीग्रेशन-फ्रेंडली",
           "desc": "Workflow की जरूरत के अनुसार APIs और third-party services जोड़ी जा सकती हैं।"
         }
       }
@@ -380,11 +380,11 @@
       "customCta": "कस्टम प्रोजेक्ट पर चर्चा करें"
     },
     "founder": {
-      "eyebrow": "Founder-led Product Thinking",
+      "eyebrow": "संस्थापक-नेतृत्व वाली प्रोडक्ट सोच",
       "title": "Practical business outcomes पर सीधा फोकस",
       "desc": "SystemMaster का approach practical है: workflow समझना, manual work कम करना, visibility बढ़ाना और ऐसा system बनाना जिसे team वास्तव में उपयोग कर सके।",
       "name": "Sunil Tiwari",
-      "role": "Founder, SystemMaster Automations",
+      "role": "संस्थापक, SystemMaster Automations",
       "cta": "SystemMaster के बारे में"
     },
     "final": {
@@ -490,7 +490,7 @@
     "readyDesc": "SM-Books, SM-HRMS + Task Management या SM-ERP + CRM में interest है?",
     "customTitle": "कस्टम सॉफ्टवेयर प्रोजेक्ट",
     "customDesc": "ERP, CRM, mobile app, website, automation, dashboard या unique business workflow चाहिए?",
-    "supportTitle": "Existing Customer / Support",
+    "supportTitle": "मौजूदा ग्राहक / सहायता",
     "supportDesc": "पहले से SystemMaster product या solution use कर रहे हैं और help चाहिए?",
     "responseTitle": "इसके बाद क्या होगा",
     "responseItems": {
@@ -512,11 +512,11 @@
       "books": "SM-Books Accounting Software",
       "hrms": "SM-HRMS + Task Management",
       "erp": "SM-ERP + CRM",
-      "website": "Website Development",
-      "mobile": "Mobile App Development",
-      "customErp": "Custom ERP / CRM",
-      "automation": "AI / Workflow Automation",
-      "whatsapp": "WhatsApp Automation",
+      "website": "वेबसाइट डेवलपमेंट",
+      "mobile": "मोबाइल ऐप डेवलपमेंट",
+      "customErp": "कस्टम ERP / CRM",
+      "automation": "AI / वर्कफ़्लो ऑटोमेशन",
+      "whatsapp": "WhatsApp ऑटोमेशन",
       "other": "अन्य Custom Requirement"
     },
     "budgets": {
@@ -565,7 +565,7 @@
           "body": "हमारी website या hosting providers security, reliability और performance के लिए browser type, device information, IP address, visited pages और diagnostic logs जैसी basic technical information process कर सकते हैं।"
         },
         "thirdParty": {
-          "title": "4. Third-party services",
+          "title": "4. तृतीय-पक्ष सेवाएँ",
           "body": "कुछ interactions में Vercel, WhatsApp, email providers, cloud platforms, analytics, payment services या automation platforms जैसी third-party services उपयोग हो सकती हैं। उन services के अपने privacy terms लागू हो सकते हैं।"
         },
         "sharing": {
@@ -573,7 +573,7 @@
           "body": "हम personal information बेचते नहीं हैं। Requested service operate, secure, support या deliver करने के लिए reasonably necessary होने पर, या कानून द्वारा required होने पर, information service providers के साथ share की जा सकती है।"
         },
         "retention": {
-          "title": "6. Data retention",
+          "title": "6. डेटा रखने की अवधि",
           "body": "Enquiry और business communication data follow-up, support, contractual, accounting, security या legal purposes के लिए reasonable period तक रखा जा सकता है।"
         },
         "security": {
@@ -585,11 +585,11 @@
           "body": "आप पहले दी गई information के correction या deletion के लिए हमसे contact कर सकते हैं, subject to legal, contractual, accounting और legitimate business retention requirements।"
         },
         "children": {
-          "title": "9. Children's privacy",
+          "title": "9. बच्चों की गोपनीयता",
           "body": "हमारे business products और services organizations तथा business users के लिए हैं, बच्चों के लिए नहीं।"
         },
         "changes": {
-          "title": "10. Policy updates",
+          "title": "10. नीति में बदलाव",
           "body": "Website, products, services या legal requirements बदलने पर हम Privacy Policy update कर सकते हैं। Latest version इसी page पर publish किया जाएगा।"
         }
       }
@@ -604,15 +604,15 @@
           "body": "आप इस website का उपयोग lawful business information, product evaluation और service enquiries के लिए कर सकते हैं। Unauthorized access, website operation में interference या unlawful use की अनुमति नहीं है।"
         },
         "information": {
-          "title": "2. Website information",
+          "title": "2. वेबसाइट की जानकारी",
           "body": "हम website information accurate और current रखने का प्रयास करते हैं, लेकिन features, pricing, offers, availability और service details बदल सकती हैं। Final commercial terms applicable quotation, order, subscription या agreement में confirmed terms होंगे।"
         },
         "products": {
-          "title": "3. Ready-to-use software products",
+          "title": "3. रेडी-टू-यूज़ सॉफ्टवेयर प्रोडक्ट",
           "body": "Published pricing applicable plan, offer conditions, taxes, user limits, billing cycle और product-specific terms पर निर्भर करती है। Software improve होने के साथ features evolve हो सकते हैं।"
         },
         "custom": {
-          "title": "4. Custom software development",
+          "title": "4. कस्टम सॉफ्टवेयर डेवलपमेंट",
           "body": "Custom development केवल scope, deliverables, timelines, responsibilities, commercial terms और relevant conditions agree होने के बाद शुरू होता है। Website examples और demo systems automatically custom project scope का हिस्सा नहीं होते।"
         },
         "payment": {
@@ -620,7 +620,7 @@
           "body": "Fees, payment milestones, subscription charges, taxes और refund conditions applicable quotation, invoice, order या agreement द्वारा governed होंगे।"
         },
         "ip": {
-          "title": "6. Intellectual property",
+          "title": "6. बौद्धिक संपदा",
           "body": "SystemMaster branding, website content, designs और proprietary materials protected रहते हैं। Custom project में source-code ownership और handover specific project agreement के अनुसार तय होगा।"
         },
         "demo": {
@@ -628,7 +628,7 @@
           "body": "Demo systems evaluation के लिए दिए जाते हैं और sample या fictional data use कर सकते हैं। Demo availability, functions और data बदल सकते हैं और इन्हें production environment नहीं माना जाना चाहिए।"
         },
         "thirdParty": {
-          "title": "8. Third-party services",
+          "title": "8. तृतीय-पक्ष सेवाएँ",
           "body": "Projects या products third-party APIs, cloud platforms, messaging services या payment providers integrate कर सकते हैं। उनकी availability, charges, policies और technical limits संबंधित provider नियंत्रित करता है।"
         },
         "liability": {
