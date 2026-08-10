@@ -2922,3 +2922,367 @@ html[lang="hi"] .eyebrow {
     max-width: none;
   }
 }
+
+
+/* =====================================================================
+   PHASE 17 — INDIA + WORLDWIDE PRESENCE MAPS
+   ===================================================================== */
+
+.sm-presence-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.sm-presence-card {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow-lg);
+}
+
+.sm-presence-card--india {
+  background:
+    radial-gradient(circle at 85% 20%, rgba(61,126,240,.09), transparent 28%),
+    var(--surface);
+}
+
+@media (min-width: 1024px) {
+  .sm-presence-card--india {
+    grid-template-columns: minmax(360px,.8fr) minmax(0,1.2fr);
+  }
+}
+
+.sm-presence-copy {
+  padding: clamp(26px,4vw,48px);
+}
+
+.sm-presence-title {
+  max-width: 15ch;
+  font-size: clamp(2rem,3.3vw,3.2rem);
+  line-height: 1.07;
+  letter-spacing: -.04em;
+  font-weight: 900;
+}
+
+.sm-presence-metric {
+  display: flex;
+  min-height: 86px;
+  align-items: center;
+  gap: 13px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: color-mix(in srgb,var(--surface-strong) 58%,transparent);
+  padding: 15px;
+}
+
+.sm-presence-metric svg {
+  flex: 0 0 auto;
+  color: var(--primary);
+}
+
+.sm-presence-metric strong,
+.sm-presence-metric span {
+  display: block;
+}
+
+.sm-presence-metric strong {
+  font-size: 1.25rem;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.sm-presence-metric span {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: .69rem;
+  font-weight: 750;
+}
+
+.sm-location-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-bottom: 1px solid color-mix(in srgb,var(--line) 72%,transparent);
+  padding: 9px 3px;
+  color: var(--text-soft);
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+.sm-location-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 5px var(--primary-soft);
+}
+
+.sm-map-visual {
+  position: relative;
+  min-height: 430px;
+  overflow: hidden;
+}
+
+.sm-map-visual--india img {
+  object-position: center;
+  filter: saturate(.96) contrast(.98);
+}
+
+.sm-map-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--surface) 0%, transparent 15%, transparent 88%, color-mix(in srgb,var(--surface) 38%,transparent) 100%),
+    linear-gradient(180deg, color-mix(in srgb,var(--surface) 8%,transparent), color-mix(in srgb,var(--surface) 18%,transparent));
+  pointer-events: none;
+}
+
+.sm-map-pulse {
+  position: absolute;
+  z-index: 3;
+  width: 12px;
+  height: 12px;
+  margin: -6px;
+  border: 2px solid rgba(255,255,255,.92);
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow:
+    0 0 0 6px rgba(229,169,60,.15),
+    0 0 22px rgba(229,169,60,.52);
+}
+
+.sm-map-hub {
+  position: absolute;
+  z-index: 4;
+  left: 51%;
+  top: 52%;
+  display: grid;
+  min-width: 108px;
+  place-items: center;
+  border: 1px solid rgba(229,169,60,.32);
+  border-radius: 18px;
+  background: rgba(255,255,255,.88);
+  padding: 10px 12px;
+  color: #15243a;
+  box-shadow: 0 14px 34px rgba(29,55,91,.15);
+  backdrop-filter: blur(12px);
+  transform: translate(-50%,-50%);
+}
+
+.sm-map-hub span {
+  color: #1d67d3;
+  font-size: 1.15rem;
+  font-weight: 950;
+}
+
+.sm-map-hub small {
+  margin-top: 2px;
+  color: #6d7788;
+  font-size: .57rem;
+  font-weight: 800;
+}
+
+.sm-presence-card--world {
+  position: relative;
+  min-height: 510px;
+  background: #041834;
+  border-color: rgba(70,135,231,.22);
+}
+
+.sm-world-map-wrap {
+  position: relative;
+  min-height: 510px;
+}
+
+.sm-world-map-wrap img {
+  object-position: center;
+}
+
+.sm-world-map-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3,17,39,.95) 0%, rgba(3,17,39,.76) 27%, rgba(3,17,39,.08) 55%, rgba(3,17,39,.18) 100%),
+    linear-gradient(180deg, rgba(3,17,39,.10), rgba(3,17,39,.22));
+}
+
+.sm-world-copy {
+  position: absolute;
+  z-index: 4;
+  top: clamp(28px,5vw,52px);
+  left: clamp(24px,5vw,58px);
+  max-width: 390px;
+}
+
+.sm-world-eyebrow {
+  color: #ffc85a !important;
+  border-color: rgba(255,200,90,.20) !important;
+  background: rgba(255,200,90,.07) !important;
+}
+
+.sm-world-title {
+  max-width: 11ch;
+  color: #fff;
+  font-size: clamp(2rem,3.4vw,3.45rem);
+  line-height: 1.05;
+  letter-spacing: -.045em;
+  font-weight: 900;
+}
+
+.sm-world-particle {
+  position: absolute;
+  z-index: 3;
+  width: 8px;
+  height: 8px;
+  margin: -4px;
+  border-radius: 50%;
+  background: #ffd16c;
+  box-shadow: 0 0 0 5px rgba(255,209,108,.10),0 0 18px rgba(255,209,108,.72);
+}
+
+.sm-world-country-strip {
+  position: absolute;
+  z-index: 5;
+  right: clamp(18px,4vw,48px);
+  bottom: clamp(18px,4vw,34px);
+  left: clamp(18px,4vw,48px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.sm-world-country {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px;
+  background: rgba(7,26,55,.72);
+  padding: 8px 11px;
+  color: rgba(255,255,255,.88);
+  font-size: .72rem;
+  font-weight: 850;
+  backdrop-filter: blur(10px);
+}
+
+.sm-country-code {
+  display: grid;
+  min-width: 26px;
+  height: 22px;
+  place-items: center;
+  border-radius: 7px;
+  background: rgba(80,144,244,.17);
+  color: #8dbbff;
+  font-size: .58rem;
+  font-weight: 950;
+  letter-spacing: .06em;
+}
+
+.sm-presence-stats {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+}
+
+@media (min-width: 760px) {
+  .sm-presence-stats {
+    grid-template-columns: repeat(4,minmax(0,1fr));
+  }
+}
+
+.sm-presence-stat {
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: var(--surface);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sm-presence-stat strong,
+.sm-presence-stat span {
+  display: block;
+}
+
+.sm-presence-stat strong {
+  font-size: 1.55rem;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: -.04em;
+}
+
+.sm-presence-stat span {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 780;
+  line-height: 1.4;
+}
+
+html.dark .sm-map-hub {
+  border-color: rgba(229,169,60,.28);
+  background: rgba(9,28,55,.88);
+  color: #fff;
+}
+
+html.dark .sm-map-hub small {
+  color: #aab6c9;
+}
+
+@media (max-width: 1023px) {
+  .sm-map-visual {
+    min-height: 500px;
+  }
+
+  .sm-world-map-overlay {
+    background:
+      linear-gradient(180deg, rgba(3,17,39,.91) 0%, rgba(3,17,39,.35) 43%, rgba(3,17,39,.18) 100%);
+  }
+
+  .sm-world-copy {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sm-presence-card {
+    border-radius: 22px;
+  }
+
+  .sm-presence-copy {
+    padding: 24px 20px;
+  }
+
+  .sm-map-visual {
+    min-height: 390px;
+  }
+
+  .sm-map-hub {
+    min-width: 94px;
+  }
+
+  .sm-presence-card--world,
+  .sm-world-map-wrap {
+    min-height: 560px;
+  }
+
+  .sm-world-copy {
+    top: 24px;
+    right: 20px;
+    left: 20px;
+  }
+
+  .sm-world-title {
+    max-width: 14ch;
+    font-size: 2.15rem;
+  }
+
+  .sm-world-country-strip {
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    justify-content: flex-start;
+  }
+}
