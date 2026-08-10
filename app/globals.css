@@ -2006,3 +2006,153 @@ html.dark {
     transition: none;
   }
 }
+
+
+/* =====================================================================
+   PHASE 13 — PORTFOLIO PREVIEW FINAL POLISH
+   ===================================================================== */
+.sm-preview-label {
+  margin-left: 7px;
+  color: var(--muted);
+  font-size: .56rem;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.sm-mini-kpi--content {
+  min-height: 55px;
+  padding: 8px;
+}
+
+.sm-mini-kpi--content span,
+.sm-score-card--content span {
+  display: block;
+  color: var(--muted);
+  font-size: .48rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.sm-mini-kpi--content strong {
+  display: block;
+  margin-top: 4px;
+  font-size: .78rem;
+  letter-spacing: -.03em;
+}
+
+.sm-mini-row--content {
+  align-items: center;
+}
+
+.sm-mini-row--content > span {
+  width: 34%;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: .46rem;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sm-pipeline-title--text {
+  height: auto !important;
+  min-height: 15px;
+  background: transparent !important;
+  color: var(--muted);
+  font-size: .43rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.sm-stock-side small {
+  color: var(--muted);
+  font-size: .45rem;
+  font-weight: 750;
+}
+
+.sm-stock-ring {
+  display: grid;
+  place-items: center;
+}
+
+.sm-stock-ring span {
+  font-size: .62rem;
+  font-weight: 900;
+}
+
+.sm-stock-item--text {
+  display: flex;
+  align-items: center;
+  padding-inline: 7px;
+}
+
+.sm-stock-item--text span {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: .45rem;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sm-production-step--content {
+  grid-template-columns: 62px 1fr 28px !important;
+}
+
+.sm-production-step--content > span,
+.sm-production-step--content > b {
+  color: var(--muted);
+  font-size: .43rem;
+  font-weight: 800;
+}
+
+.sm-production-step--content > b {
+  text-align: right;
+}
+
+.sm-score-card--content {
+  padding: 8px;
+}
+
+.sm-score-card--content b {
+  display: block;
+  margin-block: 3px 5px;
+  font-size: .68rem;
+}
+
+.sm-doc--content {
+  text-align: center;
+}
+
+.sm-doc--content strong {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--font-display, inherit);
+  font-size: .72rem;
+}
+
+.sm-doc--content > span {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: .45rem;
+}
+
+.sm-doc--content .sm-doc-logo,
+.sm-doc--content .sm-doc-seal {
+  display: grid;
+  place-items: center;
+  font-size: .5rem;
+  font-weight: 900;
+}
+
+@media (max-width: 640px) {
+  .sm-preview-label {
+    font-size: .5rem;
+  }
+
+  .sm-production-step--content {
+    grid-template-columns: 54px 1fr 25px !important;
+  }
+}
