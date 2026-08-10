@@ -165,16 +165,16 @@
     "call": "Call"
   },
   "aboutPage": {
-    "eyebrow": "About SystemMaster",
-    "title": "Enterprise software, automation and digital systems built around real business workflows",
-    "desc": "SystemMaster Automations helps growing businesses adopt ready-to-use SaaS products and custom software without forcing teams into rigid processes.",
-    "primary": "Discuss Your Project",
-    "secondary": "Explore Products",
+    "eyebrow": "SystemMaster Growth Journey",
+    "title": "A decade of building, automating and growing with real businesses",
+    "desc": "From Excel-based reporting and data systems to ERP, CRM, connected workflows and AI-powered automation — SystemMaster has continuously evolved around the real operating needs of the businesses we serve.",
+    "primary": "Discuss Your Business System",
+    "secondary": "Explore Our Work",
     "stats": {
-      "years": "Years in business automation",
+      "years": "Years of continuous system-building evolution",
       "products": "Live ready-to-use SaaS products",
       "services": "Solution & development categories",
-      "languages": "Website languages"
+      "direction": "AI-first automation direction"
     },
     "mission": {
       "eyebrow": "Our Mission",
@@ -209,28 +209,114 @@
       }
     },
     "timeline": {
-      "eyebrow": "Company Journey",
-      "title": "From automation projects to a connected SaaS ecosystem",
+      "eyebrow": "2016 → 2026 Growth Journey",
+      "title": "From data tools to AI-powered business systems",
+      "desc": "Each stage added another layer: better data, stronger workflows, connected business operations, automation, integrations and now AI-assisted systems.",
       "items": {
-        "foundation": {
-          "title": "Business Automation Foundation",
-          "desc": "Started solving workflow and reporting problems with practical automation."
+        "start": {
+          "phase": "Data & Reporting",
+          "title": "It started with one goal: make work easier",
+          "desc": "The journey began with data-entry forms, structured Excel reporting, BI dashboards, college projects and professional presentations. The early focus was already clear — reduce repetitive work and turn raw information into useful visibility.",
+          "tags": [
+            "Excel",
+            "Data Forms",
+            "Reports",
+            "BI",
+            "Presentations"
+          ]
         },
-        "systems": {
-          "title": "Custom Business Systems",
-          "desc": "Expanded into ERP-style workflows, dashboards and operational tools."
+        "digital": {
+          "phase": "Digital Systems",
+          "title": "Individual tools started becoming working systems",
+          "desc": "The work expanded into university and education-focused projects including student registration workflows, structured data systems, email automation and customized applications, alongside continued freelance projects.",
+          "tags": [
+            "Student Systems",
+            "Email Automation",
+            "Forms",
+            "Custom Projects"
+          ]
         },
-        "products": {
-          "title": "Ready-to-Use SaaS Products",
-          "desc": "Launched live products for accounting, HRMS, task management, ERP and CRM."
+        "business": {
+          "phase": "Business Operations",
+          "title": "Automation moved into company operations",
+          "desc": "SystemMaster began building systems for business teams: sales trackers, employee performance systems, management reporting and BI dashboards — helping managers understand activity, responsibility, pending work and performance.",
+          "tags": [
+            "Sales Tracker",
+            "Performance",
+            "MIS",
+            "BI Dashboard"
+          ]
+        },
+        "automation": {
+          "phase": "Automation Ecosystem",
+          "title": "One system was no longer enough",
+          "desc": "Requirements became interconnected, leading to work across FMS, IMS, HRMS, PMS, WhatsApp automation, HR systems and automated reporting. The focus shifted from isolated software toward connected processes.",
+          "tags": [
+            "FMS",
+            "IMS",
+            "HRMS",
+            "PMS",
+            "WhatsApp",
+            "Auto Reports"
+          ]
+        },
+        "rnd": {
+          "phase": "R&D + Business Systems",
+          "title": "Business understanding became as important as technology",
+          "desc": "Between 2022 and 2025, the founder continued structured learning around business systems and implementation thinking, including Business India Coaching programs and exposure to approaches associated with Rahul Jain and Sanjeev Jain, while continuing to solve diverse custom client requirements.",
+          "tags": [
+            "Business Systems",
+            "R&D",
+            "Process Thinking",
+            "Custom Requirements"
+          ]
+        },
+        "growth": {
+          "phase": "Growth Systems",
+          "title": "Technology started working directly for business growth",
+          "desc": "The focus expanded into advanced sales systems, CRM and ERP solutions, support sections, customer portals, Zoho integrations and connected operational workflows designed to improve response, control and management visibility.",
+          "tags": [
+            "CRM",
+            "ERP",
+            "Sales Systems",
+            "Customer Portal",
+            "Zoho"
+          ]
+        },
+        "connected": {
+          "phase": "Connected Automation",
+          "title": "Multiple channels started working as one system",
+          "desc": "Website and app development, AI chat automation, inquiry capture, lead-management automation, multi-source lead integration and n8n workflows helped bring scattered business activity into connected ERP/CRM environments.",
+          "tags": [
+            "Web & Apps",
+            "Lead Capture",
+            "n8n",
+            "Integrations",
+            "AI Chat"
+          ]
         },
         "ai": {
-          "title": "AI & Workflow Automation",
-          "desc": "Added AI agents, WhatsApp automation and connected workflow capabilities."
+          "phase": "AI-Powered Systems",
+          "title": "Systems that do more than store data",
+          "desc": "SystemMaster is now combining ERP, CRM, HRMS, FMS, PMS, IMS, workflow automation, WhatsApp automation and reporting experience with AI agents, intelligent lead capture, automated follow-ups and AI-assisted business workflows.",
+          "tags": [
+            "AI Agents",
+            "WhatsApp AI",
+            "AI Reporting",
+            "Automation",
+            "Workflows"
+          ]
         },
-        "platform": {
-          "title": "Unified Business Platform Vision",
-          "desc": "Building a broader ecosystem that combines ready products with custom enterprise development."
+        "next": {
+          "phase": "Continuous Innovation",
+          "title": "The journey keeps evolving",
+          "desc": "R&D remains continuous. New technologies are explored, tested and adapted only when they can solve a real business problem and create measurable value for clients.",
+          "tags": [
+            "Research",
+            "Testing",
+            "Innovation",
+            "Continuous Improvement"
+          ]
         }
       }
     },
@@ -286,18 +372,66 @@
       }
     },
     "founder": {
-      "eyebrow": "Founder",
+      "eyebrow": "Founder Story",
+      "badge": "Founder-led R&D & Product Thinking",
       "role": "Founder, SystemMaster Automations",
-      "desc": "Focused on building practical software, automation and connected business systems that reduce manual work and improve operational visibility.",
+      "headline": "Built from curiosity. Grown through real business problems.",
+      "desc": "Sunil Tiwari's journey began with a practical interest in making repetitive work easier. What started with data forms, Excel reporting and BI gradually expanded into business workflows, enterprise software, integrations and automation.",
+      "quote": "The technology has changed continuously, but the purpose remains the same — understand how a business actually works, identify where time and effort are being lost, and build a system that makes operations simpler, faster and more measurable.",
       "email": "Email",
       "call": "Call",
       "whatsapp": "WhatsApp",
-      "meeting": "Book a Meeting"
+      "meeting": "Book a Meeting",
+      "progress": {
+        "p1": "Data & Reporting",
+        "p2": "Digital Systems",
+        "p3": "Business Software",
+        "p4": "Process Automation",
+        "p5": "ERP + CRM + Integrations",
+        "p6": "Connected Automation",
+        "p7": "AI-Powered Business Systems"
+      }
     },
     "cta": {
-      "title": "Ready to discuss your business system?",
-      "desc": "Tell us your process, current tools and bottlenecks. We will help you decide whether a ready SystemMaster product or a custom solution fits better.",
-      "button": "Get Free Consultation"
+      "eyebrow": "10 Years of Evolution",
+      "title": "And we are still building what comes next",
+      "desc": "From a single reporting workflow to connected enterprise automation, each stage has expanded what SystemMaster can build. The next generation brings software, automation, data and AI together.",
+      "button": "Build My Business System",
+      "portfolio": "Explore Our Work"
+    },
+    "learning": {
+      "eyebrow": "Business-System Learning",
+      "title": "Technology alone does not build a great system. Understanding business does.",
+      "desc": "From 2022 to 2025, the founder continued expanding knowledge in business processes, growth systems and implementation approaches alongside software development. This included learning through Business India Coaching programs and exposure to business-system thinking associated with Rahul Jain and Sanjeev Jain.",
+      "noteTitle": "Learning context, not an endorsement claim",
+      "note": "These references describe learning and exposure that influenced SystemMaster's system-thinking approach. They do not imply an official partnership, certification endorsement or commercial association unless separately stated."
+    },
+    "rnd": {
+      "eyebrow": "Continuous R&D",
+      "title": "We research what is next — before our clients need it",
+      "desc": "SystemMaster continuously explores emerging technologies, tests practical use cases and develops working approaches before recommending them to clients. New technology is adopted for business value, not simply because it is new.",
+      "steps": {
+        "research": "Research",
+        "test": "Test",
+        "develop": "Develop",
+        "implement": "Implement",
+        "measure": "Measure",
+        "improve": "Improve"
+      },
+      "principle": "We do not adopt technology simply because it is new. We explore how it can solve a real business problem."
+    },
+    "continuity": {
+      "eyebrow": "Long-Term Client Relationships",
+      "title": "We do not believe a project ends at delivery",
+      "desc": "Many businesses we have worked with continue to stay connected with SystemMaster as their requirements evolve. A project may start with one workflow, then expand into reporting, integrations, sales, inventory, HR, customer management or AI automation.",
+      "steps": {
+        "requirement": "Client Requirement",
+        "system": "Custom System",
+        "automation": "Business Automation",
+        "integration": "Integration",
+        "ai": "AI Enablement",
+        "growth": "Continuous Growth"
+      }
     }
   },
   "homeTrust": {
